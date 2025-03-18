@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NomeSito</title>
+    <link rel="icon" type="image/png" href="Immagini/Logo.png">
+    <style>
+        /* Stile generale */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(Immagini/Background_site.png);
+            background-size: cover;
+            background-position: center;
+            font-family: sans-serif;
+            margin: 0;
+        }
+
+        /* Stile del titolo */
+        .title {
+            background-color: whitesmoke;
+            color: black;
+            font-family: sans-serif;
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Stile del contenitore di login */
+        .login-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: aquamarine;
+            border: none;
+            border-radius: 5px;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-box button:hover {
+            background-color: #5cd3b4;
+        }
+
+        .login-box p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .login-box a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Titolo del sito -->
+    <h1 class="title">
+        <img src="Immagini/Logo.png" alt="Logo" style="height: 50px; vertical-align: middle; margin-right: 10px;">
+        <span style="vertical-align: middle;">NomeSito</span>
+    </h1>
+    
+    <!-- Box di login -->
+    <div class="login-box">
+        <h2>Login</h2>
+        <form action="http://127.0.0.1:5000/login" method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Accedi</button>
+        </form>
+        <p>Non hai un account? <a href="Registrazione.html">Registrati</a></p>
+    </div>
+
+</body>
+</html>

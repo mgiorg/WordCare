@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Gioco di carte con musica</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 10px;
+      background-color: #a2cddb; /* Colore azzurrino */
+      color: #000; /* Testo nero */
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #scoreDisplay {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    canvas {
+      border: 2px solid #000;
+      background-color: #f0f8ff;
+      margin-bottom: 10px;
+      width: 600px;
+      height: 400px;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    button {
+      font-size: 16px;
+      margin: 5px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+    #musicToggle {
+      position: fixed; 
+      top: 10px; 
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10000;
+    }
+    /* Effetto Glow */
+    .glow {
+      box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.8); /* Leggera illuminazione gialla */
+    }
+    /* Effetto Shake */
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-5px);
+      }
+      50% {
+        transform: translateX(5px);
+      }
+      75% {
+        transform: translateX(-5px);
+      }
+    }
+    .shake {
+      animation: shake 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <button id="musicToggle">🔇</button>
+  <div id="scoreDisplay">Punteggio: 0</div>
+  <canvas id="gameCanvas" width="600" height="400"></canvas>
+  <div>
+    <button id="btnCorrect">Corretto</button>
+    <button id="btnWrong">Sbagliato</button>
+  </div>
+  <audio id="backgroundMusic" loop>
+    <source src="background.mp3" type="audio/mpeg">
+    Il tuo browser non supporta l'audio.
+  </audio>
+  <script src="game.js"></script>
+</body>
+</html>

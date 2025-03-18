@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrazione - NomeSito</title>
+    <link rel="icon" type="image/png" href="Immagini/Logo.png">
+    <style>
+        /* Stile generale */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Aggiunto per iniziare dall'alto */
+            align-items: center;
+            height: 100vh;
+            background-image: url(Immagini/Background_site.png);
+            background-size: cover;
+            background-position: center;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Stile del titolo */
+        .title {
+            background-color: whitesmoke;
+            color: black;
+            font-family: sans-serif;
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Stile del contenitore di registrazione */
+        .register-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+
+        .register-box h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .register-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .register-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: aquamarine;
+            border: none;
+            border-radius: 5px;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .register-box button:hover {
+            background-color: #5cd3b4;
+        }
+
+        .register-box p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .register-box a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .register-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function openPopup(event) {
+            event.preventDefault(); // Impedisce il comportamento predefinito del link
+
+            // Dimensioni del popup
+            const popupWidth = 600;
+            const popupHeight = 400;
+
+            // Calcolo del posizionamento al centro
+            const screenWidth = window.innerWidth || document.documentElement.clientWidth || screen.availWidth;
+            const screenHeight = window.innerHeight || document.documentElement.clientHeight || screen.availHeight;
+            const left = (screenWidth - popupWidth) / 2;
+            const top = (screenHeight - popupHeight) / 2;
+
+            // Apertura del popup
+            window.open('TerminiECondizioni.txt', 'popup', 
+                `width=${popupWidth},height=${popupHeight},resizable=yes,scrollbars=yes,top=${top},left=${left}`);
+        }
+    </script>
+
+
+
+    
+</head>
+<body>
+
+    <!-- Titolo del sito -->
+    <h1 class="title">
+        <img src="Immagini/Logo.png" alt="Logo" style="height: 50px; vertical-align: middle; margin-right: 10px;">
+        <span style="vertical-align: middle;">NomeSito</span>
+    </h1>
+    
+
+    <!-- Box di registrazione -->
+    <div class="register-box">
+        <h2>Registrati</h2>
+        <form action="http://127.0.0.1:5000/register" method="POST">
+            <input type="text" name="nome_completo" placeholder="Nome completo" required>
+            <input type="date" name="data_nascita" placeholder="Data di nascita" required>
+            <input type="tel" name="telefono" placeholder="Numero di telefono" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="conferma_password" placeholder="Conferma password" required>
+            <label style="display: inline-flex; align-items: center; white-space: nowrap;">
+                <input type="checkbox" name="termini" required style="margin-right: 5px;">
+                Accetto i&nbsp; <a href="TerminiECondizioni.txt" onclick="openPopup(event)" style="cursor: pointer;">termini e le condizioni</a>
+            </label>
+            <button type="submit">Registrati</button>
+        </form>       
+        </label>
+        
+        <p>Hai già un account? <a href="Login.html">Accedi</a></p>
+    </div>
+
+</body>
+</html>
