@@ -25,6 +25,20 @@ document.addEventListener('DOMContentLoaded', function () {
     { color: 'yellow', syllable: 'PU', image: 'pu.png' }
   ];
 
+  let deckLevel2 = [
+    { color: 'green', word: 'bastone', image: 'bastone.png' },
+    { color: 'green', word: 'bersaglio', image: 'bersaglio.png' },
+    { color: 'green', word: 'bicchiere', image: 'bicchiere.png' },
+    { color: 'green', word: 'bottone', image: 'bottone.png' },
+    { color: 'green', word: 'busta', image: 'busta.png' },
+    { color: 'red', word: 'papà', image: 'papa.png' },
+    { color: 'red', word: 'pesce', image: 'pesce.png' },
+    { color: 'red', word: 'pianta', image: 'pianta.png' },
+    { color: 'red', word: 'porta', image: 'porta.png' },
+    { color: 'red', word: 'pugno', image: 'pugno.png' }
+  ];
+  
+  let currentLevel = 1;
   let currentCard = null;
   let currentCardIndex = -1;
 
@@ -91,14 +105,16 @@ document.addEventListener('DOMContentLoaded', function () {
       const imgY = y + 40;
       ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
     };
-    const text = currentCard.syllable;
+  
+    // Modifica il testo mostrato a seconda del livello
+    const text = currentLevel === 1 ? currentCard.syllable : currentCard.word;
     ctx.font = "36px Arial";
     ctx.fillStyle = "#000";
     const textWidth = ctx.measureText(text).width;
     const textX = (canvas.width - textWidth) / 2;
     const textY = y + cardHeight + 40;
     ctx.fillText(text, textX, textY);
-  }
+  }  
 
   function updateScore() {
     scoreDisplay.textContent = "Punteggio: " + score;
@@ -141,31 +157,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
   btnCorrect.addEventListener('click', function () {
     if (!currentCard) return;
-
+  
     addGlowEffect(); // Glow effect
     score++;
     deck.splice(currentCardIndex, 1);
-
-    if (score >= 7) {
+  
+    if (score >= 7 && currentLevel === 1) {
+      // Passa al secondo livello
+      currentLevel = 2;
+      deck = deckLevel2; // Cambia mazzo
+      score = 0; // Resetta il punteggio o continua ad accumulare
+      lastTwoColors = []; // Resetta colori precedenti
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#000";
+      ctx.font = "36px Arial";
+      ctx.fillText("Livello 2: Iniziamo!", canvas.width / 2 - 100, canvas.height / 2);
+      setTimeout(newCard, 2000); // Mostra la nuova carta dopo un messaggio di transizione
+      return;
+    }
+  
+    if (score >= 7 && currentLevel === 2) {
       backgroundMusic.pause();
       finishSound.play();
-
+  
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "#000";
       ctx.font = "48px Arial";
       ctx.textAlign = "center";
-      ctx.fillText("Hai vinto!", canvas.width / 2, canvas.height / 2 - 50);
-
-      showMedal(); // Mostra la medaglia sotto la scritta "Hai vinto!"
+      ctx.fillText("Hai completato tutti i livelli!", canvas.width / 2, canvas.height / 2 - 50);
+  
+      showMedal(); // Mostra la medaglia sotto la scritta
       btnCorrect.disabled = true;
       btnWrong.disabled = true;
       startBackgroundColorLoop(); // Inizia il loop di colori di sfondo
       updateScore();
       return;
     }
-
+  
     newCard();
   });
+  
 
   btnWrong.addEventListener('click', function () {
     if (!currentCard) return;
