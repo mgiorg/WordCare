@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tachistoscopio</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <div id="settingsScreen">
+    <h1>Tachistoscopio</h1>
+    <h2>Impostazioni</h2>
+    
+    <!-- Tipo di Lista -->
+    <label>Tipo di Lista:</label>
+    <select id="listaTipo">
+      <option value="custom">Nuova Lista</option>
+      <option value="predefinite">Lista Preesistente</option>
+    </select>
+    
+    <!-- Inserimento Parole (Solo per Nuova Lista) -->
+    <div id="nuovaListaInput" style="display: none;">
+      <label>Inserisci le parole (separate da virgola):</label>
+      <textarea id="inputParole" rows="4" cols="50"></textarea>
+    </div>
+    
+    <!-- Impostazioni per Lista Preesistente -->
+    <div id="listaPredefinitaSettings">
+      <label>Contenuto della Lista:</label>
+      <select id="contenutoLista">
+        <option value="parole2">Parole 2 Sillabe</option>
+        <option value="parole3">Parole 3 Sillabe</option>
+        <option value="parole4">Parole 4 Sillabe</option>
+        <option value="sillabe">Sillabe</option>
+        <option value="coppieMinime">Coppie Minime</option>
+      </select>
+      
+      <label id="numParoleLabel">Numero di Parole/Coppie da Estrarre:</label>
+      <input type="number" id="numParole" min="1" value="15">
+    </div>
+
+    <!-- Anteprima della Lista -->
+    <div id="anteprimaLista" style="display: none;">
+      <h3>Anteprima della Lista</h3>
+      <ul id="listaAnteprima"></ul>
+    </div>
+  
+    <button id="startGame">Iniziamo a giocare!</button>
+  </div>
+
+  <div id="gameScreen" style="display: none;">
+    <canvas id="gameCanvas"></canvas>
+    <button id="exitGame">Esci</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
