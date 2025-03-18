@@ -171,7 +171,13 @@ document.addEventListener('DOMContentLoaded', function () {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "#000";
       ctx.font = "36px Arial";
-      ctx.fillText("Livello 2: Iniziamo!", canvas.width / 2 - 100, canvas.height / 2);
+      ctx.font = "36px Arial";
+      ctx.textAlign = "center";
+      const text = "Livello 2: Iniziamo!";
+      const textX = canvas.width / 2; // Posiziona al centro in orizzontale
+      const textY = canvas.height / 2; // Posiziona al centro in verticale
+      ctx.fillText(text, textX, textY);
+      
       setTimeout(newCard, 2000); // Mostra la nuova carta dopo un messaggio di transizione
       return;
     }
