@@ -19,6 +19,7 @@ const feedbackButtons = document.getElementById('feedbackButtons');
 const correttoButton = document.getElementById('corretto');
 const sbagliatoButton = document.getElementById('sbagliato');
 let punteggio = 0; // Variabile per il punteggio
+const dimensioneParolaInput = document.getElementById('dimensioneParola');
 
 // Creazione della textarea per l'anteprima
 const listaAnteprima = document.createElement('textarea');
@@ -231,12 +232,13 @@ function getWordPosition(option) {
 
 // Funzione per disegnare una parola sul canvas
 function renderWord(parola) {
-  const posizione = getWordPosition(posizioneParolaSelect.value); // Ottieni posizione in base alla selezione
+  const posizione = getWordPosition(posizioneParolaSelect.value); // Ottieni la posizione scelta
+  const dimensioneParola = parseInt(dimensioneParolaInput.value, 10); // Leggi la dimensione della parola
   ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisci il canvas
-  ctx.font = '48px Arial'; // Imposta il font
-  ctx.textAlign = 'center'; // Allinea il testo al centro orizzontale
+  ctx.font = `${dimensioneParola}px Arial`; // Imposta la dimensione del font
+  ctx.textAlign = 'center'; // Allinea il testo al centro
   ctx.textBaseline = 'middle'; // Allinea verticalmente al centro
-  ctx.fillText(parola, posizione.x, posizione.y); // Disegna la parola nella posizione selezionata
+  ctx.fillText(parola, posizione.x, posizione.y); // Disegna la parola
 }
 
 
