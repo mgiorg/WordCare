@@ -256,31 +256,59 @@ function startGame(parole) {
         }, tempoVisibile + intertempo);
 
       } else if (modalitaGioco.value === "feedback") {
-        feedbackButtons.style.display = 'flex';
+        let index = 0;
 
-        let parolaCorrente = parole[index];
-        renderWord(parolaCorrente, getValidWordPosition(parolaCorrente));
-
-        correttoButton.onclick = () => {
-          punteggio++;
-          nextWord();
-        };
-
-        sbagliatoButton.onclick = () => {
-          nextWord();
-        };
-
-        function nextWord() {
-          index++;
-          if (index < parole.length) {
-            parolaCorrente = parole[index];
-            renderWord(parolaCorrente, getValidWordPosition(parolaCorrente));
-          } else {
-            feedbackButtons.style.display = 'none';
-            fineGioco();
-          }
+        feedbackButtons.style.display = 'none';
+    
+        function mostraProssimaParola() {
+            if (index >= parole.length) {
+                feedbackButtons.style.display = 'none';
+                fineGioco();
+                return;
+            }
+    
+            let parolaCorrente = parole[index];
+            let posizione = getValidWordPosition(parolaCorrente);
+            
+            // Mostra la parola
+            renderWord(parolaCorrente, posizione);
+    
+            // Dopo il tempo stabilito, la parola scompare
+            setTimeout(() => {
+                ctx.fillStyle = coloreSfondoInput.value;
+                ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+    
+                // Mostra il messaggio "Che parola hai letto?"
+                ctx.font = "32px Arial";
+                ctx.fillStyle = "#000";
+                ctx.textAlign = "center";
+                ctx.fillText("Che parola hai letto?", gameCanvas.width / 2, gameCanvas.height / 2);
+    
+                // Dopo un piccolo ritardo, mostra i pulsanti di feedback
+                setTimeout(() => {
+                    feedbackButtons.style.display = 'flex';
+                }, 300); // Ritardo prima di mostrare i pulsanti
+            }, tempoVisibile);
         }
-      }
+    
+        correttoButton.onclick = () => {
+            punteggio++;
+            feedbackButtons.style.display = 'none';
+            index++;
+            mostraProssimaParola();
+        };
+    
+        sbagliatoButton.onclick = () => {
+            feedbackButtons.style.display = 'none';
+            index++;
+            mostraProssimaParola();
+        };
+    
+        // Avvia il primo ciclo
+        mostraProssimaParola();
+    }
+    
+    
     }
   }, 1000); // Countdown intervallo di 1 secondo
 }

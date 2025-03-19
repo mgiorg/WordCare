@@ -68,6 +68,25 @@ label {
   z-index: 10;
 }
 
+#corretto {
+  background-color: #28a745; /* Verde */
+  color: white;
+}
+
+#corretto:hover {
+  background-color: #218838; /* Verde scuro */
+}
+
+#sbagliato {
+  background-color: #dc3545; /* Rosso */
+  color: white;
+}
+
+#sbagliato:hover {
+  background-color: #c82333; /* Rosso scuro */
+}
+
+
 #feedbackButtons {
   display: flex;
   gap: 10px;
