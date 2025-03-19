@@ -11,6 +11,8 @@ const gameScreen = document.getElementById('gameScreen');
 const gameCanvas = document.getElementById('gameCanvas');
 const ctx = gameCanvas.getContext('2d');
 const anteprimaListaDiv = document.getElementById('anteprimaLista');
+const tempoVisibileInput = document.getElementById('tempoVisibile');
+const intertempoInput = document.getElementById('intertempo');
 
 // Creazione della textarea per l'anteprima
 const listaAnteprima = document.createElement('textarea');
@@ -93,25 +95,28 @@ exitButton.addEventListener('click', () => {
 });
 
 // Funzione di gioco
-function startGame(parole) {
-  let index = 0;
+  function startGame(parole) {
+    const tempoVisibile = parseInt(tempoVisibileInput.value, 10); // Tempo di visualizzazione personalizzato
+    const intertempo = parseInt(intertempoInput.value, 10); // Intertempo personalizzato
+    let index = 0;
 
-  const interval = setInterval(() => {
-    if (index >= parole.length) {
-      clearInterval(interval); // Ferma il ciclo quando tutte le parole sono state mostrate
-      return;
-    }
+    const interval = setInterval(() => {
+      if (index >= parole.length) {
+        clearInterval(interval); // Ferma il ciclo quando tutte le parole sono state mostrate
+        return;
+      }
 
-    // Disegna la parola corrente sul canvas
-    const parola = parole[index++];
-    renderWord(parola);
+      // Disegna la parola corrente sul canvas
+      const parola = parole[index++];
+      renderWord(parola);
 
-    // Cancella la parola dopo un breve periodo
-    setTimeout(() => {
-      ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    }, 1000);
-  }, 1500); // Intervallo tra la visualizzazione delle parole
-}
+      // Cancella la parola dopo il tempo di visualizzazione
+      setTimeout(() => {
+        ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+      }, tempoVisibile);
+
+    }, tempoVisibile + intertempo); // Tempo complessivo = tempoVisibile + intertempo
+  }
 
 // Funzione per disegnare una parola sul canvas
 function renderWord(parola) {
