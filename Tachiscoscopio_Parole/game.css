@@ -19,3 +19,31 @@ body {
     border: 1px solid black;
   }
   
+  #corretto {
+    background-color: green; /* Verde per il pulsante "Corretto" */
+    color: white; /* Testo bianco per leggibilità */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #sbagliato {
+    background-color: red; /* Rosso per il pulsante "Sbagliato" */
+    color: white; /* Testo bianco per leggibilità */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #corretto:hover {
+    background-color: darkgreen; /* Verde scuro al passaggio del mouse */
+  }
+  
+  #sbagliato:hover {
+    background-color: darkred; /* Rosso scuro al passaggio del mouse */
+  }
+  
