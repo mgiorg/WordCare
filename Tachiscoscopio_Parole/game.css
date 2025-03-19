@@ -13,11 +13,14 @@ body {
     padding: 20px;
   }
   
+
+
   canvas {
     display: block;
     margin: 0 auto;
-    border: 1px solid black;
+    border: 2px solid rgb(0, 0, 0);
   }
+  
   
   #corretto {
     background-color: green; /* Verde per il pulsante "Corretto" */

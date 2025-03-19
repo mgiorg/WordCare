@@ -33,8 +33,8 @@ listaAnteprima.style.display = 'none'; // Nascondi inizialmente
 anteprimaListaDiv.appendChild(listaAnteprima); // Aggiungi la textarea al DOM
 
 // Dimensioni canvas
-gameCanvas.width = 800;
-gameCanvas.height = 600;
+gameCanvas.width = 700;
+gameCanvas.height = 500;
 
 // Dati delle liste preimpostate
 const paroleDueSillabe = ["Cane", "Pane", "Papà", "Mano", "Gatto", "Mela", "Sole", "Zampa", "Donna", "Casa", "Torre"];
