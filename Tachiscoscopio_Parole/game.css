@@ -63,6 +63,26 @@ label {
   padding-bottom: 10px;
 }
 
+#feedbackButtons, #exitGame {
+  position: absolute;
+  z-index: 10;
+}
+
+#feedbackButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  top: 70%; /* Posiziona i pulsanti al 70% dell'altezza dello schermo */
+  left: 50%; /* Centra i pulsanti orizzontalmente */
+  transform: translateX(-50%); /* Corregge il centraggio */
+}
+
+#exitGame {
+  top: 5%; /* Posizione in alto */
+  right: 5%; /* Posizione a destra */
+}
+
+
 /* Pulsanti più responsivi */
 button {
   background: #4a90e2;

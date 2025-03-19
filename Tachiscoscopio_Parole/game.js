@@ -33,8 +33,8 @@ listaAnteprima.style.display = 'none'; // Nascondi inizialmente
 anteprimaListaDiv.appendChild(listaAnteprima); // Aggiungi la textarea al DOM
 
 // Dimensioni canvas
-gameCanvas.width = 700;
-gameCanvas.height = 500;
+gameCanvas.width = 1000;
+gameCanvas.height = 700;
 
 // Dati delle liste preimpostate
 const paroleDueSillabe = ["Cane", "Pane", "Papà", "Mano", "Gatto", "Mela", "Sole", "Zampa", "Donna", "Casa", "Torre"];
@@ -109,14 +109,86 @@ function aggiornaSfondoCanvas() {
 }
 
 function startGame(parole) {
+  // Funzione per impostare il canvas a schermo intero
+  function setCanvasFullScreen() {
+    gameCanvas.width = window.innerWidth - 25;
+    gameCanvas.height = window.innerHeight - 25;
+  }
+
+  // Imposta il canvas a schermo intero all'avvio
+  setCanvasFullScreen();
+
+  // Aggiorna le dimensioni del canvas quando la finestra viene ridimensionata
+  window.addEventListener('resize', setCanvasFullScreen);
+
+  // Nascondi la schermata delle impostazioni e mostra quella di gioco
+  settingsScreen.style.display = 'none';
+  gameScreen.style.display = 'block';
+
+  // Posiziona i pulsanti sopra il canvas
+  feedbackButtons.style.position = 'absolute';
+  feedbackButtons.style.top = '70%';
+  feedbackButtons.style.left = '50%';
+  feedbackButtons.style.transform = 'translateX(-50%)';
+  feedbackButtons.style.display = modalitaGioco.value === "feedback" ? 'flex' : 'none';
+
+  exitButton.style.position = 'absolute';
+  exitButton.style.top = '5%';
+  exitButton.style.right = '5%';
+
   const tempoVisibile = parseInt(tempoVisibileInput.value, 10);
   const intertempo = parseInt(intertempoInput.value, 10);
   let index = 0;
 
-  // Imposta il colore dello sfondo una sola volta
-  ctx.fillStyle = coloreSfondoInput.value;
-  ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+  // Funzione di supporto per verificare la sovrapposizione
+  function isOverlapping(x, y, width, height, area) {
+    return (
+      x < area.x + area.width &&
+      x + width > area.x &&
+      y < area.y + area.height &&
+      y + height > area.y
+    );
+  }
 
+  // Funzione per ottenere una posizione valida per le parole
+  function getValidWordPosition(parola) {
+    const dimensioneParola = parseInt(dimensioneParolaInput.value, 10);
+    const parolaLarghezza = ctx.measureText(parola).width;
+    const parolaAltezza = dimensioneParola;
+
+    let posizione;
+
+    do {
+      posizione = getWordPosition(posizioneParolaSelect.value);
+
+      const areaPulsanteEsci = {
+        x: window.innerWidth - exitButton.offsetWidth - 25,
+        y: 5,
+        width: exitButton.offsetWidth,
+        height: exitButton.offsetHeight,
+      };
+
+      const areaPulsantiFeedback = feedbackButtons.style.display === 'flex'
+        ? {
+            x: window.innerWidth / 2 - feedbackButtons.offsetWidth / 2,
+            y: window.innerHeight * 0.7 - feedbackButtons.offsetHeight / 2,
+            width: feedbackButtons.offsetWidth,
+            height: feedbackButtons.offsetHeight,
+          }
+        : null;
+
+      if (
+        !isOverlapping(posizione.x - parolaLarghezza / 2, posizione.y - parolaAltezza / 2, parolaLarghezza, parolaAltezza, areaPulsanteEsci) &&
+        (!areaPulsantiFeedback || !isOverlapping(posizione.x - parolaLarghezza / 2, posizione.y - parolaAltezza / 2, parolaLarghezza, parolaAltezza, areaPulsantiFeedback))
+      ) {
+        break;
+      }
+    } while (true);
+
+    return posizione;
+  }
+
+  // Countdown iniziale prima dell'avvio
   let countdown = 3;
   const countdownInterval = setInterval(() => {
     ctx.fillStyle = coloreSfondoInput.value;
@@ -135,48 +207,46 @@ function startGame(parole) {
       ctx.fillStyle = coloreSfondoInput.value;
       ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-      // Controlla la modalità di gioco
+      // Modalità di gioco
       if (modalitaGioco.value === "automatico") {
         feedbackButtons.style.display = 'none';
 
         const interval = setInterval(() => {
           if (index >= parole.length) {
             clearInterval(interval); // Fine del gioco
-            fineGioco(); // Chiama la funzione per la fine del gioco
+            fineGioco();
             return;
           }
 
           const parola = parole[index++];
 
-          // Mostra la parola
-          renderWord(parola);
+          // Mostra la parola in una posizione valida
+          const posizione = getValidWordPosition(parola);
+          renderWord(parola, posizione);
 
           setTimeout(() => {
             // Cancella la parola e mostra "####"
-            ctx.fillStyle = coloreSfondoInput.value; // Riempi lo sfondo
+            ctx.fillStyle = coloreSfondoInput.value;
             ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-            // Disegna "####" per indicare l'intertempo
             ctx.font = '48px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillStyle = coloreParolaInput.value; // Stesso colore delle parole
+            ctx.fillStyle = coloreParolaInput.value;
             ctx.fillText("####", gameCanvas.width / 2, gameCanvas.height / 2);
 
-            // Cancella "####" dopo un brevissimo tempo
             setTimeout(() => {
-              ctx.fillStyle = coloreSfondoInput.value; // Riempi lo sfondo
+              ctx.fillStyle = coloreSfondoInput.value;
               ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-            }, 200); // Durata breve (200ms) per "####"
-
+            }, 200);
           }, tempoVisibile);
         }, tempoVisibile + intertempo);
 
       } else if (modalitaGioco.value === "feedback") {
-        feedbackButtons.style.display = 'block';
+        feedbackButtons.style.display = 'flex';
 
         let parolaCorrente = parole[index];
-        renderWord(parolaCorrente);
+        renderWord(parolaCorrente, getValidWordPosition(parolaCorrente));
 
         correttoButton.onclick = () => {
           punteggio++;
@@ -191,16 +261,17 @@ function startGame(parole) {
           index++;
           if (index < parole.length) {
             parolaCorrente = parole[index];
-            renderWord(parolaCorrente);
+            renderWord(parolaCorrente, getValidWordPosition(parolaCorrente));
           } else {
             feedbackButtons.style.display = 'none';
-            fineGioco(); // Chiama la funzione per la fine del gioco
+            fineGioco();
           }
         }
       }
     }
   }, 1000); // Countdown intervallo di 1 secondo
 }
+
 
 
 // Funzione per gestire la fine del gioco
@@ -212,7 +283,7 @@ function fineGioco() {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = coloreParolaInput.value; // Colore della frase
-  ctx.fillText("Hai vinto!", gameCanvas.width / 2, gameCanvas.height / 2);
+  ctx.fillText("Gioco completato!", gameCanvas.width / 2, gameCanvas.height / 2);
 
   // Torna alla schermata delle impostazioni dopo 3 secondi
   setTimeout(() => {
@@ -221,11 +292,6 @@ function fineGioco() {
     ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisce il canvas
   }, 3000);
 }
-
-
-
-
-
 // Funzione per avviare il ciclo del gioco
 function startGameLoop(parole, tempoVisibile, intertempo) {
   let index = 0;
