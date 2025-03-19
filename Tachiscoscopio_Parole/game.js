@@ -39,8 +39,11 @@ gameCanvas.height = 700;
 // Dati delle liste preimpostate
 const paroleDueSillabe = ["Casa", "Mela", "Luna", "Dente", "Palla", "Bello", "Forte", "Piuma", "Muro", "Vento", "Menta", "Suono", "Ponte", "Fiume", "Strada", "Pioggia", "Fumo", "Pasta", "Carta", "Raggio", "Bosco", "Dorso", "Fondo", "Brilla", "Bacio", "Ladro", "Pranzo", "Campo", "Tenda", "Mondo", "Fame", "Tigre", "Fiore", "Danza", "Tosca", "Bimbo", "Chiesa", "Testa", "Ombra", "Tazza", "Punto", "Cielo", "Scuola", "Zampa", "Miele", "Corte", "Sponda", "Pugno", "Festa", "Tasto"];
 const paroleTreSillabe = ["Albero", "Strumento", "Fragola", "Mimosa", "Gazzella", "Farfalla", "Bambino", "Sentiero", "Tappeto", "Lampada", "Montagna", "Finestra", "Cammino", "Gelato", "Cuscino", "Zucchero", "Trombone", "Colomba", "Risotto", "Pistola", "Campana", "Matita", "Magnete", "Segnale", "Portone", "Bottone", "Volante", "Cancello", "Famoso", "Ragione", "Vigneto", "Rialzo", "Assurdo", "Divano", "Dipinto", "Realtà", "Cornice", "Riposo", "Fenice", "Miraggio", "Cultura", "Scultura", "Dirupo", "Segreto", "Dolore", "Felice"];
-const paroleQuattroSillabe = ["Abbracciare", "Primavera", "Calendario", "Semplicione", "Candelabro", "Crocifisso", "Programmare", "Anticipa", "Corrisponde", "Educato", "Orientale", "Illumina", "Manifesta", "Personale", "Rappresenta", "Luminoso", "Generoso", "Realizzare", "Pericolo", "Pasticcere", "Concludere", "Rallentare", "Espressione", "Indossare", "Ricordare", "Discutere", "Formazione", "Comportare", "Dimostrare", "Allargare", "Compilare", "Misterioso", "Ponderare", "Bilanciare", "Sostenere", "Capitano", "Appendice", "Apparente", "Scorpione", "Navigante".];
-const sillabe = ["Ca", "ne", "Pa", "ne", "Pa", "pà", "Go", "la", "Ra", "na", "To", "po", "Ta", "vo", "lo", "Ma", "re", "Fi", "u", "me", "Mon", "te", "Sal", "to", "Car", "ta", "Fo", "gli", "o", "Sor", "so", "Luce", "Ne", "ve", "Dita", "La", "vo", "ro", "Fre", "tta", "Men", "te", "Sguar", "do", "Zuc", "che", "ro", "Gran", "de", "Cam", "po", "Me", "te", "Ra", "mi", "Fi", "o", "ri", "Ar", "co", "No", "to", "Bre", "zze", "Vol", "to", "Gi", "no", "Cuo", "re", "Cen", "tro", "Fron", "te"];
+const paroleQuattroSillabe = ["Abbracciare", "Primavera", "Calendario", "Semplicione", "Candelabro", "Crocifisso", "Programmare", "Anticipa", "Corrisponde", "Educato", "Orientale", "Illumina", "Manifesta", "Personale", "Rappresenta", "Luminoso", "Generoso", "Realizzare", "Pericolo", "Pasticcere", "Concludere", "Rallentare", "Espressione", "Indossare", "Ricordare", "Discutere", "Formazione", "Comportare", "Dimostrare", "Allargare", "Compilare", "Misterioso", "Ponderare", "Bilanciare", "Sostenere", "Capitano", "Appendice", "Apparente", "Scorpione", "Navigante"];
+const sillabe = ["Ca", "Ne", "Pa", "Ne", "Go", "La", "Ra", "Na", "To", "Po", "Ta", "Vo", "Lo", "Ma", "Re", "Fi", "Me", "Mon", "Te", "Sal", "To", "Car", "Ta", "Fo", "Gli", "Sor", "So", "Ne", "Ve", "Ta", "La", "Ro", "Fre", "Fri", "Me", "Te", "Bri", "Do", "Zuc", "Che", "Ro", "Gra", "De", "Cam", "Po", "Ra", "Mi", "Fi", "Ri", "Ar", "Co", "No", "To", "Bre", "Ze", "Vol", "To", "Gi", "Quo", "Re", "Cen", "Tro", "Fro"];
+const nonParole = ["Tabe", "Pome", "Luto", "Buto", "Sane", "Dane", "Mefa", "Tefa", "Giso", "Viso",
+"Rupa", "Zupa", "Dimo", "Nimo", "Feto", "Leto", "Pobu", "Tobu", "Sila", "Mila","Tabero", "Pomilo", "Lutero", "Butano", "Sanepo", "Danefu", "Mefaro", "Tefima", "Gisolo", "Visane",
+"Rupado", "Zupano", "Dimera", "Nimato", "Fetimo", "Letovo", "Pobera", "Tobisi", "Silovo", "Milote"]
 const coppieMinime = [
   ["Fata", "Vata"], ["Casa", "Cassa"], ["Lama", "Rama"],
   ["Mare", "Pare"], ["Torre", "Corre"], ["Vela", "Zela"], ["Dente", "Lente"], ["Bello", "Pello"],
@@ -64,12 +67,14 @@ function aggiornaAnteprima() {
     paroleFiltrate = sillabe.sort(() => 0.5 - Math.random()).slice(0, numDaEstrarre);
   } else if (contenuto === 'coppieMinime') {
     const coppieRandomizzate = coppieMinime.sort(() => 0.5 - Math.random()).slice(0, numDaEstrarre);
-    paroleFiltrate = coppieRandomizzate.flat(); // Appiattisci le coppie in una lista singola
+    paroleFiltrate = coppieRandomizzate.flat();
+  } else if (contenuto === 'nonParole') {
+    paroleFiltrate = nonParole.sort(() => 0.5 - Math.random()).slice(0, numDaEstrarre); // Logica per "Non parole"
   }
 
   // Mostra l'anteprima nella text area
   listaAnteprima.style.display = 'block';
-  listaAnteprima.value = paroleFiltrate.join(', '); // Rendi modificabili le parole nella text area
+  listaAnteprima.value = paroleFiltrate.join(', ');
 }
 
 // Gestione delle opzioni di tipo lista
