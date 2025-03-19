@@ -100,9 +100,14 @@ startButton.addEventListener('click', () => {
   gameScreen.style.display = 'block';
 
   // Leggi le parole dalla text area (anche quelle modificate dall'utente)
-  const paroleGioco = listaAnteprima.value.split(',').map(p => p.trim());
+  let paroleGioco = listaAnteprima.value.split(',').map(p => p.trim());
+  
+  // Mescola le parole per farle apparire in un ordine sempre diverso
+  paroleGioco = shuffleArray(paroleGioco);
+
   startGame(paroleGioco);
 });
+
 
 // Uscita dal gioco
 exitButton.addEventListener('click', () => {
@@ -321,6 +326,11 @@ function startGameLoop(parole, tempoVisibile, intertempo) {
 
   }, tempoVisibile + intertempo); // Tempo complessivo = tempoVisibile + intertempo
 }
+
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
 
 // Funzione per ottenere le coordinate della posizione scelta
 function getWordPosition(option) {
