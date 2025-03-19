@@ -251,40 +251,47 @@ function getWordPosition(option) {
   return { x, y };
 }
 
-// Funzione per disegnare una parola sul canvas
-// Funzione per disegnare una parola sul canvas senza uscire dai limiti
 function renderWord(parola) {
-  const posizione = getWordPosition(posizioneParolaSelect.value); // Ottieni la posizione scelta
-  const dimensioneParola = parseInt(dimensioneParolaInput.value, 10); // Leggi la dimensione
-  aggiornaSfondoCanvas(); // Applica lo sfondo
+  // Leggi la posizione, dimensione della parola e se le parole devono essere maiuscole
+  const posizione = getWordPosition(posizioneParolaSelect.value); 
+  const dimensioneParola = parseInt(dimensioneParolaInput.value, 10); 
+  const maiuscolo = document.getElementById('maiuscoloParole').checked; 
 
-  ctx.font = `${dimensioneParola}px Arial`; // Imposta la dimensione del font
-  ctx.textAlign = 'center'; // Allinea il testo al centro
-  ctx.textBaseline = 'middle'; // Allinea verticalmente
+  // Trasforma la parola in maiuscolo, se la checkbox è selezionata
+  if (maiuscolo) {
+    parola = parola.toUpperCase();
+  }
+
+  aggiornaSfondoCanvas(); // Applica lo sfondo del canvas
+
+  ctx.font = `${dimensioneParola}px Arial`; // Imposta il font e la dimensione
+  ctx.textAlign = 'center'; // Allinea il testo orizzontalmente al centro
+  ctx.textBaseline = 'middle'; // Allinea il testo verticalmente al centro
   ctx.fillStyle = coloreParolaInput.value; // Imposta il colore della parola
 
   // Misura la larghezza della parola in pixel
   const parolaLarghezza = ctx.measureText(parola).width;
 
-  // Calcola i limiti per mantenere la parola dentro il canvas
+  // Imposta i limiti per non far uscire la parola dai bordi del canvas
   let x = posizione.x;
   let y = posizione.y;
 
   if (x - parolaLarghezza / 2 < 0) {
-    x = parolaLarghezza / 2; // Mantieni la parola dentro il bordo sinistro
+    x = parolaLarghezza / 2; // Limite sinistro
   } else if (x + parolaLarghezza / 2 > gameCanvas.width) {
-    x = gameCanvas.width - parolaLarghezza / 2; // Mantieni la parola dentro il bordo destro
+    x = gameCanvas.width - parolaLarghezza / 2; // Limite destro
   }
 
   if (y - dimensioneParola / 2 < 0) {
-    y = dimensioneParola / 2; // Mantieni la parola dentro il bordo superiore
+    y = dimensioneParola / 2; // Limite superiore
   } else if (y + dimensioneParola / 2 > gameCanvas.height) {
-    y = gameCanvas.height - dimensioneParola / 2; // Mantieni la parola dentro il bordo inferiore
+    y = gameCanvas.height - dimensioneParola / 2; // Limite inferiore
   }
 
   // Disegna la parola nelle coordinate corrette
   ctx.fillText(parola, x, y);
 }
+
 
 
 // Gestione delle opzioni di tipo lista
