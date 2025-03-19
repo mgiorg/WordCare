@@ -135,20 +135,40 @@ function startGame(parole) {
       ctx.fillStyle = coloreSfondoInput.value;
       ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 
+      // Controlla la modalità di gioco
       if (modalitaGioco.value === "automatico") {
         feedbackButtons.style.display = 'none';
 
         const interval = setInterval(() => {
           if (index >= parole.length) {
-            clearInterval(interval);
+            clearInterval(interval); // Fine del gioco
             fineGioco(); // Chiama la funzione per la fine del gioco
             return;
           }
+
           const parola = parole[index++];
+
+          // Mostra la parola
           renderWord(parola);
+
           setTimeout(() => {
-            ctx.fillStyle = coloreSfondoInput.value;
+            // Cancella la parola e mostra "####"
+            ctx.fillStyle = coloreSfondoInput.value; // Riempi lo sfondo
             ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+            // Disegna "####" per indicare l'intertempo
+            ctx.font = '48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = coloreParolaInput.value; // Stesso colore delle parole
+            ctx.fillText("####", gameCanvas.width / 2, gameCanvas.height / 2);
+
+            // Cancella "####" dopo un brevissimo tempo
+            setTimeout(() => {
+              ctx.fillStyle = coloreSfondoInput.value; // Riempi lo sfondo
+              ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+            }, 200); // Durata breve (200ms) per "####"
+
           }, tempoVisibile);
         }, tempoVisibile + intertempo);
 
@@ -181,6 +201,7 @@ function startGame(parole) {
     }
   }, 1000); // Countdown intervallo di 1 secondo
 }
+
 
 // Funzione per gestire la fine del gioco
 function fineGioco() {
