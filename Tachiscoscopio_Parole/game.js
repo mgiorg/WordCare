@@ -108,68 +108,61 @@ function aggiornaSfondoCanvas() {
   ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height); // Riempi il canvas con il colore
 }
 
-//funzione di gioco
 function startGame(parole) {
   const tempoVisibile = parseInt(tempoVisibileInput.value, 10);
   const intertempo = parseInt(intertempoInput.value, 10);
   let index = 0;
 
-  // Imposta il colore dello sfondo per l'intera durata del gioco
-  ctx.fillStyle = coloreSfondoInput.value; // Colore sfondo scelto dal giocatore
-  ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height); // Disegna lo sfondo una volta
+  // Imposta il colore dello sfondo una sola volta
+  ctx.fillStyle = coloreSfondoInput.value;
+  ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-  // Countdown prima dell'inizio del gioco
   let countdown = 3;
   const countdownInterval = setInterval(() => {
-    // Cancella lo schermo e ridisegna lo sfondo
-    ctx.fillStyle = coloreSfondoInput.value; // Mantieni il colore di sfondo
-    ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisci il canvas
+    ctx.fillStyle = coloreSfondoInput.value;
+    ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-    // Disegna il numero del countdown
     ctx.font = '48px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillStyle = coloreParolaInput.value; // Colore delle parole
+    ctx.fillStyle = coloreParolaInput.value;
     ctx.fillText(countdown, gameCanvas.width / 2, gameCanvas.height / 2);
     countdown--;
 
     if (countdown < 0) {
       clearInterval(countdownInterval);
 
-      // Mantieni lo sfondo una volta iniziato il gioco
       ctx.fillStyle = coloreSfondoInput.value;
       ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-      // Avvia il gioco in modalità "automatico" o "feedback"
       if (modalitaGioco.value === "automatico") {
         feedbackButtons.style.display = 'none';
 
         const interval = setInterval(() => {
           if (index >= parole.length) {
-            clearInterval(interval); // Fine del gioco
+            clearInterval(interval);
+            fineGioco(); // Chiama la funzione per la fine del gioco
             return;
           }
           const parola = parole[index++];
-          renderWord(parola); // Disegna la parola
+          renderWord(parola);
           setTimeout(() => {
-            // Riempi nuovamente lo sfondo senza flash
             ctx.fillStyle = coloreSfondoInput.value;
             ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
           }, tempoVisibile);
         }, tempoVisibile + intertempo);
+
       } else if (modalitaGioco.value === "feedback") {
         feedbackButtons.style.display = 'block';
 
         let parolaCorrente = parole[index];
         renderWord(parolaCorrente);
 
-        // Gestione pulsante "Corretto"
         correttoButton.onclick = () => {
           punteggio++;
           nextWord();
         };
 
-        // Gestione pulsante "Sbagliato"
         sbagliatoButton.onclick = () => {
           nextWord();
         };
@@ -181,13 +174,33 @@ function startGame(parole) {
             renderWord(parolaCorrente);
           } else {
             feedbackButtons.style.display = 'none';
-            alert(`Gioco finito! Punteggio finale: ${punteggio}`);
+            fineGioco(); // Chiama la funzione per la fine del gioco
           }
         }
       }
     }
-  }, 1000); // Intervallo di 1 secondo per il countdown
+  }, 1000); // Countdown intervallo di 1 secondo
 }
+
+// Funzione per gestire la fine del gioco
+function fineGioco() {
+  // Mostra la frase "Hai vinto!"
+  ctx.fillStyle = coloreSfondoInput.value; // Colore dello sfondo
+  ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisce il canvas
+  ctx.font = '48px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = coloreParolaInput.value; // Colore della frase
+  ctx.fillText("Hai vinto!", gameCanvas.width / 2, gameCanvas.height / 2);
+
+  // Torna alla schermata delle impostazioni dopo 3 secondi
+  setTimeout(() => {
+    gameScreen.style.display = 'none';
+    settingsScreen.style.display = 'block'; // Mostra la schermata iniziale
+    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisce il canvas
+  }, 3000);
+}
+
 
 
 
