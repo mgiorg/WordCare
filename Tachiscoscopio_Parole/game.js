@@ -108,52 +108,68 @@ function aggiornaSfondoCanvas() {
   ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height); // Riempi il canvas con il colore
 }
 
-// Funzione di gioco
+//funzione di gioco
 function startGame(parole) {
   const tempoVisibile = parseInt(tempoVisibileInput.value, 10);
   const intertempo = parseInt(intertempoInput.value, 10);
   let index = 0;
 
-  // Countdown
+  // Imposta il colore dello sfondo per l'intera durata del gioco
+  ctx.fillStyle = coloreSfondoInput.value; // Colore sfondo scelto dal giocatore
+  ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height); // Disegna lo sfondo una volta
+
+  // Countdown prima dell'inizio del gioco
   let countdown = 3;
   const countdownInterval = setInterval(() => {
-    aggiornaSfondoCanvas(); // Applica lo sfondo
+    // Cancella lo schermo e ridisegna lo sfondo
+    ctx.fillStyle = coloreSfondoInput.value; // Mantieni il colore di sfondo
+    ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisci il canvas
+
+    // Disegna il numero del countdown
     ctx.font = '48px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillStyle = coloreParolaInput.value; // Usa lo stesso colore della parola
+    ctx.fillStyle = coloreParolaInput.value; // Colore delle parole
     ctx.fillText(countdown, gameCanvas.width / 2, gameCanvas.height / 2);
     countdown--;
 
     if (countdown < 0) {
       clearInterval(countdownInterval);
-      ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-      // Avvia il gioco nella modalità scelta
+      // Mantieni lo sfondo una volta iniziato il gioco
+      ctx.fillStyle = coloreSfondoInput.value;
+      ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+      // Avvia il gioco in modalità "automatico" o "feedback"
       if (modalitaGioco.value === "automatico") {
         feedbackButtons.style.display = 'none';
 
         const interval = setInterval(() => {
           if (index >= parole.length) {
-            clearInterval(interval);
+            clearInterval(interval); // Fine del gioco
             return;
           }
           const parola = parole[index++];
-          renderWord(parola);
-          setTimeout(() => ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height), tempoVisibile);
+          renderWord(parola); // Disegna la parola
+          setTimeout(() => {
+            // Riempi nuovamente lo sfondo senza flash
+            ctx.fillStyle = coloreSfondoInput.value;
+            ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+          }, tempoVisibile);
         }, tempoVisibile + intertempo);
-
       } else if (modalitaGioco.value === "feedback") {
         feedbackButtons.style.display = 'block';
 
         let parolaCorrente = parole[index];
         renderWord(parolaCorrente);
 
+        // Gestione pulsante "Corretto"
         correttoButton.onclick = () => {
           punteggio++;
           nextWord();
         };
 
+        // Gestione pulsante "Sbagliato"
         sbagliatoButton.onclick = () => {
           nextWord();
         };
@@ -165,14 +181,15 @@ function startGame(parole) {
             renderWord(parolaCorrente);
           } else {
             feedbackButtons.style.display = 'none';
-            ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
             alert(`Gioco finito! Punteggio finale: ${punteggio}`);
           }
         }
       }
     }
-  }, 1000); // Countdown intervallo di 1 secondo
+  }, 1000); // Intervallo di 1 secondo per il countdown
 }
+
+
 
 
 // Funzione per avviare il ciclo del gioco
