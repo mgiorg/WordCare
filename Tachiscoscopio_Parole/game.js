@@ -1,4 +1,5 @@
 // Elementi DOM
+const posizioneParolaSelect = document.getElementById('posizioneParola');
 const listaTipo = document.getElementById('listaTipo');
 const nuovaListaInput = document.getElementById('nuovaListaInput');
 const listaPredefinitaSettings = document.getElementById('listaPredefinitaSettings');
@@ -139,13 +140,51 @@ function startGameLoop(parole, tempoVisibile, intertempo) {
   }, tempoVisibile + intertempo); // Tempo complessivo = tempoVisibile + intertempo
 }
 
+// Funzione per ottenere le coordinate della posizione scelta
+function getWordPosition(option) {
+  let x, y;
+
+  switch (option) {
+    case 'centro':
+      x = gameCanvas.width / 2;
+      y = gameCanvas.height / 2;
+      break;
+    case 'sinistra':
+      x = gameCanvas.width * 0.25;
+      y = gameCanvas.height / 2;
+      break;
+    case 'destra':
+      x = gameCanvas.width * 0.75;
+      y = gameCanvas.height / 2;
+      break;
+    case 'alto':
+      x = gameCanvas.width / 2;
+      y = gameCanvas.height * 0.25;
+      break;
+    case 'basso':
+      x = gameCanvas.width / 2;
+      y = gameCanvas.height * 0.75;
+      break;
+    case 'random':
+      x = Math.random() * gameCanvas.width;
+      y = Math.random() * gameCanvas.height;
+      break;
+    default:
+      x = gameCanvas.width / 2;
+      y = gameCanvas.height / 2;
+  }
+
+  return { x, y };
+}
+
 // Funzione per disegnare una parola sul canvas
 function renderWord(parola) {
+  const posizione = getWordPosition(posizioneParolaSelect.value); // Ottieni posizione in base alla selezione
   ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisci il canvas
   ctx.font = '48px Arial'; // Imposta il font
-  ctx.textAlign = 'center'; // Allinea il testo al centro
+  ctx.textAlign = 'center'; // Allinea il testo al centro orizzontale
   ctx.textBaseline = 'middle'; // Allinea verticalmente al centro
-  ctx.fillText(parola, gameCanvas.width / 2, gameCanvas.height / 2); // Disegna la parola
+  ctx.fillText(parola, posizione.x, posizione.y); // Disegna la parola nella posizione selezionata
 }
 
 
