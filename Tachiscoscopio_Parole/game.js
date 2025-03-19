@@ -235,6 +235,7 @@ function getWordPosition(option) {
 }
 
 // Funzione per disegnare una parola sul canvas
+// Funzione per disegnare una parola sul canvas senza uscire dai limiti
 function renderWord(parola) {
   const posizione = getWordPosition(posizioneParolaSelect.value); // Ottieni la posizione scelta
   const dimensioneParola = parseInt(dimensioneParolaInput.value, 10); // Leggi la dimensione
@@ -244,7 +245,28 @@ function renderWord(parola) {
   ctx.textAlign = 'center'; // Allinea il testo al centro
   ctx.textBaseline = 'middle'; // Allinea verticalmente
   ctx.fillStyle = coloreParolaInput.value; // Imposta il colore della parola
-  ctx.fillText(parola, posizione.x, posizione.y); // Disegna la parola
+
+  // Misura la larghezza della parola in pixel
+  const parolaLarghezza = ctx.measureText(parola).width;
+
+  // Calcola i limiti per mantenere la parola dentro il canvas
+  let x = posizione.x;
+  let y = posizione.y;
+
+  if (x - parolaLarghezza / 2 < 0) {
+    x = parolaLarghezza / 2; // Mantieni la parola dentro il bordo sinistro
+  } else if (x + parolaLarghezza / 2 > gameCanvas.width) {
+    x = gameCanvas.width - parolaLarghezza / 2; // Mantieni la parola dentro il bordo destro
+  }
+
+  if (y - dimensioneParola / 2 < 0) {
+    y = dimensioneParola / 2; // Mantieni la parola dentro il bordo superiore
+  } else if (y + dimensioneParola / 2 > gameCanvas.height) {
+    y = gameCanvas.height - dimensioneParola / 2; // Mantieni la parola dentro il bordo inferiore
+  }
+
+  // Disegna la parola nelle coordinate corrette
+  ctx.fillText(parola, x, y);
 }
 
 
