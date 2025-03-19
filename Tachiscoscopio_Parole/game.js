@@ -37,12 +37,15 @@ gameCanvas.width = 1000;
 gameCanvas.height = 700;
 
 // Dati delle liste preimpostate
-const paroleDueSillabe = ["Cane", "Pane", "Papà", "Mano", "Gatto", "Mela", "Sole", "Zampa", "Donna", "Casa", "Torre"];
-const paroleTreSillabe = ["Carota", "Banana", "Matita", "Bambino", "Pantera", "Campana", "Cucina"];
-const paroleQuattroSillabe = ["Ristorante", "Campanello", "Tamburino", "Bicicletta", "Canarino", "Elefante", "Cavaliere"];
-const sillabe = ["Ca", "Co", "Cu", "Chi", "Che", "Ci", "Ce", "La", "Lo", "Lu", "Li", "Le"];
+const paroleDueSillabe = ["Casa", "Mela", "Luna", "Dente", "Palla", "Bello", "Forte", "Piuma", "Muro", "Vento", "Menta", "Suono", "Ponte", "Fiume", "Strada", "Pioggia", "Fumo", "Pasta", "Carta", "Raggio", "Bosco", "Dorso", "Fondo", "Brilla", "Bacio", "Ladro", "Pranzo", "Campo", "Tenda", "Mondo", "Fame", "Tigre", "Fiore", "Danza", "Tosca", "Bimbo", "Chiesa", "Testa", "Ombra", "Tazza", "Punto", "Cielo", "Scuola", "Zampa", "Miele", "Corte", "Sponda", "Pugno", "Festa", "Tasto"];
+const paroleTreSillabe = ["Albero", "Strumento", "Fragola", "Mimosa", "Gazzella", "Farfalla", "Bambino", "Sentiero", "Tappeto", "Lampada", "Montagna", "Finestra", "Cammino", "Gelato", "Cuscino", "Zucchero", "Trombone", "Colomba", "Risotto", "Pistola", "Campana", "Matita", "Magnete", "Segnale", "Portone", "Bottone", "Volante", "Cancello", "Famoso", "Ragione", "Vigneto", "Rialzo", "Assurdo", "Divano", "Dipinto", "Realtà", "Cornice", "Riposo", "Fenice", "Miraggio", "Cultura", "Scultura", "Dirupo", "Segreto", "Dolore", "Felice"];
+const paroleQuattroSillabe = ["Abbracciare", "Primavera", "Calendario", "Semplicione", "Candelabro", "Crocifisso", "Programmare", "Anticipa", "Corrisponde", "Educato", "Orientale", "Illumina", "Manifesta", "Personale", "Rappresenta", "Luminoso", "Generoso", "Realizzare", "Pericolo", "Pasticcere", "Concludere", "Rallentare", "Espressione", "Indossare", "Ricordare", "Discutere", "Formazione", "Comportare", "Dimostrare", "Allargare", "Compilare", "Misterioso", "Ponderare", "Bilanciare", "Sostenere", "Capitano", "Appendice", "Apparente", "Scorpione", "Navigante".];
+const sillabe = ["Ca", "ne", "Pa", "ne", "Pa", "pà", "Go", "la", "Ra", "na", "To", "po", "Ta", "vo", "lo", "Ma", "re", "Fi", "u", "me", "Mon", "te", "Sal", "to", "Car", "ta", "Fo", "gli", "o", "Sor", "so", "Luce", "Ne", "ve", "Dita", "La", "vo", "ro", "Fre", "tta", "Men", "te", "Sguar", "do", "Zuc", "che", "ro", "Gran", "de", "Cam", "po", "Me", "te", "Ra", "mi", "Fi", "o", "ri", "Ar", "co", "No", "to", "Bre", "zze", "Vol", "to", "Gi", "no", "Cuo", "re", "Cen", "tro", "Fron", "te"];
 const coppieMinime = [
-  ["Cane", "Casa"], ["Palla", "Pala"], ["Gatto", "Tetto"], ["Porto", "Morto"]
+  ["Fata", "Vata"], ["Casa", "Cassa"], ["Lama", "Rama"],
+  ["Mare", "Pare"], ["Torre", "Corre"], ["Vela", "Zela"], ["Dente", "Lente"], ["Bello", "Pello"],
+  ["Duro", "Puro"], ["Fumo", "Lumo"], ["Giro", "Viro"], ["Corte", "Porte"], ["Tasto", "Rasto"],
+  ["Zampa", "Tampa"], ["Diva", "Viva"], ["Punto", "Munto"], ["Pesto", "Vesto"]
 ];
 
 // Funzione per aggiornare l'anteprima della lista
