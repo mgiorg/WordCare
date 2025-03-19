@@ -5,44 +5,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tachistoscopio</title>
   <link rel="stylesheet" href="game.css">
+  <style>
+    /* Stile base per il layout a tre colonne */
+    #settingsContainer {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .settingsSection {
+      flex: 1; /* Ogni sezione occupa 1/3 del contenitore */
+      margin: 0 10px; /* Spaziatura tra le sezioni */
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .settingsSection h2 {
+      text-align: center;
+    }
+
+    /* Stile per separare visivamente le sezioni */
+    .settingsSection:nth-child(1) {
+      background-color: #f9f9f9;
+    }
+
+    .settingsSection:nth-child(2) {
+      background-color: #e9f7ff;
+    }
+
+    .settingsSection:nth-child(3) {
+      background-color: #f9f5ff;
+    }
+  </style>
 </head>
 <body>
   <div id="settingsScreen">
     <h1>Tachistoscopio</h1>
-    <h2>Impostazioni</h2>
-    
-    <!-- Tipo di Lista -->
-    <label>Tipo di Lista:</label>
-    <select id="listaTipo">
-      <option value="custom">Nuova Lista</option>
-      <option value="predefinite">Lista Preesistente</option>
-    </select>
-    
-    <!-- Inserimento Parole (Solo per Nuova Lista) -->
-    <div id="nuovaListaInput" style="display: none;">
-      <label>Inserisci le parole (separate da virgola):</label>
-      <textarea id="inputParole" rows="4" cols="50"></textarea>
+    <div id="settingsContainer">
+      <!-- Impostazioni Esistenti (Sinistra) -->
+      <div class="settingsSection" id="existingSettings">
+        <h2>Impostazioni Lista</h2>
+        <!-- Tipo di Lista -->
+        <label>Tipo di Lista:</label>
+        <select id="listaTipo">
+          <option value="custom">Nuova Lista</option>
+          <option value="predefinite">Lista Preesistente</option>
+        </select>
+
+        <!-- Inserimento Parole (Solo per Nuova Lista) -->
+        <div id="nuovaListaInput" style="display: none;">
+          <label>Inserisci le parole (separate da virgola):</label>
+          <textarea id="inputParole" rows="4" cols="50"></textarea>
+        </div>
+
+        <!-- Impostazioni per Lista Preesistente -->
+        <div id="listaPredefinitaSettings">
+          <label>Contenuto della Lista:</label>
+          <select id="contenutoLista">
+            <option value="parole2">Parole 2 Sillabe</option>
+            <option value="parole3">Parole 3 Sillabe</option>
+            <option value="parole4">Parole 4 Sillabe</option>
+            <option value="sillabe">Sillabe</option>
+            <option value="coppieMinime">Coppie Minime</option>
+          </select>
+
+          <label id="numParoleLabel">Numero di Parole/Coppie da Estrarre:</label>
+          <input type="number" id="numParole" min="1" value="5">
+        </div>
+
+        <!-- Anteprima della Lista -->
+        <div id="anteprimaLista" style="display: none;">Anteprima della lista:</div>
+      </div>
+
+      <!-- Impostazioni di Gioco (Centro) -->
+      <div class="settingsSection" id="gameSettings">
+        <h2>Impostazioni di Gioco</h2>
+        <!-- Aggiungi qui le impostazioni di gioco future -->
+        <p>In questa sezione aggiungerai le opzioni di gioco.</p>
+      </div>
+
+      <!-- Impostazioni Grafiche (Destra) -->
+      <div class="settingsSection" id="graphicSettings">
+        <h2>Impostazioni Grafiche</h2>
+        <!-- Aggiungi qui le impostazioni grafiche future -->
+        <p>In questa sezione aggiungerai le opzioni grafiche.</p>
+      </div>
     </div>
     
-    <!-- Impostazioni per Lista Preesistente -->
-    <div id="listaPredefinitaSettings">
-      <label>Contenuto della Lista:</label>
-      <select id="contenutoLista">
-        <option value="parole2">Parole 2 Sillabe</option>
-        <option value="parole3">Parole 3 Sillabe</option>
-        <option value="parole4">Parole 4 Sillabe</option>
-        <option value="sillabe">Sillabe</option>
-        <option value="coppieMinime">Coppie Minime</option>
-      </select>
-      
-      <label id="numParoleLabel">Numero di Parole/Coppie da Estrarre:</label>
-      <input type="number" id="numParole" min="1" value="5">
-    </div>
-
-    <!-- Anteprima della Lista -->
-    <div id="anteprimaLista" style="display: none;">Anteprima della lista:</div>
-
-  
     <button id="startGame">Iniziamo a giocare!</button>
   </div>
 
