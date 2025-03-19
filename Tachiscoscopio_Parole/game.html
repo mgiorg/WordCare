@@ -114,8 +114,17 @@
         <option value="basso">Basso</option>
         <option value="random">Random</option>
       </select>
-    </div>
+      
+      <br>
 
+      <!-- Modalità di Gioco -->
+      <label for="modalitaGioco">Modalità di Gioco:</label>
+      <select id="modalitaGioco">
+        <option value="automatico">Automatico</option>
+        <option value="feedback">Con Feedback</option>
+      </select>
+
+    </div>
 
       <!-- Impostazioni Grafiche (Destra) -->
       <div class="settingsSection" id="graphicSettings">
@@ -130,8 +139,16 @@
 
   <div id="gameScreen" style="display: none;">
     <canvas id="gameCanvas"></canvas>
-    <button id="exitGame">Esci</button>
+  
+    <!-- Bottoni per il feedback dentro al gioco -->
+    <div id="feedbackButtons" style="display: none; text-align: center; margin-top: 20px;">
+      <button id="corretto">Corretto</button>
+      <button id="sbagliato">Sbagliato</button>
+    </div>
+  
+    <button id="exitGame" style="margin-top: 20px;">Esci</button>
   </div>
+  
 
   <script src="game.js"></script>
 </body>

@@ -14,6 +14,11 @@ const ctx = gameCanvas.getContext('2d');
 const anteprimaListaDiv = document.getElementById('anteprimaLista');
 const tempoVisibileInput = document.getElementById('tempoVisibile');
 const intertempoInput = document.getElementById('intertempo');
+const modalitaGioco = document.getElementById('modalitaGioco');
+const feedbackButtons = document.getElementById('feedbackButtons');
+const correttoButton = document.getElementById('corretto');
+const sbagliatoButton = document.getElementById('sbagliato');
+let punteggio = 0; // Variabile per il punteggio
 
 // Creazione della textarea per l'anteprima
 const listaAnteprima = document.createElement('textarea');
@@ -97,26 +102,73 @@ exitButton.addEventListener('click', () => {
 
 // Funzione di gioco
 function startGame(parole) {
-  const tempoVisibile = parseInt(tempoVisibileInput.value, 10); // Tempo di visualizzazione personalizzato
-  const intertempo = parseInt(intertempoInput.value, 10); // Intertempo personalizzato
+  const tempoVisibile = parseInt(tempoVisibileInput.value, 10);
+  const intertempo = parseInt(intertempoInput.value, 10);
   let index = 0;
 
-  // Mostra il countdown sul canvas
+  // Mostra il countdown prima di iniziare
   let countdown = 3;
   const countdownInterval = setInterval(() => {
-    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisci il canvas
-    ctx.font = '48px Arial'; // Imposta il font
-    ctx.textAlign = 'center'; // Allinea il testo al centro
-    ctx.textBaseline = 'middle'; // Allinea verticalmente al centro
-    ctx.fillText(countdown, gameCanvas.width / 2, gameCanvas.height / 2); // Disegna il numero del countdown
+    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    ctx.font = '48px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(countdown, gameCanvas.width / 2, gameCanvas.height / 2);
     countdown--;
 
     if (countdown < 0) {
-      clearInterval(countdownInterval); // Ferma il countdown
-      startGameLoop(parole, tempoVisibile, intertempo); // Avvia il gioco
+      clearInterval(countdownInterval);
+      ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+      // Modalità di gioco
+      if (modalitaGioco.value === "automatico") {
+        feedbackButtons.style.display = 'none'; // Nasconde i bottoni per "Automatico"
+
+        // Ciclo automatico delle parole
+        const interval = setInterval(() => {
+          if (index >= parole.length) {
+            clearInterval(interval);
+            return;
+          }
+          const parola = parole[index++];
+          renderWord(parola);
+          setTimeout(() => ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height), tempoVisibile);
+        }, tempoVisibile + intertempo);
+
+      } else if (modalitaGioco.value === "feedback") {
+        feedbackButtons.style.display = 'block'; // Mostra i bottoni per "Feedback"
+
+        // Mostra la prima parola
+        let parolaCorrente = parole[index];
+        renderWord(parolaCorrente);
+
+        // Gestione del feedback
+        correttoButton.onclick = () => {
+          punteggio++; // Aumenta il punteggio
+          nextWord(); // Passa alla parola successiva
+        };
+
+        sbagliatoButton.onclick = () => {
+          nextWord(); // Passa alla parola successiva senza cambiare il punteggio
+        };
+
+        function nextWord() {
+          index++;
+          if (index < parole.length) {
+            parolaCorrente = parole[index];
+            renderWord(parolaCorrente);
+          } else {
+            // Fine del gioco
+            feedbackButtons.style.display = 'none'; // Nascondi i bottoni
+            ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+            alert(`Gioco finito! Punteggio finale: ${punteggio}`);
+          }
+        }
+      }
     }
-  },1000);
+  }, 1000); // Countdown intervallo di 1 secondo
 }
+
 
 // Funzione per avviare il ciclo del gioco
 function startGameLoop(parole, tempoVisibile, intertempo) {
