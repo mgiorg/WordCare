@@ -95,28 +95,49 @@ exitButton.addEventListener('click', () => {
 });
 
 // Funzione di gioco
-  function startGame(parole) {
-    const tempoVisibile = parseInt(tempoVisibileInput.value, 10); // Tempo di visualizzazione personalizzato
-    const intertempo = parseInt(intertempoInput.value, 10); // Intertempo personalizzato
-    let index = 0;
+function startGame(parole) {
+  const tempoVisibile = parseInt(tempoVisibileInput.value, 10); // Tempo di visualizzazione personalizzato
+  const intertempo = parseInt(intertempoInput.value, 10); // Intertempo personalizzato
+  let index = 0;
 
-    const interval = setInterval(() => {
-      if (index >= parole.length) {
-        clearInterval(interval); // Ferma il ciclo quando tutte le parole sono state mostrate
-        return;
-      }
+  // Mostra il countdown sul canvas
+  let countdown = 3;
+  const countdownInterval = setInterval(() => {
+    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisci il canvas
+    ctx.font = '48px Arial'; // Imposta il font
+    ctx.textAlign = 'center'; // Allinea il testo al centro
+    ctx.textBaseline = 'middle'; // Allinea verticalmente al centro
+    ctx.fillText(countdown, gameCanvas.width / 2, gameCanvas.height / 2); // Disegna il numero del countdown
+    countdown--;
 
-      // Disegna la parola corrente sul canvas
-      const parola = parole[index++];
-      renderWord(parola);
+    if (countdown < 0) {
+      clearInterval(countdownInterval); // Ferma il countdown
+      startGameLoop(parole, tempoVisibile, intertempo); // Avvia il gioco
+    }
+  },1000);
+}
 
-      // Cancella la parola dopo il tempo di visualizzazione
-      setTimeout(() => {
-        ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-      }, tempoVisibile);
+// Funzione per avviare il ciclo del gioco
+function startGameLoop(parole, tempoVisibile, intertempo) {
+  let index = 0;
 
-    }, tempoVisibile + intertempo); // Tempo complessivo = tempoVisibile + intertempo
-  }
+  const interval = setInterval(() => {
+    if (index >= parole.length) {
+      clearInterval(interval); // Ferma il ciclo quando tutte le parole sono state mostrate
+      return;
+    }
+
+    // Disegna la parola corrente sul canvas
+    const parola = parole[index++];
+    renderWord(parola);
+
+    // Cancella la parola dopo il tempo di visualizzazione
+    setTimeout(() => {
+      ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    }, tempoVisibile);
+
+  }, tempoVisibile + intertempo); // Tempo complessivo = tempoVisibile + intertempo
+}
 
 // Funzione per disegnare una parola sul canvas
 function renderWord(parola) {
