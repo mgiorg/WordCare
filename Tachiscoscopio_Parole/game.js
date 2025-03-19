@@ -20,6 +20,8 @@ const correttoButton = document.getElementById('corretto');
 const sbagliatoButton = document.getElementById('sbagliato');
 let punteggio = 0; // Variabile per il punteggio
 const dimensioneParolaInput = document.getElementById('dimensioneParola');
+const coloreParolaInput = document.getElementById('coloreParola');
+const coloreSfondoInput = document.getElementById('coloreSfondo');
 
 // Creazione della textarea per l'anteprima
 const listaAnteprima = document.createElement('textarea');
@@ -101,19 +103,25 @@ exitButton.addEventListener('click', () => {
   ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulizia del canvas
 });
 
+function aggiornaSfondoCanvas() {
+  ctx.fillStyle = coloreSfondoInput.value; // Imposta il colore di sfondo
+  ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height); // Riempi il canvas con il colore
+}
+
 // Funzione di gioco
 function startGame(parole) {
   const tempoVisibile = parseInt(tempoVisibileInput.value, 10);
   const intertempo = parseInt(intertempoInput.value, 10);
   let index = 0;
 
-  // Mostra il countdown prima di iniziare
+  // Countdown
   let countdown = 3;
   const countdownInterval = setInterval(() => {
-    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    aggiornaSfondoCanvas(); // Applica lo sfondo
     ctx.font = '48px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+    ctx.fillStyle = coloreParolaInput.value; // Usa lo stesso colore della parola
     ctx.fillText(countdown, gameCanvas.width / 2, gameCanvas.height / 2);
     countdown--;
 
@@ -121,11 +129,10 @@ function startGame(parole) {
       clearInterval(countdownInterval);
       ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-      // Modalità di gioco
+      // Avvia il gioco nella modalità scelta
       if (modalitaGioco.value === "automatico") {
-        feedbackButtons.style.display = 'none'; // Nasconde i bottoni per "Automatico"
+        feedbackButtons.style.display = 'none';
 
-        // Ciclo automatico delle parole
         const interval = setInterval(() => {
           if (index >= parole.length) {
             clearInterval(interval);
@@ -137,20 +144,18 @@ function startGame(parole) {
         }, tempoVisibile + intertempo);
 
       } else if (modalitaGioco.value === "feedback") {
-        feedbackButtons.style.display = 'block'; // Mostra i bottoni per "Feedback"
+        feedbackButtons.style.display = 'block';
 
-        // Mostra la prima parola
         let parolaCorrente = parole[index];
         renderWord(parolaCorrente);
 
-        // Gestione del feedback
         correttoButton.onclick = () => {
-          punteggio++; // Aumenta il punteggio
-          nextWord(); // Passa alla parola successiva
+          punteggio++;
+          nextWord();
         };
 
         sbagliatoButton.onclick = () => {
-          nextWord(); // Passa alla parola successiva senza cambiare il punteggio
+          nextWord();
         };
 
         function nextWord() {
@@ -159,8 +164,7 @@ function startGame(parole) {
             parolaCorrente = parole[index];
             renderWord(parolaCorrente);
           } else {
-            // Fine del gioco
-            feedbackButtons.style.display = 'none'; // Nascondi i bottoni
+            feedbackButtons.style.display = 'none';
             ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
             alert(`Gioco finito! Punteggio finale: ${punteggio}`);
           }
@@ -233,11 +237,13 @@ function getWordPosition(option) {
 // Funzione per disegnare una parola sul canvas
 function renderWord(parola) {
   const posizione = getWordPosition(posizioneParolaSelect.value); // Ottieni la posizione scelta
-  const dimensioneParola = parseInt(dimensioneParolaInput.value, 10); // Leggi la dimensione della parola
-  ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Pulisci il canvas
+  const dimensioneParola = parseInt(dimensioneParolaInput.value, 10); // Leggi la dimensione
+  aggiornaSfondoCanvas(); // Applica lo sfondo
+
   ctx.font = `${dimensioneParola}px Arial`; // Imposta la dimensione del font
   ctx.textAlign = 'center'; // Allinea il testo al centro
-  ctx.textBaseline = 'middle'; // Allinea verticalmente al centro
+  ctx.textBaseline = 'middle'; // Allinea verticalmente
+  ctx.fillStyle = coloreParolaInput.value; // Imposta il colore della parola
   ctx.fillText(parola, posizione.x, posizione.y); // Disegna la parola
 }
 
