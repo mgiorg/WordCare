@@ -99,14 +99,25 @@ startButton.addEventListener('click', () => {
   settingsScreen.style.display = 'none';
   gameScreen.style.display = 'block';
 
-  // Leggi le parole dalla text area (anche quelle modificate dall'utente)
-  let paroleGioco = listaAnteprima.value.split(',').map(p => p.trim());
-  
+  let paroleGioco = [];
+
+  if (listaTipo.value === 'custom') {
+    // Se l'utente ha scelto "Nuova Lista", prendi le parole dalla textarea
+    let inputText = document.getElementById('inputParole').value.trim();
+    if (inputText) {
+      paroleGioco = inputText.split(',').map(p => p.trim());
+    }
+  } else {
+    // Se ha scelto una lista predefinita, usa le parole dall'anteprima
+    paroleGioco = listaAnteprima.value.split(',').map(p => p.trim());
+  }
+
   // Mescola le parole per farle apparire in un ordine sempre diverso
   paroleGioco = shuffleArray(paroleGioco);
 
   startGame(paroleGioco);
 });
+
 
 
 // Uscita dal gioco
