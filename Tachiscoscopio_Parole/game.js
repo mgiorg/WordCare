@@ -183,34 +183,32 @@ function startGame(parole) {
     let posizione;
 
     do {
-      posizione = getWordPosition(posizioneParolaSelect.value);
+        posizione = getWordPosition(posizioneParolaSelect.value);
 
-      const areaPulsanteEsci = {
-        x: window.innerWidth - exitButton.offsetWidth - 25,
-        y: 5,
-        width: exitButton.offsetWidth,
-        height: exitButton.offsetHeight,
-      };
+        // Definisce l'area del pulsante "Esci"
+        const areaPulsanteEsci = {
+            x: window.innerWidth - exitButton.offsetWidth - 25,
+            y: 5,
+            width: exitButton.offsetWidth,
+            height: exitButton.offsetHeight,
+        };
 
-      const areaPulsantiFeedback = feedbackButtons.style.display === 'flex'
-        ? {
-            x: window.innerWidth / 2 - feedbackButtons.offsetWidth / 2,
-            y: window.innerHeight * 0.7 - feedbackButtons.offsetHeight / 2,
-            width: feedbackButtons.offsetWidth,
-            height: feedbackButtons.offsetHeight,
-          }
-        : null;
+        // Controlla i limiti del canvas per non far sforare la parola
+        let x = Math.max(parolaLarghezza / 2, Math.min(posizione.x, gameCanvas.width - parolaLarghezza / 2));
+        let y = Math.max(parolaAltezza / 2, Math.min(posizione.y, gameCanvas.height - parolaAltezza / 2));
 
-      if (
-        !isOverlapping(posizione.x - parolaLarghezza / 2, posizione.y - parolaAltezza / 2, parolaLarghezza, parolaAltezza, areaPulsanteEsci) &&
-        (!areaPulsantiFeedback || !isOverlapping(posizione.x - parolaLarghezza / 2, posizione.y - parolaAltezza / 2, parolaLarghezza, parolaAltezza, areaPulsantiFeedback))
-      ) {
-        break;
-      }
+        // Se la parola non si sovrappone al pulsante "Esci", esce dal loop
+        if (!isOverlapping(x - parolaLarghezza / 2, y - parolaAltezza / 2, parolaLarghezza, parolaAltezza, areaPulsanteEsci)) {
+            posizione.x = x;
+            posizione.y = y;
+            break;
+        }
+
     } while (true);
 
     return posizione;
-  }
+}
+
 
   // Countdown iniziale prima dell'avvio
   let countdown = 3;
