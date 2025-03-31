@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>Login Dinamico</title>
+  <link rel="stylesheet" href="NuovoLogin.css">
+</head>
+<body>
+	<div class="login-header">
+		<div class="card">
+		  <div class="loader">
+			<h2>WordCare</h2>
+			<div class="words">
+			  <h2 class="word" style="margin-bottom: 5px;">studia</h2>
+			  <h2 class="word" style="margin-bottom: 5px;">impara</h2>
+			  <h2 class="word" style="margin-bottom: 5px;">esercitati</h2>
+			  <h2 class="word" style="margin-bottom: 5px;">migliora</h2>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+  <div class="container-dinamico" id="container">
+
+    <div class="form-container sign-up-container">
+      <form action="#">
+        <h1>Registrati</h1>
+		<div class="input-group">
+			<input type="text" name="text" autocomplete="off" class="input" required>
+			<label class="user-label">Nome</label>
+		</div>
+		<div class="input-group">
+			<input type="text" name="text" autocomplete="off" class="input" required>
+			<label class="user-label">Cognome</label>
+		</div>
+		<div class="input-group">
+			<input type="email" name="text" autocomplete="off" class="input" required>
+			<label class="user-label">Email</label>
+		</div>
+		<div class="input-group">
+			<input type="text" name="text" autocomplete="off" class="input" required>
+			<label class="user-label">Username</label>
+		</div>
+		<div class="input-group">
+			<input type="password" name="text" autocomplete="off" class="input" required>
+			<label class="user-label">Password</label>
+		</div>
+        <button style="margin-top: 20px;">Registrati</button>
+      </form>
+    </div>
+
+    <div class="form-container sign-in-container">
+      <form action="#">
+        <h1>Accedi</h1>
+        <div class="input-group">
+			<input type="text" name="text" autocomplete="off" class="input" required>
+			<label class="user-label">Username</label>
+		</div>
+		<div class="input-group">
+			<input type="password" name="text" autocomplete="off" class="input" required>
+			<label class="user-label">Password</label>
+		</div>
+        <button style="margin-top: 20px;">Accedi</button>
+      </form>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="overlay-container">
+      <div class="overlay">
+
+        <div class="overlay-panel overlay-left">
+          <h1>Bentornato!</h1>
+          <p>Se hai già un account, effettua il login</p>
+          <button class="ghost" id="signIn">Accedi</button>
+        </div>
+
+        <div class="overlay-panel overlay-right">
+          <h1>Benvenuto!</h1>
+          <p>Inserisci i tuoi dati personali per registrarti</p>
+          <button class="ghost" id="signUp">Registrati</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <script>
+    const signUpButton = document.getElementById('signUp');  
+    const signInButton = document.getElementById('signIn');  
+    const container = document.getElementById('container');  
+
+    // Click su "Registrati"
+    signUpButton.addEventListener('click', () => {
+      container.classList.add("right-panel-active");
+    });
+
+    // Click su "Accedi"
+    signInButton.addEventListener('click', () => {
+      container.classList.remove("right-panel-active");
+    });
+  </script>
+</body>
+</html>
