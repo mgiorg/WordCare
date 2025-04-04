@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tachistoscopio</title>
+  <link rel="stylesheet" href="../../css/games/Tachiscoscopio_Parole.css" />
+</head>
+
+<body>
+  <div id="settingsScreen">
+    <h1>Tachistoscopio</h1>
+    <div id="settingsContainer">
+      <!-- Impostazioni Esistenti (Sinistra) -->
+      <div class="settingsSection" id="existingSettings">
+        <h2>Impostazioni Lista</h2>
+        <!-- Tipo di Lista -->
+        <label>Tipo di Lista:</label>
+        <select id="listaTipo">
+          <option value="custom">Nuova Lista</option>
+          <option value="predefinite">Lista Preesistente</option>
+        </select>
+
+        <!-- Inserimento Parole (Solo per Nuova Lista) -->
+        <div id="nuovaListaInput" style="display: none">
+          <label>Inserisci le parole (separate da virgola):</label>
+          <textarea id="inputParole" rows="4" cols="50"></textarea>
+        </div>
+
+        <!-- Impostazioni per Lista Preesistente -->
+        <div id="listaPredefinitaSettings">
+          <label>Contenuto della Lista</label>
+          <select id="contenutoLista">
+            <option value="parole2">Parole 2 Sillabe</option>
+            <option value="parole3">Parole 3 Sillabe</option>
+            <option value="parole4">Parole 4 Sillabe</option>
+            <option value="sillabe">Sillabe</option>
+            <option value="coppieMinime">Coppie Minime</option>
+            <option value="nonParole">Non Parole</option>
+            <!-- Nuova opzione -->
+          </select>
+
+          <br />
+
+          <label id="numParoleLabel">Numero di Parole/Coppie da Estrarre:</label>
+          <input type="number" id="numParole" min="1" value="5" />
+        </div>
+
+        <!-- Anteprima della Lista -->
+        <div id="anteprimaLista" style="display: none">
+          Anteprima della lista:
+        </div>
+      </div>
+
+      <!-- Impostazioni di Gioco (Centro) -->
+      <div class="settingsSection" id="gameSettings">
+        <h2>Impostazioni di Gioco</h2>
+
+        <!-- Tempo di Visualizzazione -->
+        <label for="tempoVisibile">Tempo di Visualizzazione (ms):</label>
+        <input type="number" id="tempoVisibile" min="100" max="5000" step="100" value="1000" />
+
+        <!-- Intertempo -->
+        <label for="intertempo">Intertempo (ms):</label>
+        <input type="number" id="intertempo" min="100" max="5000" step="100" value="1000" />
+
+        <br />
+
+        <!-- Posizione Parola -->
+        <label for="posizioneParola">Posizione Parola:</label>
+        <select id="posizioneParola">
+          <option value="centro">Centro</option>
+          <option value="sinistra">Sinistra</option>
+          <option value="destra">Destra</option>
+          <option value="alto">Alto</option>
+          <option value="basso">Basso</option>
+          <option value="random">Random</option>
+        </select>
+
+        <br />
+
+        <!-- Modalità di Gioco -->
+        <label for="modalitaGioco">Modalità di Gioco:</label>
+        <select id="modalitaGioco">
+          <option value="automatico">Automatico</option>
+          <option value="feedback">Con Feedback</option>
+        </select>
+      </div>
+
+      <!-- Impostazioni Grafiche (Destra) -->
+      <div class="settingsSection" id="graphicSettings">
+        <h2>Impostazioni Grafiche</h2>
+
+        <!-- Dimensione della Parola -->
+        <label for="dimensioneParola">Dimensione della Parola (px):</label>
+        <input type="number" id="dimensioneParola" min="16" max="72" step="2" value="48" />
+
+        <br />
+        <label for="coloreParola">Colore Parola:</label>
+        <input type="color" id="coloreParola" value="#000000" />
+
+        <!-- Colore Sfondo -->
+        <label for="coloreSfondo">Colore Sfondo:</label>
+        <input type="color" id="coloreSfondo" value="#ffffff" />
+
+        <br />
+
+        <!-- Nuova checkbox per le parole in maiuscolo -->
+        <label for="maiuscoloParole">Parole in maiuscolo:</label>
+        <input type="checkbox" id="maiuscoloParole" />
+      </div>
+    </div>
+
+    <button id="startGame">Iniziamo a giocare!</button>
+  </div>
+
+  <div id="gameScreen" style="display: none">
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Bottoni per il feedback dentro al gioco -->
+    <div id="feedbackButtons" style="display: none; text-align: center; margin-top: 20px">
+      <button id="corretto">Corretto</button>
+      <button id="sbagliato">Sbagliato</button>
+    </div>
+
+    <button id="exitGame" style="margin-top: 20px">Esci</button>
+  </div>
+
+  <link rel="stylesheet" href="../../js/games/Tachiscoscopio_Parole.js" />
+</body>
+
+</html>

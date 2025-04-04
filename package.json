@@ -1,0 +1,20 @@
+{
+  "name": "web-project",
+  "version": "1.0.0",
+  "description": "A web project with client-server architecture using Node.js and Express.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
