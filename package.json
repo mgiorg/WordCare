@@ -4,8 +4,8 @@
   "description": "A web project with client-server architecture using Node.js and Express.",
   "main": "server/server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "dev": "nodemon server/server.js"
+    "start": "node server/App.js",
+    "dev": "nodemon server/App.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

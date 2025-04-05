@@ -1,0 +1,189 @@
+:root {
+	--primary: #667eea;
+	--accent: #764ba2;
+	--light: #f4f4f4;
+	--text: #333;
+	--white: #fff;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: var(--light);
+	color: var(--text);
+}
+
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: linear-gradient(to right, var(--primary), var(--accent));
+	padding: 1rem 2rem;
+	color: var(--white);
+	position: relative;
+}
+
+.navbar-brand {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.navbar-links {
+	list-style: none;
+	display: flex;
+	gap: 1.5rem;
+}
+
+.navbar-links a {
+	color: var(--white);
+	text-decoration: none;
+	transition: opacity 0.3s;
+}
+
+.navbar-links a:hover {
+	opacity: 0.8;
+}
+
+.navbar-avatar {
+	position: relative;
+	cursor: pointer;
+}
+
+.navbar-avatar img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.avatar-dropdown {
+	position: absolute;
+	top: 70px;
+	width: 200px;
+	right: 0;
+	background-color: var(--white);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	padding: 0.5rem 1rem;
+	display: none;
+	flex-direction: column;
+	z-index: 10;
+}
+
+.avatar-dropdown a {
+	color: var(--text);
+	text-decoration: none;
+	padding: 0.5rem 0;
+	display: block;
+	transition: background 0.2s;
+}
+
+.avatar-dropdown a:hover {
+	background-color: #f0f0f0;
+}
+
+.avatar-dropdown.active {
+	display: flex;
+}
+
+.dashboard {
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.greeting h1 {
+	font-size: 2rem;
+	margin-bottom: 0.5rem;
+}
+
+.greeting p {
+	color: #666;
+}
+
+.stats {
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.card {
+	flex: 1 1 200px;
+	background: var(--white);
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	padding: 1rem;
+	transition: transform 0.2s;
+}
+
+.card:hover {
+	transform: translateY(-4px);
+}
+
+.card h3 {
+	font-size: 1.1rem;
+	margin-bottom: 0.5rem;
+}
+
+.card span {
+	font-size: 1.5rem;
+	color: var(--accent);
+	font-weight: bold;
+}
+
+.agenda h2 {
+	margin-bottom: 1rem;
+}
+
+.agenda ul {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.agenda li {
+	background: var(--white);
+	padding: 1rem;
+	border-left: 4px solid var(--primary);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 6px;
+	transition: background 0.3s;
+}
+
+.agenda li:hover {
+	background: #eef1ff;
+}
+
+.agenda-time {
+	font-weight: bold;
+}
+
+.agenda-task {
+	color: #555;
+}
+
+.user-name {
+	font-weight: bold;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 1.2rem;
+	color: var(--primary);
+}
+
+@media (max-width: 768px) {
+	.navbar-links {
+		display: none;
+	}
+
+	.stats {
+		flex-direction: column;
+	}
+}

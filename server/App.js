@@ -1,28 +1,42 @@
-/**
- * WordCare - App.js
- */
-
-// Initialize Express app and database connection
+// Inizializzazione Express e moduli
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
-const authRoutes = require('./routes/AuthRoutes');
 const { initDb } = require('./database/Database');
+
+// Importazione delle route
+const authRoutes = require('./routes/AuthRoutes');
+const patientRoutes = require('./routes/PatientRoutes');
+const apiRoutes = require('./routes/ApiRoutes');
 
 const app = express();
 const PORT = 3000;
+const MAX_AGE_SESSION = 1000 * 60 * 60; // 1 ora
 
-// Initialize the database (create tables if they do not exist)
+// Inizializza il database
 initDb();
 
-// Set up middleware to parse URL-encoded and JSON payloads
+// Middleware di parsing
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); // per payload JSON
+app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
+
+// Session middleware (deve venire PRIMA di qualsiasi route)
+app.use(session({
+	secret: 'wordcare_secret_session', // cambia con una chiave sicura in produzione
+	resave: false,
+	saveUninitialized: false,
+	cookie: {
+		maxAge: MAX_AGE_SESSION
+	}
+}));
+
+// Registrazione delle route (dopo che la sessione è attiva)
 app.use('/', authRoutes);
+app.use('/paziente', patientRoutes);
+app.use('/', apiRoutes); // ✅ ora la session sarà disponibile
 
-// Start the server and listen on the defined port
+// Avvio server
 app.listen(PORT, () => {
-  // Log server status to the console
-  console.log(`Server in esecuzione su http://localhost:${PORT}`);
+	console.log(`Server in esecuzione su http://localhost:${PORT}`);
 });
-
