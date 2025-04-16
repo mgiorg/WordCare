@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendario Appuntamenti</title>
+  <link rel="stylesheet" href="calendario.css">
+</head>
+<body>
+  <header>
+    <h1>Calendario Appuntamenti</h1>
+    <div id="currentDateDisplay"></div>
+    <!-- Pulsanti di scelta vista e navigazione -->
+    <div class="controls">
+      <button id="monthViewBtn">Vista Mese</button>
+      <button id="weekViewBtn">Vista Settimana</button>
+      <button id="prevBtn">&laquo; Precedente</button>
+      <button id="nextBtn">Successivo &raquo;</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Calendario -->
+    <div id="calendar"></div>
+    
+    <!-- Sezione Reminder -->
+    <div id="reminders">
+      <h2>Promemoria Appuntamenti</h2>
+      <ul id="reminderList"></ul>
+    </div>
+  </main>
+
+  <!-- Modal per gestione appuntamenti -->
+  <div id="appointmentModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="modalCloseBtn">&times;</span>
+      <h2 id="modalTitle">Gestione Appuntamento</h2>
+      <form id="appointmentForm">
+        <!-- Il campo data è in sola lettura (viene impostato dal giorno cliccato) -->
+        <label for="appDate">Data:</label>
+        <input type="text" id="appDate" name="appDate" readonly>
+
+        <label for="appTime">Orario:</label>
+        <input type="time" id="appTime" name="appTime" required>
+
+        <label for="patientName">Nome Paziente:</label>
+        <input type="text" id="patientName" name="patientName" required>
+
+        <label for="location">Luogo:</label>
+        <input type="text" id="location" name="location" required>
+
+        <label for="disorder">Disturbo (opzionale):</label>
+        <input type="text" id="disorder" name="disorder">
+
+        <label for="pdfFile">Cartella Clinica in PDF (opzionale):</label>
+        <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf">
+
+        <div class="modal-buttons">
+          <button type="submit" id="saveBtn">Salva Appuntamento</button>
+          <button type="button" id="deleteBtn">Cancella Appuntamento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="calendario.js"></script>
+</body>
+</html>
