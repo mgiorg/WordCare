@@ -48,7 +48,7 @@ class AuthController {
 			const hashedPassword = await bcrypt.hash(password, 10);
 			await loginRepository.createUser(name, surname, email, username, hashedPassword);
 
-			return res.send('Registrazione completata! <a href="/login">Accedi</a>');
+			return res.status(500).sendFile('views/error404.html', { root: 'public' });
 		} catch (err) {
 			if (err.message.includes('UNIQUE'))
 				return res.status(400).sendFile('views/error404.html', { root: 'public' });

@@ -26,7 +26,7 @@ class PatientController {
 			}
 
 			// Render the patient view with user and profile data
-			res.sendFile(path.join(__dirname, '../../public/views/paziente.html'));
+			res.sendFile(path.join(__dirname, '../../public/views/Paziente/paziente.html'));
 
 		} catch (err) {
 			console.error('Error in patient dashboard:', err);
