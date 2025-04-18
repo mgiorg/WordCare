@@ -13,7 +13,7 @@ router.get('/', (req, res) => res.redirect('/login'));
 
 // Route to serve the login HTML page
 router.get('/login', (req, res) => {
-	res.sendFile(path.join(viewsPath, 'login.html'));
+	res.sendFile(path.join(viewsPath, 'Paziente/login.html'));
 });
 
 router.post('/login', authController.login);
