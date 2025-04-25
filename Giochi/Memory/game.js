@@ -48,7 +48,7 @@ function initializeGame(category) {
 function getCategoryImages(category) {
     const categories = {
         house: ["casa.jpg", "letto.jpg", "pc.jpg", "porta.jpg", "sedia.jpg", "vasca.jpg", "orologio.jpg", "piatto.jpg"],
-        jobs: ["medico.jpg", "cuoco.jpg", "astronauta.jpg", "poliziotto.jpg", "insegnante.jpg", "operaio.jpg", "fotografo.jpg"],
+        jobs: ["medico.jpg", "cuoco.jpg", "astronauta.jpg", "poliziotto.jpg", "insegnante.jpg", "operaio.jpg", "fotografo.jpg", "cantante.jpg"],
         animals: ["cane.jpg", "gatto.jpg", "panda.jpg", "leone.jpg", "tartaruga.jpg", "serpente.jpg", "elefante.jpg", "uccello.jpg"]
     };
     return categories[category];
