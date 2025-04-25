@@ -35,7 +35,7 @@ function getRandomItems(arr, num) {
 }
 
 function generateUniqueSyllables(correctSyllable) {
-    const allSyllables = ["BA", "BI", "CA", "CO", "DA", "DE", "EL", "FA", "FI", "GA"];
+    const allSyllables = ["BA", "BI", "CA", "CO", "DA", "DE", "LE", "FA", "FI", "GA"];
     let syllables = new Set();
     syllables.add(correctSyllable);
 
