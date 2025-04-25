@@ -1,0 +1,120 @@
+
+/* Titolo principale */
+h1 {
+  font-size: 2.5rem; /* Dimensione originale */
+  color: #000000; /* Colore nero per mantenere lo stile semplice */
+  text-align: center; /* Centro il titolo */
+  margin-bottom: 20px; /* Spazio sotto il titolo */
+}
+
+
+
+#settingsContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Permette agli elementi di andare a capo se necessario */
+  gap: 20px; /* Spaziatura tra le sezioni */
+  padding: 20px;
+  max-width: 1200px; /* Limita la larghezza massima del contenitore */
+  margin: 0 auto; /* Centra il contenitore */
+}
+
+/* Stile delle sezioni */
+.settingsSection {
+  flex: 1;
+  min-width: 280px; /* Larghezza minima per evitare che gli elementi si stringano troppo */
+  max-width: 100%; /* Adatta la larghezza alla dimensione del contenitore */
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  box-sizing: border-box; /* Include padding nel calcolo delle dimensioni */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Campi di input */
+input, select, textarea {
+  width: calc(100% - 20px); /* Assicura che il campo non esca dai bordi */
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Include padding nel calcolo della larghezza */
+}
+
+/* Stile specifico per i numeri e i select */
+label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+/* Stile migliorato per i titoli */
+.settingsSection h2 {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: #4a90e2;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+#feedbackButtons, #exitGame {
+  position: absolute;
+  z-index: 10;
+}
+
+#corretto {
+  background-color: #28a745; /* Verde */
+  color: white;
+}
+
+#corretto:hover {
+  background-color: #218838; /* Verde scuro */
+}
+
+#sbagliato {
+  background-color: #dc3545; /* Rosso */
+  color: white;
+}
+
+#sbagliato:hover {
+  background-color: #c82333; /* Rosso scuro */
+}
+
+
+#feedbackButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  top: 70%; /* Posiziona i pulsanti al 70% dell'altezza dello schermo */
+  left: 50%; /* Centra i pulsanti orizzontalmente */
+  transform: translateX(-50%); /* Corregge il centraggio */
+}
+
+#exitGame {
+  top: 5%; /* Posizione in alto */
+  right: 5%; /* Posizione a destra */
+}
+
+
+/* Pulsanti più responsivi */
+button {
+  background: #4a90e2;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #357ABD;
+  transform: scale(1.05);
+}
