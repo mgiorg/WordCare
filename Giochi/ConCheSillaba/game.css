@@ -1,24 +1,42 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-align: center;
     text-transform: uppercase;
+    background: linear-gradient(135deg, #d6ff9a, #d8fd9f); /* Sfondo sfumato */
+    color: #333;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    display: inline-block;
 }
 
 button {
-    padding: 10px;
-    margin: 5px;
-    font-size: 18px;
+    padding: 15px 20px;
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px;
     cursor: pointer;
-    text-transform: uppercase;
-    transition: transform 0.2s ease, background-color 0.3s ease;
+    background: #facac6;
+    color: rgb(0, 0, 0);
+    border: none;
+    transition: all 0.3s ease-in-out;
 }
 
 button:hover {
     transform: scale(1.1);
+    background: #ff4733;
 }
 
 button:disabled {
-    background-color: red;
+    background: #b22222;
     color: white;
 }
 
@@ -28,6 +46,8 @@ img {
     margin: 20px;
     opacity: 0;
     transition: opacity 1s ease-in-out;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .fade-in {
