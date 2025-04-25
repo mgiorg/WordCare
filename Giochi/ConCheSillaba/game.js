@@ -28,18 +28,30 @@ function getRandomItems(arr, num) {
     return shuffled.slice(0, num);
 }
 
+function generateUniqueSyllables(correctSyllable) {
+    const allSyllables = ["BA", "BI", "CA", "CO", "DA", "DE", "EL", "FA", "FI", "GA"];
+    let syllables = new Set();
+    syllables.add(correctSyllable);
+
+    while (syllables.size < 4) {
+        let randomSyllable = allSyllables[Math.floor(Math.random() * allSyllables.length)];
+        if (!syllables.has(randomSyllable)) {
+            syllables.add(randomSyllable);
+        }
+    }
+
+    return Array.from(syllables).sort(() => Math.random() - 0.5);
+}
+
 function showNextImage() {
     if (currentIndex >= selectedItems.length) {
-        document.getElementById("game-container").innerHTML = "<h2>Hai completato il gioco! 🏆</h2>";
+        endGame();
         return;
     }
 
     const item = selectedItems[currentIndex];
     const correctSyllable = item.name.substring(0, 2).toUpperCase();
-    const syllables = [
-        correctSyllable,
-        "BI", "CA", "DA", "EL"
-    ].sort(() => Math.random() - 0.5);
+    const syllables = generateUniqueSyllables(correctSyllable);
 
     const gameContainer = document.getElementById("game-container");
     gameContainer.innerHTML = "";
@@ -53,14 +65,14 @@ function showNextImage() {
     syllables.forEach(syllable => {
         const button = document.createElement("button");
         button.textContent = syllable;
-        button.onclick = () => checkAnswer(syllable, correctSyllable);
+        button.onclick = () => checkAnswer(button, syllable, correctSyllable);
         optionContainer.appendChild(button);
     });
 
     gameContainer.appendChild(optionContainer);
 }
 
-function checkAnswer(selectedSyllable, correctSyllable) {
+function checkAnswer(button, selectedSyllable, correctSyllable) {
     const result = document.getElementById("result");
     if (selectedSyllable.toUpperCase() === correctSyllable) {
         result.textContent = "CORRETTO!";
@@ -68,11 +80,26 @@ function checkAnswer(selectedSyllable, correctSyllable) {
         score++;
         document.getElementById("score").textContent = "Punteggio: " + score;
         currentIndex++;
-        setTimeout(showNextImage, 1000); // Mostra nuova immagine dopo 1 sec
+        setTimeout(showNextImage, 1000);
     } else {
         result.textContent = "SBAGLIATO, RIPROVA!";
         result.style.color = "red";
+        button.style.backgroundColor = "red";  // Colora di rosso il pulsante sbagliato
+        button.disabled = true;  // Disabilita il pulsante sbagliato
     }
+}
+
+function endGame() {
+    const gameContainer = document.getElementById("game-container");
+    gameContainer.innerHTML = `<h2>Hai completato il gioco! 🏆</h2>
+                               <button onclick="startGame()">Gioca di nuovo</button>
+                               <button onclick="exitGame()">Esci</button>`;
+    document.getElementById("result").textContent = "";
+}
+
+function exitGame() {
+    document.getElementById("game-container").innerHTML = "<h2>Grazie per aver giocato! 👋</h2>";
+    document.getElementById("result").textContent = "";
 }
 
 document.addEventListener("DOMContentLoaded", startGame);
