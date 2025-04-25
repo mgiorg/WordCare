@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div id="settings-container">
+        <h1>Memory Game</h1>
+        <label for="category">Scegli la categoria:</label>
+        <select id="category">
+            <option value="house">Oggetti della casa</option>
+            <option value="jobs">Mestieri</option>
+            <option value="animals">Animali</option>
+        </select>
+        
+        <label for="players">Inserisci i nomi dei giocatori:</label>
+        <input type="text" id="players" placeholder="Es. Marco, Luca">
+        <button onclick="startGame()">Inizia</button>
+    </div>
+
+    <div id="game-container" style="display: none;">
+        <h2 id="turn-info"></h2>
+        <div id="board"></div>
+        <p id="scoreboard"></p>
+    </div>
+
+    <div id="end-game" style="display: none;">
+        <h2>Classifica Finale 🏆</h2>
+        <p id="final-score"></p>
+        <button onclick="restartGame()">Gioca di nuovo</button>
+        <button onclick="exitGame()">Esci</button>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
