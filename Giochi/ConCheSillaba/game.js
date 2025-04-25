@@ -1,16 +1,30 @@
 const imageDatabase = [
-    { name: "astuccio", image: "images/astuccio.jpg" },
-    { name: "bicicletta", image: "images/bicicletta.jpg" },
-    { name: "cane", image: "images/cane.jpg" },
-    { name: "dado", image: "images/dado.jpg" },
-    { name: "elefante", image: "images/elefante.jpg" },
-    { name: "foca", image: "images/foca.jpg" },
-    { name: "giraffa", image: "images/giraffa.jpg" },
-    { name: "hotel", image: "images/hotel.jpg" },
-    { name: "isola", image: "images/isola.jpg" },
-    { name: "limone", image: "images/limone.jpg" }
-    // Aggiungi fino a 30 elementi nel database
-];
+        { name: "astuccio", image: "images/astuccio.jpg" },
+        { name: "bicicletta", image: "images/bicicletta.jpg" },
+        { name: "cane", image: "images/cane.jpg" },
+        { name: "dado", image: "images/dado.jpg" },
+        { name: "elefante", image: "images/elefante.jpg" },
+        { name: "foca", image: "images/foca.jpg" },
+        { name: "giraffa", image: "images/giraffa.jpg" },
+        { name: "hotel", image: "images/hotel.jpg" },
+        { name: "isola", image: "images/isola.jpg" },
+        { name: "limone", image: "images/limone.jpg" },
+        { name: "macchina", image: "images/macchina.jpg" },
+        { name: "navetta", image: "images/navetta.jpg" },
+        { name: "orologio", image: "images/orologio.jpg" },
+        { name: "pennarello", image: "images/pennarello.jpg" },
+        { name: "quaderno", image: "images/quaderno.jpg" },
+        { name: "racchetta", image: "images/racchetta.jpg" },
+        { name: "sedia", image: "images/sedia.jpg" },
+        { name: "tavolo", image: "images/tavolo.jpg" },
+        { name: "umbrella", image: "images/umbrella.jpg" },
+        { name: "vestito", image: "images/vestito.jpg" },
+        { name: "water", image: "images/water.jpg" },
+        { name: "xilofono", image: "images/xilofono.jpg" },
+        { name: "yogurt", image: "images/yogurt.jpg" },
+        { name: "zaino", image: "images/zaino.jpg" },
+        { name: "zebra", image: "images/zebra.jpg" }
+    ];
 
 function getRandomItems(arr, num) {
     let shuffled = arr.sort(() => 0.5 - Math.random());
