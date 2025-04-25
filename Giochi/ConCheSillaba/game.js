@@ -17,10 +17,7 @@ const imageDatabase = [
         { name: "racchetta", image: "images/racchetta.jpg" },
         { name: "sedia", image: "images/sedia.jpg" },
         { name: "tavolo", image: "images/tavolo.jpg" },
-        { name: "umbrella", image: "images/umbrella.jpg" },
         { name: "vestito", image: "images/vestito.jpg" },
-        { name: "water", image: "images/water.jpg" },
-        { name: "xilofono", image: "images/xilofono.jpg" },
         { name: "yogurt", image: "images/yogurt.jpg" },
         { name: "zaino", image: "images/zaino.jpg" },
         { name: "zebra", image: "images/zebra.jpg" }
