@@ -109,3 +109,53 @@ function exitGame() {
 }
 
 document.addEventListener("DOMContentLoaded", startGame);
+
+
+function showNextImage() {
+    if (currentIndex >= selectedItems.length) {
+        endGame();
+        return;
+    }
+
+    const item = selectedItems[currentIndex];
+    const correctSyllable = item.name.substring(0, 2).toUpperCase();
+    const syllables = generateUniqueSyllables(correctSyllable);
+
+    const gameContainer = document.getElementById("game-container");
+    gameContainer.innerHTML = "";
+
+    const img = document.createElement("img");
+    img.src = item.image;
+    img.alt = item.name;
+    img.classList.add("fade-in"); // Applica l'effetto fade-in
+    gameContainer.appendChild(img);
+
+    const optionContainer = document.createElement("div");
+    syllables.forEach(syllable => {
+        const button = document.createElement("button");
+        button.textContent = syllable;
+        button.onclick = () => checkAnswer(button, syllable, correctSyllable);
+        optionContainer.appendChild(button);
+    });
+
+    gameContainer.appendChild(optionContainer);
+}
+
+function checkAnswer(button, selectedSyllable, correctSyllable) {
+    const result = document.getElementById("result");
+    if (selectedSyllable.toUpperCase() === correctSyllable) {
+        result.textContent = "CORRETTO!";
+        result.classList.add("bounce"); // Applica l'effetto di rimbalzo
+        score++;
+        document.getElementById("score").textContent = "Punteggio: " + score;
+        currentIndex++;
+        setTimeout(() => {
+            result.classList.remove("bounce");
+            showNextImage();
+        }, 1000);
+    } else {
+        result.textContent = "SBAGLIATO, RIPROVA!";
+        button.style.backgroundColor = "red";
+        button.disabled = true;
+    }
+}
