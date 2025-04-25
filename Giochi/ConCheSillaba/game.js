@@ -1,14 +1,20 @@
 const imageDatabase = [
-    { name: "ASTUCCIO", image: "images/astuccio.jpg" },
     { name: "BICICLETTA", image: "images/bicicletta.jpg" },
     { name: "CANE", image: "images/cane.jpg" },
     { name: "DADO", image: "images/dado.jpg" },
-    { name: "ELEFANTE", image: "images/elefante.jpg" },
     { name: "FOCA", image: "images/foca.jpg" },
     { name: "GIRAFFA", image: "images/giraffa.jpg" },
-    { name: "HOTEL", image: "images/hotel.jpg" },
-    { name: "ISOLA", image: "images/isola.jpg" },
-    { name: "LIMONE", image: "images/limone.jpg" }
+    { name: "LIMONE", image: "images/limone.jpg" },
+    { name: "MACCHINA", image: "images/macchina.jpg" },
+    { name: "NAVETTA", image: "images/navetta.jpg" },
+    { name: "PENNARELLO", image: "images/pennarello.jpg" },
+    { name: "SEDIA", image: "images/sedia.jpg" },
+    { name: "TAVOLO", image: "images/tavolo.jpg" },
+    { name: "VESTITO", image: "images/vestito.jpg" },
+    { name: "ZAINO", image: "images/zaino.jpg" },
+    { name: "ZEBRA", image: "images/zebra.jpg" },
+
+
 ];
 
 let currentIndex = 0;
