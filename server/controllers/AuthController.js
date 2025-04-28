@@ -3,8 +3,7 @@
  */
 
 const bcrypt = require('bcrypt');
-const loginRepository = require('../repositories/UserLoginRepository');
-const profileRepository = require('../repositories/UserProfileRepository');
+const UserRepository = require('../repositories/UserRepository');
 const Behavior = require('../models/enums/ProfileBehavior');
 
 class AuthController {
@@ -13,57 +12,81 @@ class AuthController {
 		const { username, password } = req.body;
 
 		try {
-			const user = await loginRepository.findUserByUsername(username);
+			const user = await UserRepository.findUserByUsername(username);
 
-			if (!user)
-				return res.status(401).sendFile('views/error404.html', { root: 'public' })
+			if (!user) {
+				return res.status(401).sendFile('views/error404.html', { root: 'public' });
+			}
 
 			const passwordMatch = await bcrypt.compare(password, user.password);
-			if (!passwordMatch)
-				return res.status(401).sendFile('views/error404.html', { root: 'public' })
+			if (!passwordMatch) {
+				return res.status(401).sendFile('views/error404.html', { root: 'public' });
+			}
 
 			// Imposta la sessione
 			req.session.userId = user.id;
-			req.session.userRole = Behavior.Patient;
-			req.session.userName = user.name; // Assicurati che "user.name" sia corretto
-
-			// Verifica se il profilo esiste già
-			const profile = await profileRepository.getByGuid(user.profileGuid);
-			if (!profile) {
-				await profileRepository.createEmptyProfile(user.profileGuid, Behavior.Patient);
-			}
+			req.session.userRole = user.behavior;
+			req.session.userName = user.name;
 
 			// Reindirizza alla dashboard del paziente
-			return res.redirect('/paziente');
+			res.redirect('/paziente');
 		} catch (err) {
 			console.error('Errore durante il login:', err.message);
-			return res.status(500).sendFile('views/error404.html', { root: 'public' });
+			res.status(500).sendFile('views/error404.html', { root: 'public' });
 		}
 	}
 
 	// REGISTRAZIONE PAZIENTE
 	async register(req, res) {
 		const { name, surname, email, username, password } = req.body;
+
 		try {
 			const hashedPassword = await bcrypt.hash(password, 10);
-			await loginRepository.createUser(name, surname, email, username, hashedPassword);
+			const newUser = {
+				name,
+				surname,
+				email,
+				username,
+				password: hashedPassword,
+				behavior: 'PATIENT', // Comportamento predefinito per i pazienti
+				bio: null,
+				avatarUrl: null,
+				city: null,
+				country: null,
+				phone: null,
+				birthDate: null,
+				lastVisit: null,
+				specialization: null,
+				clinicName: null,
+				licenseNumber: null
+			};
 
-			// Reindirizza alla dashboard del paziente
-			return res.redirect('/paziente');
+			// Crea l'utente nel database
+			const userId = await UserRepository.createUser(newUser);
+
+			// Imposta la sessione per l'utente appena registrato
+			req.session.userId = userId;
+			req.session.userRole = newUser.behavior;
+			req.session.userName = newUser.name;
+
+			// Reindirizza direttamente alla dashboard del paziente
+			res.redirect('/paziente');
 		} catch (err) {
-			if (err.message.includes('UNIQUE'))
+			if (err.message.includes('UNIQUE')) {
 				return res.status(400).sendFile('views/error404.html', { root: 'public' });
+			}
 
-			console.error("Errore durante la registrazione:", err.message);
-			return res.status(500).sendFile('views/error404.html', { root: 'public' });
+			console.error('Errore durante la registrazione:', err.message);
+			res.status(500).sendFile('views/error404.html', { root: 'public' });
 		}
 	}
 
 	// LOGOUT
-	logout(req, res) {
+	async logout(req, res) {
 		req.session.destroy(err => {
 			if (err) {
-				return res.status(500).sendFile('views/error404.html', { root: 'public' });
+				console.error('Errore durante il logout:', err);
+				return res.status(500).send('Errore durante il logout');
 			}
 			res.redirect('/login');
 		});

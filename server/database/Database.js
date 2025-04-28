@@ -21,24 +21,16 @@ db.run("PRAGMA foreign_keys = ON");
 // Function to initialize the database schema (create tables if not exist)
 function initDb() {
 	db.serialize(() => {
-		// Create 'UserLogin' table with necessary constraints
+		// Creazione della tabella 'User'
 		db.run(`
-			CREATE TABLE IF NOT EXISTS UserLogin (
+			CREATE TABLE IF NOT EXISTS User (
 				id INTEGER PRIMARY KEY AUTOINCREMENT,
-				name TEXT NOT NULL,       -- Corretto da "nome" a "name"
-				surname TEXT NOT NULL,    -- Corretto da "cognome" a "surname"
+				name TEXT NOT NULL,
+				surname TEXT NOT NULL,
 				email TEXT NOT NULL UNIQUE,
 				username TEXT NOT NULL UNIQUE,
 				password TEXT NOT NULL,
-				profileGuid TEXT NOT NULL UNIQUE
-			)
-		`);
-
-		// Create 'UserProfile' table with foreign key reference to 'UserLogin'
-		db.run(`
-      		CREATE TABLE IF NOT EXISTS UserProfile (
-				profileGuid TEXT PRIMARY KEY,
-				behavior TEXT NOT NULL,
+				behavior TEXT NOT NULL, -- "PATIENT", "PROFESSIONAL", ecc.
 				bio TEXT,
 				avatarUrl TEXT,
 				city TEXT,
@@ -48,10 +40,9 @@ function initDb() {
 				lastVisit TEXT,
 				specialization TEXT,
 				clinicName TEXT,
-				licenseNumber TEXT,
-  				FOREIGN KEY (profileGuid) REFERENCES UserLogin(profileGuid) ON DELETE CASCADE			
+				licenseNumber TEXT
 			)
-    	`);
+		`);
 	});
 }
 
