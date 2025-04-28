@@ -7,6 +7,7 @@ const { initDb } = require('./database/Database');
 // Importazione delle route
 const authRoutes = require('./routes/AuthRoutes');
 const patientRoutes = require('./routes/PatientRoutes');
+const professionalRoutes = require('./routes/ProfessionalRoutes');
 const apiRoutes = require('./routes/ApiRoutes');
 
 const app = express();
@@ -34,7 +35,8 @@ app.use(session({
 // Registrazione delle route (dopo che la sessione è attiva)
 app.use('/', authRoutes);
 app.use('/paziente', patientRoutes);
-app.use('/', apiRoutes); // ✅ ora la session sarà disponibile
+app.use('/professionista', professionalRoutes);
+app.use('/', apiRoutes);
 
 // Avvio server
 app.listen(PORT, () => {

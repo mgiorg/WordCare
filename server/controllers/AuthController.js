@@ -29,7 +29,13 @@ class AuthController {
 			req.session.userName = user.name;
 
 			// Reindirizza alla dashboard del paziente
-			res.redirect('/paziente');
+			if (user.Behavior === Behavior.Patient) {
+				return res.redirect('/paziente');
+			}
+			else if (user.Behavior === Behavior.Professional) {
+				res.redirect('/professionista');
+			}
+			else return res.status(401).sendFile('views/error404.html', { root: 'public' });
 		} catch (err) {
 			console.error('Errore durante il login:', err.message);
 			res.status(500).sendFile('views/error404.html', { root: 'public' });
