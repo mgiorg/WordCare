@@ -24,3 +24,5 @@ class ProfessionalController {
 		}
 	}
 }
+
+module.exports = new ProfessionalController();
