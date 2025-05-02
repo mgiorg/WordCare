@@ -1,8 +1,7 @@
 const sentences = [
     { sentence: "IL ___ SALTELLA NEL BOSCO", correct: "CONIGLIO", options: ["CONILIO", "CONIGLO", "CONIGLIO"] },
-    { sentence: "IL ___ HA IL COLLO LUNGO", correct: "GIRAFFA", options: ["GIRAFA", "GIRAFFA", "GIRAFFO"] },
-    { sentence: "IL ___ FA LE UOVA", correct: "GALLINA", options: ["GALLINA", "GALLINO", "GALLENA"] },
-    // Aggiungi altre 37 frasi qui
+    { sentence: "LA ___ HA IL COLLO LUNGO", correct: "GIRAFFA", options: ["GIRAFA", "GIRAFFA", "GIRAFFO"] },
+    { sentence: "LA ___ FA LE UOVA", correct: "GALLINA", options: ["GALLINA", "GALLINO", "GALLENA"] },
 ];
 
 let score = 0;
@@ -18,22 +17,27 @@ function startGame() {
 
 function showNextSentence() {
     if (usedSentences.length < 10) {
-        let availableSentences = sentences.filter(s => !usedSentences.includes(s));
-        currentSentence = availableSentences[Math.floor(Math.random() * availableSentences.length)];
-        usedSentences.push(currentSentence);
-        
-        document.getElementById('sentence').innerText = currentSentence.sentence;
-        let optionsDiv = document.getElementById('options');
-        optionsDiv.innerHTML = '';
-        currentSentence.options.forEach(option => {
-            let optionDiv = document.createElement('div');
-            optionDiv.className = 'option';
-            optionDiv.innerText = option;
-            optionDiv.onclick = () => checkAnswer(option);
-            optionsDiv.appendChild(optionDiv);
-        });
+        let availableSentences = sentences.filter(s => !usedSentences.includes(s.sentence));
+
+        if (availableSentences.length > 0) {
+            currentSentence = availableSentences[Math.floor(Math.random() * availableSentences.length)];
+            usedSentences.push(currentSentence.sentence); // Salva solo la stringa della frase
+
+            document.getElementById('sentence').innerText = currentSentence.sentence;
+            let optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+
+            currentSentence.options.forEach(option => {
+                let optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.innerText = option;
+                optionDiv.onclick = () => checkAnswer(option);
+                optionsDiv.appendChild(optionDiv);
+            });
+        }
     } else {
         document.getElementById('sentence').innerText = 'GIOCO TERMINATO';
+        document.getElementById('options').innerHTML = '';
     }
 }
 
