@@ -36,7 +36,7 @@ const sentences = [
     { sentence: "LA ___ È UN PICCOLO MAMMIFERO NOTTURNO", correct: "DONNOLA", options: ["DONNOLA", "DONOLA", "DONNILO"] },
     { sentence: "IL ___ CACCIA NELLA NOTTE", correct: "LUPO", options: ["LUPO", "LUPA", "LUPI"] },
     { sentence: "IL ___ SCAVA IN TERRA", correct: "RATTO", options: ["RATTO", "RATTI", "RATO"] }
-];
+]
 
 let score = 0;
 let usedSentences = [];
@@ -55,9 +55,11 @@ function showNextSentence() {
 
         if (availableSentences.length > 0) {
             currentSentence = availableSentences[Math.floor(Math.random() * availableSentences.length)];
-            usedSentences.push(currentSentence.sentence); // Salva solo la stringa della frase
+            usedSentences.push(currentSentence.sentence);
 
             document.getElementById('sentence').innerText = currentSentence.sentence;
+            document.getElementById('sentence').style.animation = "fadeIn 0.5s ease-in-out";
+
             let optionsDiv = document.getElementById('options');
             optionsDiv.innerHTML = '';
 
@@ -70,7 +72,7 @@ function showNextSentence() {
             });
         }
     } else {
-        document.getElementById('sentence').innerText = 'GIOCO TERMINATO';
+        document.getElementById('sentence').innerText = '🎉 GIOCO TERMINATO! 🎉';
         document.getElementById('options').innerHTML = '';
     }
 }
@@ -78,13 +80,19 @@ function showNextSentence() {
 function checkAnswer(selectedOption) {
     if (selectedOption === currentSentence.correct) {
         score++;
+        let scoreElement = document.getElementById('score');
+        scoreElement.innerText = `PUNTEGGIO: ${score}`;
+        scoreElement.style.animation = "bounce 0.5s ease-in-out";
+
+        setTimeout(() => {
+            scoreElement.style.animation = "";
+        }, 500);
     }
-    document.getElementById('score').innerText = `PUNTEGGIO: ${score}`;
     showNextSentence();
 }
 
 function exitGame() {
-    alert("Grazie per aver giocato!");
+    alert("Grazie per aver giocato! Torna presto! 😊");
 }
 
 startGame();
