@@ -3,6 +3,7 @@ body {
     text-align: center;
     background: linear-gradient(to bottom, #ffcc70, #ff6b6b);
     color: white;
+    transition: background-color 0.5s ease;
 }
 
 .title {
@@ -11,11 +12,6 @@ body {
     margin-bottom: 20px;
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
     animation: bounceTitle 1s infinite alternate;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .container {
@@ -32,11 +28,6 @@ body {
     margin-bottom: 20px;
     opacity: 1;
     animation: fadeIn 0.5s ease-in forwards;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .options {
@@ -63,17 +54,26 @@ body {
     transform: scale(1.1);
 }
 
-.score {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 20px;
-    animation: bounce 0.5s ease-in-out;
+/* Effetto visivo per le risposte */
+.correct {
+    animation: bounceCorrect 0.5s ease-in-out;
 }
 
-@keyframes bounce {
+.wrong {
+    animation: shakeWrong 0.5s ease-in-out;
+}
+
+@keyframes bounceCorrect {
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
+}
+
+@keyframes shakeWrong {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
 }
 
 .buttons {

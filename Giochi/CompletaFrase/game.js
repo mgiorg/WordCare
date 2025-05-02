@@ -45,6 +45,7 @@ let currentSentence = {};
 function startGame() {
     score = 0;
     usedSentences = [];
+    document.body.style.backgroundColor = "#ffcc70"; // Reset dello sfondo
     document.getElementById('score').innerText = `PUNTEGGIO: ${score}`;
     showNextSentence();
 }
@@ -57,8 +58,9 @@ function showNextSentence() {
             currentSentence = availableSentences[Math.floor(Math.random() * availableSentences.length)];
             usedSentences.push(currentSentence.sentence);
 
-            document.getElementById('sentence').innerText = currentSentence.sentence;
-            document.getElementById('sentence').style.animation = "fadeIn 0.5s ease-in-out";
+            let sentenceElement = document.getElementById('sentence');
+            sentenceElement.innerText = currentSentence.sentence;
+            sentenceElement.className = ""; // Reset animazione
 
             let optionsDiv = document.getElementById('options');
             optionsDiv.innerHTML = '';
@@ -78,17 +80,22 @@ function showNextSentence() {
 }
 
 function checkAnswer(selectedOption) {
+    let sentenceElement = document.getElementById('sentence');
+
     if (selectedOption === currentSentence.correct) {
         score++;
-        let scoreElement = document.getElementById('score');
-        scoreElement.innerText = `PUNTEGGIO: ${score}`;
-        scoreElement.style.animation = "bounce 0.5s ease-in-out";
-
-        setTimeout(() => {
-            scoreElement.style.animation = "";
-        }, 500);
+        document.body.style.backgroundColor = "#4caf50"; // Verde per risposta corretta
+        sentenceElement.classList.add("correct");
+    } else {
+        document.body.style.backgroundColor = "#e91e63"; // Rosso per risposta sbagliata
+        sentenceElement.classList.add("wrong");
     }
-    showNextSentence();
+
+    document.getElementById('score').innerText = `PUNTEGGIO: ${score}`;
+    setTimeout(() => {
+        showNextSentence();
+        document.body.style.backgroundColor = "#ffcc70"; // Reset colore
+    }, 1000);
 }
 
 function exitGame() {
