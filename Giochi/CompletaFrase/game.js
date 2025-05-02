@@ -37,7 +37,6 @@ const sentences = [
     { sentence: "IL ___ CACCIA NELLA NOTTE", correct: "LUPO", options: ["LUPO", "LUPA", "LUPI"] },
     { sentence: "IL ___ SCAVA IN TERRA", correct: "RATTO", options: ["RATTO", "RATTI", "RATO"] }
 ]
-
 let score = 0;
 let usedSentences = [];
 let currentSentence = {};
@@ -60,7 +59,7 @@ function showNextSentence() {
 
             let sentenceElement = document.getElementById('sentence');
             sentenceElement.innerText = currentSentence.sentence;
-            sentenceElement.className = ""; // Reset animazione
+            sentenceElement.className = ""; // Reset animazione e colore
 
             let optionsDiv = document.getElementById('options');
             optionsDiv.innerHTML = '';
@@ -69,7 +68,7 @@ function showNextSentence() {
                 let optionDiv = document.createElement('div');
                 optionDiv.className = 'option';
                 optionDiv.innerText = option;
-                optionDiv.onclick = () => checkAnswer(option);
+                optionDiv.onclick = () => checkAnswer(option, optionDiv);
                 optionsDiv.appendChild(optionDiv);
             });
         }
@@ -79,19 +78,22 @@ function showNextSentence() {
     }
 }
 
-function checkAnswer(selectedOption) {
+function checkAnswer(selectedOption, optionElement) {
     let sentenceElement = document.getElementById('sentence');
 
     if (selectedOption === currentSentence.correct) {
         score++;
-        document.body.style.backgroundColor = "#4caf50"; // Verde per risposta corretta
+        document.body.style.backgroundColor = "#a8e6a2"; // Verde per risposta corretta
         sentenceElement.classList.add("correct");
+        optionElement.classList.add("correct");
     } else {
-        document.body.style.backgroundColor = "#e91e63"; // Rosso per risposta sbagliata
+        document.body.style.backgroundColor = "#f8a7a7"; // Rosso per risposta sbagliata
         sentenceElement.classList.add("wrong");
+        optionElement.classList.add("wrong");
     }
 
     document.getElementById('score').innerText = `PUNTEGGIO: ${score}`;
+
     setTimeout(() => {
         showNextSentence();
         document.body.style.backgroundColor = "#ffcc70"; // Reset colore
