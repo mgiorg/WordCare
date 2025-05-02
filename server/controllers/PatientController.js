@@ -2,8 +2,7 @@
  * WordCare - PatientController.js
  */
 
-const UserLoginRepository = require('../repositories/UserLoginRepository');
-const UserProfileRepository = require('../repositories/UserProfileRepository');
+const UserRepository = require('../repositories/UserRepository');
 const Behavior = require('../models/enums/ProfileBehavior');
 const path = require('path');
 
@@ -12,25 +11,41 @@ class PatientController {
 	// Route: /paziente
 	async Patient(req, res) {
 		try {
-			// Find the UserLogin by userId
+			// Trova l'utente tramite l'ID della sessione
 			const userId = req.session.userId;
-			const user = await UserLoginRepository.findById(userId);
+			const user = await UserRepository.findUserById(userId);
 			if (!user) {
 				return res.status(404).send('User not found');
 			}
 
-			// Retrieve the related UserProfile by GUID
-			const profile = await UserProfileRepository.getByGuid(user.profileGuid);
-			if (!profile) {
-				return res.status(404).send('Profile not found');
-			}
-
-			// Render the patient view with user and profile data
+			// Renderizza la vista del paziente
 			res.sendFile(path.join(__dirname, '../../public/views/Paziente/paziente.html'));
-
 		} catch (err) {
 			console.error('Error in patient dashboard:', err);
 			res.status(500).send('Internal Server Error');
+		}
+	}
+
+	async getPatientDashboard(req, res) {
+		try {
+			const userId = req.user.id; // Supponendo che l'ID utente sia disponibile nel token
+			const user = await UserRepository.findUserById(userId);
+
+			if (!user) {
+				return res.status(404).json({ message: 'Utente non trovato' });
+			}
+
+			res.json({
+				name: user.name,
+				surname: user.surname,
+				bio: user.bio,
+				avatarUrl: user.avatarUrl,
+				lastVisit: user.lastVisit,
+				behavior: user.behavior
+			});
+		} catch (error) {
+			console.error('Errore nel recupero della dashboard:', error);
+			res.status(500).json({ message: 'Errore interno del server' });
 		}
 	}
 }

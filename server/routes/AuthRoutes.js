@@ -16,8 +16,13 @@ router.get('/login', (req, res) => {
 	res.sendFile(path.join(viewsPath, 'Login/login.html'));
 });
 
+// Route to handle login
 router.post('/login', authController.login);
+
+// Route to handle registration
 router.post('/register', authController.register);
+
+// Route to handle logout
 router.get('/logout', authController.logout);
 
 module.exports = router;
