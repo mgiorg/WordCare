@@ -50,13 +50,25 @@ body {
 }
 
 .box {
-    width: 80%;
+    width: 100%;
     height: 200px;
     margin: 20px;
-    border: 2px dashed #ccc;
+    border: 4px dashed #007bff; /* Bordo più evidente */
+    background-color: rgba(0, 123, 255, 0.1); /* Sfondo leggermente colorato */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
-    color: #333;
+}
+
+.box.dragover {
+    border-color: #ff9800; /* Cambia colore quando un'immagine viene trascinata sopra */
+    background-color: rgba(255, 152, 0, 0.2);
+}
+
+
+
+.box img {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
 }

@@ -76,6 +76,20 @@ function drop(event) {
     }
 }
 
+function highlight(event) {
+    event.preventDefault();
+    event.target.classList.add('dragover');
+}
+
+function removeHighlight(event) {
+    event.target.classList.remove('dragover');
+}
+
+document.getElementById('ch-box').addEventListener('dragenter', highlight);
+document.getElementById('ch-box').addEventListener('dragleave', removeHighlight);
+document.getElementById('c-box').addEventListener('dragenter', highlight);
+document.getElementById('c-box').addEventListener('dragleave', removeHighlight);
+
 
 
 
