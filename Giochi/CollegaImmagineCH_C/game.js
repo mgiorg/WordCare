@@ -43,6 +43,7 @@ function startGame() {
 
     shuffledImages.forEach(image => {
         const imgElement = document.createElement('img');
+        imgElement.id = `img-${Math.random().toString(36).substr(2, 9)}`;
         imgElement.src = image.src;
         imgElement.classList.add('image');
         imgElement.dataset.type = image.type;
