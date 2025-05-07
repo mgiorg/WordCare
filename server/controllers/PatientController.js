@@ -3,6 +3,7 @@
  */
 
 const UserRepository = require('../repositories/UserRepository');
+const PatientRepository = require('../repositories/PatientRepository');
 const Behavior = require('../models/enums/ProfileBehavior');
 const path = require('path');
 
@@ -13,7 +14,7 @@ class PatientController {
 		try {
 			// Trova l'utente tramite l'ID della sessione
 			const userId = req.session.userId;
-			const user = await UserRepository.findUserById(userId);
+			const user = await UserRepository.findById(userId);
 			if (!user) {
 				return res.status(404).send('User not found');
 			}
@@ -29,18 +30,18 @@ class PatientController {
 	async getPatientDashboard(req, res) {
 		try {
 			const userId = req.user.id; // Supponendo che l'ID utente sia disponibile nel token
-			const user = await UserRepository.findUserById(userId);
-
+			const user = await UserRepository.findById(userId);
+			const patient = await PatientRepository.findByUserId(userId);
 			if (!user) {
 				return res.status(404).json({ message: 'Utente non trovato' });
 			}
+			if (!patient) {
+				return res.status(404).json({ message: 'Paziente non trovato' });
+			}
 
 			res.json({
-				name: user.name,
-				surname: user.surname,
-				bio: user.bio,
-				avatarUrl: user.avatarUrl,
-				lastVisit: user.lastVisit,
+				name: patient.nome,
+				surname: patient.cognome,
 				behavior: user.behavior
 			});
 		} catch (error) {

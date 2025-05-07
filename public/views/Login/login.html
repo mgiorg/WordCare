@@ -2,27 +2,41 @@
 <html lang="it">
 
 <head>
-	<title>Login Dinamico</title>
-	<link rel="stylesheet" href="../css/Login/login.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WordCare - Login Dinamico</title>
+	<link rel="stylesheet" href="../../css/Login/login.css" />
 </head>
 
 <body>
+	<!--* Background shapes *-->
+	<div class="bg-shapes">
+		<div class="shape shape-1"></div>
+		<div class="shape shape-2"></div>
+		<div class="shape shape-3"></div>
+		<div class="shape shape-4"></div>
+	</div>
+
+	<!--* Header con logo e animazione *-->
 	<div class="login-header">
 		<div class="card">
 			<div class="loader">
 				<h2>WordCare</h2>
 				<div class="words">
-					<h2 class="word" style="margin-bottom: 5px;">studia</h2>
-					<h2 class="word" style="margin-bottom: 5px;">impara</h2>
-					<h2 class="word" style="margin-bottom: 5px;">esercitati</h2>
-					<h2 class="word" style="margin-bottom: 5px;">migliora</h2>
+					<div class="words-inner">
+						<h2 class="word">studia</h2>
+						<h2 class="word">impara</h2>
+						<h2 class="word">esercitati</h2>
+						<h2 class="word">migliora</h2>
+						<h2 class="word">studia</h2> <!--* duplicato *-->
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<!--* Main login container *-->
 	<div class="container-dinamico" id="container">
-
 		<div class="form-container sign-up-container">
 			<form action="/register" method="POST">
 				<h1>Registrati</h1>
@@ -46,10 +60,19 @@
 					<input type="password" name="password" autocomplete="off" class="input" required>
 					<label class="user-label">Password</label>
 				</div>
-				<button style="margin-top: 20px;">Registrati</button>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="userType" value="professional" required>
+						<span>Professionista</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="userType" value="patient" required>
+						<span>Paziente</span>
+					</label>
+				</div>
+				<button type="submit">Registrati</button>
 			</form>
 		</div>
-
 		<div class="form-container sign-in-container">
 			<form action="/login" method="POST">
 				<h1>Accedi</h1>
@@ -61,28 +84,25 @@
 					<input type="password" name="password" autocomplete="off" class="input" required>
 					<label class="user-label">Password</label>
 				</div>
-				<button style="margin-top: 20px;">Accedi</button>
+				<a href="#" class="forgot-password">Password dimenticata?</a>
+				<button type="submit">Accedi</button>
 			</form>
 		</div>
-
-		<!-- OVERLAY -->
+		<!--* OVERLAY *-->
 		<div class="overlay-container">
 			<div class="overlay">
-
 				<div class="overlay-panel overlay-left">
 					<h1>Bentornato!</h1>
-					<p>Se hai già un account, effettua il login</p>
+					<p>Per accedere ai tuoi contenuti, effettua il login con i tuoi dati personali</p>
 					<button class="ghost" id="signIn">Accedi</button>
 				</div>
-
 				<div class="overlay-panel overlay-right">
 					<h1>Benvenuto!</h1>
-					<p>Inserisci i tuoi dati personali per registrarti</p>
+					<p>Inserisci i tuoi dati personali e inizia il tuo percorso con noi</p>
 					<button class="ghost" id="signUp">Registrati</button>
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<script>
@@ -98,6 +118,13 @@
 		// Click su "Accedi"
 		signInButton.addEventListener('click', () => {
 			container.classList.remove("right-panel-active");
+		});
+
+		// Focus sul primo input all'apertura della pagina
+		window.addEventListener('load', () => {
+			setTimeout(() => {
+				document.querySelector('.sign-in-container input[name="username"]').focus();
+			}, 1000);
 		});
 	</script>
 </body>

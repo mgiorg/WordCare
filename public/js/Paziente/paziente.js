@@ -19,9 +19,12 @@ $(document).ready(function () {
 			url: '/api/user-info',
 			method: 'GET',
 			dataType: 'json',
+			xhrFields: {
+				withCredentials: true
+			},
 			success: function (data) {
 				console.log('Dati ricevuti:', data);
-				$('.patient-title').text(`Dashboard di ${data.nome}`);
+				$('.patient-title').text(`Dashboard di ${data.nome} ${data.cognome}`);
 				$('.avatar-dropdown .user-name').text(`Ciao, ${data.nome}`);
 			},
 			error: function (xhr, status, error) {

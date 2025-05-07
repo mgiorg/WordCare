@@ -23,57 +23,54 @@ function initDb() {
 	db.serialize(() => {
 		// Creazione della tabella 'User'
 		db.run(`
-			CREATE TABLE IF NOT EXISTS User (
-				id INTEGER PRIMARY KEY AUTOINCREMENT,
-				email TEXT NOT NULL UNIQUE,
-				username TEXT NOT NULL UNIQUE,
-				password TEXT NOT NULL,
-				behavior TEXT NOT NULL, -- "PATIENT", "PROFESSIONAL", ecc.
-				bio TEXT,
-				avatarUrl TEXT,
-				city TEXT,
-				country TEXT,
-				phone TEXT,
-				lastVisit TEXT,
-				clinicName TEXT,
-				licenseNumber TEXT
-			)
-		`);
+            CREATE TABLE IF NOT EXISTS User (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                email TEXT NOT NULL UNIQUE,
+                username TEXT NOT NULL UNIQUE,
+                password TEXT NOT NULL,
+                behavior TEXT NOT NULL
+            );
+        `);
 		// --- Entità Paziente
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Paziente (
-			  id_paziente INTEGER PRIMARY KEY AUTOINCREMENT,
+			  id INTEGER PRIMARY KEY AUTOINCREMENT,
+			  user_id INTEGER NOT NULL,
 			  nome TEXT NOT NULL,
 			  cognome TEXT NOT NULL,
 			  eta INTEGER NOT NULL CHECK(eta >= 0 AND eta <= 150),
-			  patologia TEXT NOT NULL
 			  data_nascita DATE NOT NULL,
-			  FOREIGN KEY(id) REFERENCES User(id) ON DELETE CASCADE
+			  patologia TEXT NOT NULL,
+			  FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE
 			);
 		`);
 
 		// --- Entità Professionista
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Professionista (
-			  id_prof INTEGER PRIMARY KEY AUTOINCREMENT,
+			  id INTEGER PRIMARY KEY AUTOINCREMENT,
+			  user_id INTEGER NOT NULL,
 			  nome TEXT NOT NULL,
 			  cognome TEXT NOT NULL,
 			  data_nascita DATE NOT NULL,
 			  specializzazione TEXT NOT NULL,
-			  sede TEXT NOT NULL
-			  FOREIGN KEY(id) REFERENCES User(id) ON DELETE CASCADE
+			  sede TEXT NOT NULL,
+			  FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE
+
 			);
 		`);
 
 		// --- Relazione in_cura (M:N Paziente - Professionista)
 		db.run(`
-			CREATE TABLE IF NOT EXISTS in_cura (
-			  paziente_id INTEGER NOT NULL,
-			  professionista_id INTEGER NOT NULL,
-			  data_nascita DATE NOT NULL,
-			  PRIMARY KEY(paziente_id, professionista_id),
-			  FOREIGN KEY(paziente_id) REFERENCES Paziente(id) ON DELETE CASCADE,
-			  FOREIGN KEY(professionista_id) REFERENCES Professionista(id) ON DELETE CASCADE
+			CREATE TABLE IF NOT EXISTS InCura (
+			  paziente INTEGER NOT NULL,
+			  professionista INTEGER NOT NULL,
+			  data_inizio DATE NOT NULL,
+			  data_fine DATE,
+			  note TEXT,
+			  PRIMARY KEY(paziente, professionista),
+			  FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE,
+			  FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE
 			);
 		`);
 
@@ -89,13 +86,13 @@ function initDb() {
 
 		// --- Relazione post_it (M:N Professionista - Promemoria)
 		db.run(`
-			CREATE TABLE IF NOT EXISTS post_it (
-			  professionista_id INTEGER NOT NULL,
-			  promemoria_id INTEGER NOT NULL,
+			CREATE TABLE IF NOT EXISTS PostIt (
+			  professionista INTEGER NOT NULL,
+			  promemoria INTEGER NOT NULL,
 
-			  PRIMARY KEY(professionista_id, promemoria_id),
-			  FOREIGN KEY(professionista_id) REFERENCES Professionista(id) ON DELETE CASCADE,
-			  FOREIGN KEY(promemoria_id) REFERENCES Promemoria(id) ON DELETE CASCADE
+			  PRIMARY KEY(professionista, promemoria),
+			  FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE,
+			  FOREIGN KEY(promemoria) REFERENCES Promemoria(id) ON DELETE CASCADE
 			);
 		`);
 
@@ -103,15 +100,15 @@ function initDb() {
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Appuntamento (
 			  id INTEGER PRIMARY KEY AUTOINCREMENT,
-			  paziente_id INTEGER NOT NULL,
-			  professionista_id INTEGER NOT NULL,
+			  paziente INTEGER NOT NULL,
+			  professionista INTEGER NOT NULL,
 			  data DATE NOT NULL,
 			  ora TIME NOT NULL,
 			  sede TEXT NOT NULL,
 
-			  FOREIGN KEY(paziente_id) REFERENCES Paziente(id) ON DELETE CASCADE,
-			  FOREIGN KEY(professionista_id) REFERENCES Professionista(id) ON DELETE CASCADE,
-			  UNIQUE(paziente_id, professionista_id, data, ora)
+			  FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE,
+			  FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE,
+			  UNIQUE(paziente, professionista, data, ora)
 			);
 		`);
 
@@ -120,8 +117,8 @@ function initDb() {
 			CREATE TABLE IF NOT EXISTS Gioco (
 			  id INTEGER PRIMARY KEY AUTOINCREMENT,
 			  nome TEXT NOT NULL UNIQUE,
-			  punteggio INTEGER NOT NULL CHECK(punteggio >= 0),
-			  tipologia TEXT NOT NULL
+			  tipologia TEXT NOT NULL,
+			  note TEXT
 			);
 		`);
 
@@ -129,22 +126,24 @@ function initDb() {
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Assegnazione (
 			  id INTEGER PRIMARY KEY AUTOINCREMENT,
-			  paziente_id INTEGER NOT NULL,
-			  professionista_id INTEGER NOT NULL,
-			  gioco_id INTEGER NOT NULL,
+			  paziente INTEGER NOT NULL,
+			  professionista INTEGER NOT NULL,
+			  gioco INTEGER NOT NULL,
 			  scadenza DATE NOT NULL,
-			  num_ripetizioni INTEGER NOT NULL CHECK(num_ripetizioni >= 1),
+			  ripetizioni_assegnate INTEGER NOT NULL CHECK(ripetizioni_assegnate >= 1),
 			  svolto INTEGER NOT NULL CHECK(svolto IN (0,1)),
+			  ripetizioni_svolte INTEGER NOT NULL CHECK(ripetizioni_svolte >= 0),
+			  punteggio INTEGER NOT NULL CHECK(punteggio >= 0),
 
-			  FOREIGN KEY(paziente_id) REFERENCES Paziente(id) ON DELETE CASCADE,
-			  FOREIGN KEY(professionista_id) REFERENCES Professionista(id) ON DELETE CASCADE,
-			  FOREIGN KEY(gioco_id) REFERENCES Gioco(id) ON DELETE RESTRICT,
-			  UNIQUE(paziente_id, professionista_id, gioco_id)
+			  FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE,
+			  FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE,
+			  FOREIGN KEY(gioco) REFERENCES Gioco(id) ON DELETE CASCADE,
+			  UNIQUE(paziente, professionista, gioco)
 			);
 		`);
 
 		console.log("Tabelle inizializzate o già esistenti.");
-	
+
 	});
 }
 
