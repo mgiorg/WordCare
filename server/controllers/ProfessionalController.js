@@ -6,6 +6,7 @@
 const UserRepository = require('../repositories/UserRepository');
 const Behavior = require('../models/enums/ProfileBehavior');
 const path = require('path');
+const { db } = require('../database/Database');
 
 module.exports = {
 	listPazienti: (req, res) => {

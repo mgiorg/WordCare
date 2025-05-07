@@ -6,6 +6,7 @@
 const express = require('express');
 const ProfessionalController = require('../controllers/ProfessionalController');
 const Behavior = require('../models/enums/ProfileBehavior');
+const path=require('path');
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ function VerifyProfessionalSession(req, res, next) {
 
 // Dashboard
 router.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname, '..', 'public', 'professional', 'dashboard.html'));
+	res.sendFile(path.join(public/professionista/homeprof/homeprof.html, '..', 'public', 'professional', 'homeprof.html'));
   });
   
   // Pazienti
