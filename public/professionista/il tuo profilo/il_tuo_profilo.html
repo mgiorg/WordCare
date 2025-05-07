@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il tuo profilo - Logopedia</title>
+  <link rel="stylesheet" href="il_tuo_profilo.css" />
+</head>
+<body>
+  <main class="profile-card">
+    <section class="photo-section">
+      <img id="profile-photo" src="placeholder.jpg" alt="Foto profilo" />
+      <input type="file" id="photo-input" accept="image/*" />
+    </section>
+    <section class="info-section">
+      <div class="row row-static">
+        <span id="first-name">Mario</span>
+        <span id="last-name">Rossi</span>
+        <span id="dob">01/01/1980</span>
+      </div>
+      <div class="row">
+        <label for="office">Sede:</label>
+        <input type="text" id="office" placeholder="Inserisci sede" />
+      </div>
+      <div class="row">
+        <label for="degrees">Lauree e specializzazioni:</label>
+        <input type="text" id="degrees" placeholder="Inserisci lauree e specializzazioni" />
+      </div>
+      <div class="row row-cv">
+        <button id="toggle-cv">Aggiungi/Visualizza CV</button>
+        <input type="file" id="cv-input" accept="application/pdf" style="display:none" />
+      </div>
+    </section>
+  </main>
+  <section class="contacts">
+    <h2>I miei contatti (opzionale)</h2>
+    <textarea id="contacts" rows="3" placeholder="Email, telefono..."></textarea>
+  </section>
+
+  <script src="il_tuo_profilo.js"></script>
+</body>
+</html>
