@@ -1,5 +1,6 @@
 /**
  * WordCare - ProfessionalRoutes.js
+ * versione provvisoria da correggere e finire
  */
 
 const express = require('express');
@@ -16,7 +17,26 @@ function VerifyProfessionalSession(req, res, next) {
 	return res.redirect('/login');
 }
 
-// Dashboard professionista
-router.get('/', VerifyProfessionalSession, (req, res) => ProfessionalController.Professional(req, res));
-
-module.exports = router;
+// Dashboard
+router.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname, '..', 'public', 'professional', 'dashboard.html'));
+  });
+  
+  // Pazienti
+  router.get('/pazienti', controller.listPazienti);
+  router.get('/pazienti/:id', controller.dettaglioPaziente);
+  
+  // Appuntamenti
+  router.get('/appuntamenti', controller.listaAppuntamenti);
+  router.post('/appuntamenti', controller.creaAppuntamento);
+  router.post('/appuntamenti/:id/elimina', controller.eliminaAppuntamento);
+  
+  // Giochi
+  router.get('/giochi', controller.listaGiochi);
+  router.post('/assegnazioni', controller.assegnaGioco);
+  
+  // Promemoria
+  router.get('/promemoria', controller.listaPromemoria);
+  router.post('/promemoria', controller.creaPromemoria);
+  
+  module.exports = router;

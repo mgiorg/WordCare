@@ -42,7 +42,7 @@ function initDb() {
 		// --- Entità Paziente
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Paziente (
-			  id INTEGER PRIMARY KEY AUTOINCREMENT,
+			  id_paziente INTEGER PRIMARY KEY AUTOINCREMENT,
 			  nome TEXT NOT NULL,
 			  cognome TEXT NOT NULL,
 			  eta INTEGER NOT NULL CHECK(eta >= 0 AND eta <= 150),
@@ -55,7 +55,7 @@ function initDb() {
 		// --- Entità Professionista
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Professionista (
-			  id INTEGER PRIMARY KEY AUTOINCREMENT,
+			  id_prof INTEGER PRIMARY KEY AUTOINCREMENT,
 			  nome TEXT NOT NULL,
 			  cognome TEXT NOT NULL,
 			  data_nascita DATE NOT NULL,
