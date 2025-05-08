@@ -5,6 +5,7 @@ const path = require('path');
 const { initDb } = require('./database/Database');
 
 // Importazione delle route
+const homeRoutes = require('./routes/HomeRoutes');
 const authRoutes = require('./routes/AuthRoutes');
 const patientRoutes = require('./routes/PatientRoutes');
 const professionalRoutes = require('./routes/ProfessionalRoutes');
@@ -33,10 +34,11 @@ app.use(session({
 }));
 
 // Registrazione delle route (dopo che la sessione è attiva)
-app.use('/', authRoutes);
+app.use('/', homeRoutes);
+app.use('/login', authRoutes);
 app.use('/paziente', patientRoutes);
 app.use('/professionista', professionalRoutes);
-app.use('/', apiRoutes);
+app.use('/api', apiRoutes);
 
 // Avvio server
 app.listen(PORT, () => {
