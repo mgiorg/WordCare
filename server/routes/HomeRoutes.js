@@ -5,11 +5,8 @@ const router = express.Router();
 const viewsPath = path.join(__dirname, '../../public/views');
 const authRoutes = require('./AuthRoutes');
 
-// Route to serve the home HTML page
+// Route to serve the main HTML page
 router.get('/', (req, res) => {
-	res.redirect('/home');
-});
-router.get('/home', (req, res) => {
 	res.sendFile(path.join(viewsPath, 'Home/home.html'));
 });
 
@@ -25,7 +22,7 @@ router.get('/services', (req, res) => {
 
 // Route to serve the contact HTML page
 router.get('/contact', (req, res) => {
-	res.sendFile(path.join(viewsPath, 'Home/contatti.html'))
+	res.sendFile(path.join(viewsPath, 'Home/Contatti.html'))
 });
 
 module.exports = router;

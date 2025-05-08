@@ -1,11 +1,11 @@
-$(document).ready(function () {
+$(function () {
 	// Gestione del dropdown dell'avatar
-	$(".navbar-avatar").click(function () {
+	$(".navbar-avatar").on("click", function () {
 		$(".avatar-dropdown").toggleClass("active");
 	});
 
 	// Chiudi il dropdown quando si clicca altrove
-	$(document).click(function (event) {
+	$(document).on("click", function (event) {
 		if (!$(event.target).closest('.navbar-avatar').length) {
 			$(".avatar-dropdown").removeClass("active");
 		}
@@ -16,7 +16,7 @@ $(document).ready(function () {
 
 	function loadUserInfo() {
 		$.ajax({
-			url: '/api/user-info',
+			url: '/api/patient-info',
 			method: 'GET',
 			dataType: 'json',
 			xhrFields: {

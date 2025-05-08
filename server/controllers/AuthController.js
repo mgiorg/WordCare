@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt');
 const UserRepository = require('../repositories/UserRepository');
 const PatientRepository = require('../repositories/PatientRepository');
 const Behavior = require('../models/enums/ProfileBehavior');
+const patientRoutes = require('../routes/PatientRoutes');
+const Paziente = require('../models/Paziente');
 
 class AuthController {
 	// LOGIN PAZIENTE
@@ -45,11 +47,7 @@ class AuthController {
 			// Reindirizza alla dashboard del paziente
 			if (user.behavior === Behavior.Patient) {
 				const patient = await PatientRepository.findByUserId(user.id);
-				req.session.userName = patient.nome;
-				req.session.userSurname = patient.cognome;
-				req.session.userAge = patient.eta;
-				req.session.userBirthDate = patient.data_nascita;
-				req.session.userPathology = patient.patologia;
+				req.session.patientId = patient.id;
 				return res.redirect('/paziente');
 			}
 			else if (user.behavior === Behavior.Professional) {
@@ -63,29 +61,43 @@ class AuthController {
 		}
 	}
 
-	// REGISTRAZIONE PAZIENTE
+	// REGISTRAZIONE
 	async register(req, res) {
-		const { email, username, password } = req.body;
+		const { name, surname, email, username, password, userType } = req.body;
 
 		try {
 			const hashedPassword = await bcrypt.hash(password, 10);
+			const behavior = userType === 'professional' ? Behavior.Professional : Behavior.Patient;
 			const newUser = {
 				email,
 				username,
 				password: hashedPassword,
-				behavior: 'PATIENT',
+				behavior: behavior,
 			};
 
 			// Crea l'utente nel database
 			const userId = await UserRepository.createUser(newUser);
 
-			// Imposta la sessione per l'utente appena registrato
-			req.session.userId = userId;
-			req.session.userRole = newUser.behavior;
-			req.session.userName = newUser.name;
+			if (newUser.behavior === Behavior.Patient) {
+				const patient = {
+					user_id: userId,
+					nome: name,
+					cognome: surname,
+					data_nascita: null,
+					patologia: null,
+				};
+				const patientId = await PatientRepository.new(patient);
+				// Imposta la sessione per l'utente appena registrato
+				req.session.userId = userId;
+				req.session.userRole = newUser.behavior;
+				req.session.patientId = patientId;
 
-			// Reindirizza direttamente alla dashboard del paziente
-			res.redirect('/paziente');
+				// Reindirizza direttamente alla dashboard del paziente
+				res.redirect('/paziente');
+			}
+			else {
+
+			}
 		} catch (err) {
 			if (err.message.includes('UNIQUE')) {
 				return res.status(400).sendFile('views/error404.html', { root: 'public' });
@@ -93,6 +105,7 @@ class AuthController {
 
 			console.error('Errore durante la registrazione:', err.message);
 			res.status(500).sendFile('views/error404.html', { root: 'public' });
+			return;
 		}
 	}
 

@@ -5,7 +5,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/api/user-info', (req, res) => {
+router.get('/patient-info', (req, res) => {
 	if (!req.session.userId) {
 		return res.status(401).json({ error: 'Non loggato' });
 	}
@@ -21,7 +21,7 @@ router.get('/api/user-info', (req, res) => {
  * → Riceve opzionalmente in query: code, returnUrl
  * → Puoi mappare code→titolo/messaggio o usare dei valori di default
  */
-router.get('/api/error-info', (req, res) => {
+router.get('/error-info', (req, res) => {
 	const { code, returnUrl } = req.query;
 
 	// Mappa di esempio per titoli e messaggi

@@ -38,9 +38,8 @@ function initDb() {
 			  user_id INTEGER NOT NULL,
 			  nome TEXT NOT NULL,
 			  cognome TEXT NOT NULL,
-			  eta INTEGER NOT NULL CHECK(eta >= 0 AND eta <= 150),
-			  data_nascita DATE NOT NULL,
-			  patologia TEXT NOT NULL,
+			  data_nascita DATE,
+			  patologia TEXT,
 			  FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE
 			);
 		`);
@@ -52,9 +51,9 @@ function initDb() {
 			  user_id INTEGER NOT NULL,
 			  nome TEXT NOT NULL,
 			  cognome TEXT NOT NULL,
-			  data_nascita DATE NOT NULL,
-			  specializzazione TEXT NOT NULL,
-			  sede TEXT NOT NULL,
+			  data_nascita DATE,
+			  specializzazione TEXT,
+			  sede TEXT,
 			  FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE
 
 			);

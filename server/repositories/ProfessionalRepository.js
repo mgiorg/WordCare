@@ -3,29 +3,30 @@
  */
 
 const { db } = require('../database/Database');
-const Patient = require('../models/Paziente');
+const Profesional = require('../models/Professionista');
 
 class PatientRepository {
 	/**
 	 * Trova un paziente in base all'ID.
 	 * @param {number} id - ID del paziente.
-	 * @returns {Promise<Patient|null>} L'oggetto Patient se trovato, altrimenti null.
+	 * @returns {Promise<Profesional|null>} L'oggetto Patient se trovato, altrimenti null.
 	 */
 	async findById(id) {
-		const query = `SELECT * FROM Paziente WHERE id = ?`;
+		const query = `SELECT * FROM Professionista WHERE id = ?`;
 
 		return new Promise((resolve, reject) => {
 			db.get(query, [id], (err, row) => {
 				if (err) return reject(err);
 				if (!row) return resolve(null);
 
-				const user = new Patient(
+				const user = new Profesional(
 					row.id,
 					row.user_id,
 					row.nome,
 					row.cognome,
 					row.data_nascita,
-					row.patologia
+					row.specializzazione,
+					row.sede
 				);
 				resolve(user);
 			});
@@ -35,35 +36,36 @@ class PatientRepository {
 	/**
 	 * Trova un paziente in base all'ID.
 	 * @param {number} id - ID del paziente.
-	 * @returns {Promise<Patient|null>} L'oggetto Patient se trovato, altrimenti null.
+	 * @returns {Promise<Profesional|null>} L'oggetto Patient se trovato, altrimenti null.
 	 */
 	async findByUserId(id) {
-		const query = `SELECT * FROM Paziente WHERE user_id = ?`;
+		const query = `SELECT * FROM Professionista WHERE user_id = ?`;
 
 		return new Promise((resolve, reject) => {
 			db.get(query, [id], (err, row) => {
 				if (err) return reject(err);
 				if (!row) return resolve(null);
 
-				const patient = new Patient(
+				const user = new Profesional(
 					row.id,
 					row.user_id,
 					row.nome,
 					row.cognome,
 					row.data_nascita,
-					row.patologia
+					row.specializzazione,
+					row.sede
 				);
-				resolve(patient);
+				resolve(user);
 			});
 		});
 	}
 
-	async new(patient) {
-		const query = `INSERT INTO Paziente (user_id, nome, cognome, data_nascita, patologia)
-					   VALUES (?, ?, ?, ?, ?)`;
+	async new(userId, nome, cognome, dataNascita = null, specializzazione = null, sede = null) {
+		const query = `INSERT INTO Professionista (user_id, nome, cognome, data_nascita, specializzazione, sede)
+					   VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
 		return new Promise((resolve, reject) => {
-			db.run(query, [patient.user_id, patient.nome, patient.cognome, patient.data_nascita, patient.patologia], function (err) {
+			db.run(query, [userId, nome, cognome, dataNascita, specializzazione, sede], function (err) {
 				if (err) return reject(err);
 				resolve(this.lastID);
 			});

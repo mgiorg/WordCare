@@ -35,9 +35,9 @@ app.use(session({
 
 // Registrazione delle route (dopo che la sessione è attiva)
 app.use('/', homeRoutes);
-app.use('/login', authRoutes);
-app.use('/paziente', patientRoutes);
-app.use('/professionista', professionalRoutes);
+app.use('/', authRoutes);
+app.use('/', patientRoutes);
+app.use('/', professionalRoutes);
 app.use('/api', apiRoutes);
 
 // Avvio server
