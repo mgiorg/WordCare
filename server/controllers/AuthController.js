@@ -4,6 +4,7 @@
 
 const bcrypt = require('bcrypt');
 const UserRepository = require('../repositories/UserRepository');
+const PatientRepository = require('../repositories/PatientRepository');
 const Behavior = require('../models/enums/ProfileBehavior');
 
 class AuthController {
@@ -15,24 +16,44 @@ class AuthController {
 			const user = await UserRepository.findUserByUsername(username);
 
 			if (!user) {
-				return res.status(401).sendFile('views/error404.html', { root: 'public' });
+				req.session.errorInfo = {
+					code: 401,
+					title: 'Utente non trovato',
+					message: `Username "${username}" non esiste`,
+					returnUrl: '/login'
+				};
+				return res.redirect('/views/error404.html');
 			}
 
+			console.log("Password inserita:", password);
+			console.log("Password salvata (hash):", user.password);
 			const passwordMatch = await bcrypt.compare(password, user.password);
 			if (!passwordMatch) {
-				return res.status(401).sendFile('views/error404.html', { root: 'public' });
+				req.session.errorInfo = {
+					code: 401,
+					title: 'Password errata',
+					message: 'La password inserita non è corretta',
+					returnUrl: '/login'
+				};
+				return res.redirect('/views/error404.html');
 			}
 
 			// Imposta la sessione
 			req.session.userId = user.id;
 			req.session.userRole = user.behavior;
-			req.session.userName = user.name;
 
 			// Reindirizza alla dashboard del paziente
-			if (user.Behavior === Behavior.Patient) {
+			if (user.behavior === Behavior.Patient) {
+				const patient = await PatientRepository.findByUserId(user.id);
+				req.session.userName = patient.nome;
+				req.session.userSurname = patient.cognome;
+				req.session.userAge = patient.eta;
+				req.session.userBirthDate = patient.data_nascita;
+				req.session.userPathology = patient.patologia;
 				return res.redirect('/paziente');
 			}
-			else if (user.Behavior === Behavior.Professional) {
+			else if (user.behavior === Behavior.Professional) {
+				//TODO: Implementare la sessione con tutti i dati del professionista
 				res.redirect('/professionista');
 			}
 			else return res.status(401).sendFile('views/error404.html', { root: 'public' });
@@ -44,27 +65,15 @@ class AuthController {
 
 	// REGISTRAZIONE PAZIENTE
 	async register(req, res) {
-		const { name, surname, email, username, password } = req.body;
+		const { email, username, password } = req.body;
 
 		try {
 			const hashedPassword = await bcrypt.hash(password, 10);
 			const newUser = {
-				name,
-				surname,
 				email,
 				username,
 				password: hashedPassword,
-				behavior: 'PATIENT', // Comportamento predefinito per i pazienti
-				bio: null,
-				avatarUrl: null,
-				city: null,
-				country: null,
-				phone: null,
-				birthDate: null,
-				lastVisit: null,
-				specialization: null,
-				clinicName: null,
-				licenseNumber: null
+				behavior: 'PATIENT',
 			};
 
 			// Crea l'utente nel database

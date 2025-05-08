@@ -1,80 +1,296 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Errore - WordCare</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
-        body {
+        /* Reset e box-sizing */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
             margin: 0;
-            height: 100vh;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
-            align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: 'Arial', sans-serif;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
         }
 
+        /* Contenitore principale */
         .error-container {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            width: 480px;
+            max-width: 90%;
+            padding: 40px;
             text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 2;
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
+        /* Stili testo */
         h1 {
-            color: white;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2a3652;
+            font-size: 32px;
         }
 
         p {
-            color: #eee;
-            margin-bottom: 2rem;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            letter-spacing: 0.5px;
+            margin: 20px 0 30px;
+            color: #606c88;
         }
 
+        /* Icona di errore */
+        .error-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .error-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea1a 0%, #764ba21a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #764ba2;
+        }
+
+        /* Pulsanti */
         .buttons {
             display: flex;
-            gap: 1rem;
+            gap: 20px;
             justify-content: center;
+            margin-top: 30px;
         }
 
         .button {
-            padding: 12px 24px;
+            border-radius: 30px;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 16px 30px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
             text-decoration: none;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         }
 
         .retry {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
         .exit {
-            background-color: #f44336;
-            color: white;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #333;
         }
 
         .button:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Decorazioni di sfondo */
+        .bg-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5));
+            filter: blur(20px);
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -120px;
+            right: -100px;
+        }
+
+        .shape-2 {
+            width: 250px;
+            height: 250px;
+            bottom: -80px;
+            left: -80px;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            right: -50px;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+        }
+
+        /* Animation for the container */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animation for buttons */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .retry {
+            animation: pulse 2s infinite;
+        }
+
+        /* Error code display */
+        .error-code {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #764ba2;
+            opacity: 0.5;
+        }
+
+        /* Footer */
+        .error-footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #8a8a8a;
+        }
+
+        /* Loader animation */
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #764ba2;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: none;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
+
 <body>
+    <!-- Background shapes -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Main error container -->
     <div class="error-container">
-        <h1>Oops! Qualcosa è andato storto</h1>
-        <p>Si è verificato un errore durante l'operazione</p>
+        <div class="error-code" id="error-code">404</div>
+
+        <div class="error-icon">
+            <div class="error-circle">
+                <i>!</i>
+            </div>
+        </div>
+
+        <h1 id="error-title">Oops! Qualcosa è andato storto</h1>
+        <p id="error-message">Si è verificato un errore durante l'operazione</p>
+
+        <div class="loader" id="loader"></div>
+
         <div class="buttons">
-            <a href="/login" class="button retry">Riprova</a>
-            <a href="/logout" class="button exit">Esci</a>
+            <a href="/login" class="button retry" id="retry-button">Riprova</a>
+            <a href="/logout" class="button exit" id="exit-button">Esci</a>
+        </div>
+
+        <div class="error-footer">
+            <p>© 2025 WordCare - Tutti i diritti riservati</p>
         </div>
     </div>
+
+    <script>
+        $(function () {
+            // Carica i dati di errore dalla sessione via API
+            $.getJSON('/api/error-info')
+                .done(function (data) {
+                    // Codice HTTP (es. 401, 500...)
+                    $('#error-code').text(data.code);
+                    // Titolo e messaggio
+                    $('#error-title').text(data.title);
+                    $('#error-message').text(data.message);
+                    // Imposta il link di ritorno
+                    $('#retry-button').attr('href', data.returnUrl);
+                })
+                .fail(function () {
+                    // Fallback in caso di problemi con l'API
+                    $('#error-title').text('Errore');
+                    $('#error-message').text('Impossibile recuperare i dettagli dell\'errore.');
+                    $('#retry-button').attr('href', '/login');
+                });
+        });
+    </script>
 </body>
+
 </html>

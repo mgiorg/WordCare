@@ -25,4 +25,7 @@ router.post('/register', authController.register);
 // Route to handle logout
 router.get('/logout', authController.logout);
 
+// Route to handle forgot password request
+//router.post('/forgot-password', authController.forgotPassword);
+
 module.exports = router;
