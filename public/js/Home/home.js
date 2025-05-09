@@ -43,74 +43,58 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 
-	// ===== TESTIMONIANZE SLIDER =====
-	document.addEventListener('DOMContentLoaded', function () {
-		const testimonialCards = document.querySelectorAll('.testimonial-card');
-		const dots = document.querySelectorAll('.dot');
-		const prevBtn = document.querySelector('.prev-btn');
-		const nextBtn = document.querySelector('.next-btn');
-		let currentSlide = 0;
+// ===== TESTIMONIANZE SLIDER =====
+const testimonialCards = document.querySelectorAll('.testimonial-card');
+const dots = document.querySelectorAll('.dot');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+let currentSlide = 0;
 
-		// Funzione per mostrare una slide specifica
-		function showSlide(index) {
-			// Nascondi tutte le slide
-			testimonialCards.forEach(card => {
-				card.classList.remove('active');
-			});
-			dots.forEach(dot => {
-				dot.classList.remove('active');
-			});
+function showSlide(index) {
+    testimonialCards.forEach(card => card.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
 
-			// Mostra la slide corrente
-			testimonialCards[index].classList.add('active');
-			dots[index].classList.add('active');
-			currentSlide = index;
-		}
+    testimonialCards[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentSlide = index;
+}
 
-		// Inizializza mostrando la prima slide
-		showSlide(0);
+// Inizializza la prima slide
+showSlide(0);
 
-		// Eventi per i pulsanti prev/next
-		prevBtn.addEventListener('click', function () {
-			let newIndex = currentSlide - 1;
-			if (newIndex < 0) newIndex = testimonialCards.length - 1;
-			showSlide(newIndex);
-		});
+// Pulsanti freccia
+prevBtn.addEventListener('click', () => {
+    let newIndex = currentSlide - 1;
+    if (newIndex < 0) newIndex = testimonialCards.length - 1;
+    showSlide(newIndex);
+});
 
-		nextBtn.addEventListener('click', function () {
-			let newIndex = currentSlide + 1;
-			if (newIndex >= testimonialCards.length) newIndex = 0;
-			showSlide(newIndex);
-		});
+nextBtn.addEventListener('click', () => {
+    let newIndex = currentSlide + 1;
+    if (newIndex >= testimonialCards.length) newIndex = 0;
+    showSlide(newIndex);
+});
 
-		// Eventi per i dots
-		dots.forEach((dot, index) => {
-			dot.addEventListener('click', function () {
-				showSlide(index);
-			});
-		});
+// Dots
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => showSlide(index));
+});
 
-		// Avvia lo slider automatico
-		let slideInterval = setInterval(function () {
-			let newIndex = currentSlide + 1;
-			if (newIndex >= testimonialCards.length) newIndex = 0;
-			showSlide(newIndex);
-		}, 5000);
+// Scorrimento automatico
+let slideInterval = setInterval(() => {
+    let newIndex = (currentSlide + 1) % testimonialCards.length;
+    showSlide(newIndex);
+}, 5000);
 
-		// Interrompi l'intervallo quando l'utente interagisce con lo slider
-		const testimonialSlider = document.querySelector('.testimonials-slider');
-		testimonialSlider.addEventListener('mouseenter', function () {
-			clearInterval(slideInterval);
-		});
-
-		testimonialSlider.addEventListener('mouseleave', function () {
-			slideInterval = setInterval(function () {
-				let newIndex = currentSlide + 1;
-				if (newIndex >= testimonialCards.length) newIndex = 0;
-				showSlide(newIndex);
-			}, 5000);
-		});
-	});
+// Pausa su hover
+const testimonialSlider = document.querySelector('.testimonials-slider');
+testimonialSlider.addEventListener('mouseenter', () => clearInterval(slideInterval));
+testimonialSlider.addEventListener('mouseleave', () => {
+    slideInterval = setInterval(() => {
+        let newIndex = (currentSlide + 1) % testimonialCards.length;
+        showSlide(newIndex);
+    }, 5000);
+});
 
 	// ===== COOKIE BANNER =====
 	const cookieBanner = document.querySelector('.cookie-banner');
