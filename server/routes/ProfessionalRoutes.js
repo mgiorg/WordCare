@@ -20,10 +20,13 @@ function VerifyProfessionalSession(req, res, next) {
 
 // Dashboard
 router.get('/', (req, res) => {
-  res.sendFile(path.join(public / professionista / homeprof / homeprof.html, '..', 'public', 'professional', 'homeprof.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'professional', 'homeprof','home.html'));
 });
 
 //Profilo professionista
+router.get('/profilo/view', VerifyProfessionalSession, (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'professionista', 'il tuo profilo', 'profilo.html'));
+});
 router.get('/profilo',ProfessionalController.DatiPersonali);
 router.post('/profilo',ProfessionalController.SalvaDatiProfilo);
 
@@ -32,9 +35,12 @@ router.get('/pazienti', ProfessionalController.listPazienti);
 router.get('/pazienti/:id', ProfessionalController.dettaglioPaziente);
 
 // Appuntamenti
-router.get('/appuntamenti', ProfessionalController.listaAppuntamenti);
-router.post('/appuntamenti', ProfessionalController.creaAppuntamento);
-router.post('/appuntamenti/:id/elimina', ProfessionalController.eliminaAppuntamento);
+router.get('/appuntamenti/view', VerifyProfessionalSession, (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'professionista', 'calendario', 'calendario.html'));
+});
+router.get('/agenda', ProfessionalController.listaAppuntamenti);
+router.post('/agenda', ProfessionalController.creaAppuntamento);
+router.post('/agenda/:id/elimina', ProfessionalController.eliminaAppuntamento);
 
 // Giochi
 router.get('/giochi', ProfessionalController.listaGiochi);

@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle, #eeaeca, #94bbe9);
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+}
+
+h1 {
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+#calendar-list {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  max-width: 90vw;
+  margin: auto;
+}
+
+li {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  padding: 0.5rem;
+  min-height: 100px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+li.today {
+  background: #ffffff70;
+  border: 2px solid #000;
+}
+
+li time {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.event {
+  font-size: 0.7rem;
+  margin-top: 0.3rem;
+  background: #fff6;
+  border-left: 3px solid #333;
+  padding-left: 4px;
+  text-align: left;
+}
+.event.promemoria {
+  border-color: teal;
+}
+.event.appuntamento {
+  border-color: crimson;
+}
+
+/* Modal */
+#modal {
+  position: fixed;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+}
+.hidden {
+  display: none;
+}
+form input {
+  margin: 0.25rem 0;
+  width: 100%;
+  padding: 0.5rem;
+}
+button {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+}
+ul#eventi-giorno {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+}
+ul#eventi-giorno li {
+  padding: 0.25rem 0;
+}
+ul#eventi-giorno li button {
+  float: right;
+  background: crimson;
+  color: white;
+  border: none;
+  padding: 2px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
