@@ -23,6 +23,10 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(public / professionista / homeprof / homeprof.html, '..', 'public', 'professional', 'homeprof.html'));
 });
 
+//Profilo professionista
+router.get('/profilo',ProfessionalController.DatiPersonali);
+router.post('/profilo',ProfessionalController.SalvaDatiProfilo);
+
 // Pazienti
 router.get('/pazienti', ProfessionalController.listPazienti);
 router.get('/pazienti/:id', ProfessionalController.dettaglioPaziente);

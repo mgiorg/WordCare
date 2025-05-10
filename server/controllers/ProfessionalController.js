@@ -9,6 +9,47 @@ const path = require('path');
 const { db } = require('../database/Database');
 
 module.exports = {
+	DatiPersonali: (req, res) => {
+		const userId = req.session.userId;
+		const query = `
+			SELECT u.nome, u.cognome, p.data_nascita, p.specializzazione, p.sede
+			FROM user u
+			JOIN professionista p ON u.id = p.id
+			WHERE u.id = ?
+		`;
+		db.get(query, [userId], (err, row) => {
+			if (err) return res.status(500).json({ error: 'Errore nel recupero dati profilo' });
+			if (!row) return res.status(404).json({ error: 'Profilo non trovato' });
+			res.json(row);
+		});
+		},
+
+
+    SalvaDatiProfilo: (req, res) => {
+		const userId = req.session.userId;
+		const { nome, cognome, data_nascita, specializzazione, sede } = req.body;
+
+		// Aggiorna tabella User
+		const updateUser = `
+			UPDATE user
+			SET nome = ?, cognome = ?
+			WHERE id = ?
+		`;
+		// Aggiorna tabella Professionista
+		const updateProfessionista = `
+			UPDATE professionista
+			SET data_nascita = ?, specializzazione = ?, sede = ?
+			WHERE id = ?
+		`;
+		db.run(updateUser, [nome, cognome, userId], function (err) {
+			if (err) return res.status(500).json({ error: 'Errore aggiornamento utente' });
+			db.run(updateProfessionista, [data_nascita, specializzazione, sede, userId], function (err2) {
+			if (err2) return res.status(500).json({ error: 'Errore aggiornamento profilo professionista' });
+			res.status(200).json({ success: true });
+			});
+		});
+		},
+
 	listPazienti: (req, res) => {
 	  const professionalId = req.session.userId;
 	  const query = `
