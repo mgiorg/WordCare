@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordCare - Dashboard Minigiochi</title>
+    <link rel="stylesheet" href="../../css/DashBoardGiochi/DashBoardGiochi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">WC</div>
+            <h1>WordCare</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="dashboard-header">
+            <h2 class="dashboard-title">I Nostri Minigiochi</h2>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchGames" placeholder="Cerca gioco...">
+            </div>
+        </div>
+        
+        <div class="games-grid" id="gamesContainer">
+            <!-- I giochi inseriti tramite JavaScript -->
+        </div>
+        
+        <div class="legend">
+            <h3 class="legend-title">Legenda</h3>
+            <div class="legend-item">
+                    <i class="fas fa-user-friends", class="legend-icon caregiver-badge"></i>
+                <div class="legend-text">Richiede assistenza di un care-giver</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-icon">
+                    <div class="difficulty">
+                        <div class="difficulty-dot active"></div>
+                        <div class="difficulty-dot inactive"></div>
+                        <div class="difficulty-dot inactive"></div>
+                    </div>
+                </div>
+                <div class="legend-text">Livello di difficoltà (da 1 a 3)</div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 WordCare - Tutti i diritti riservati</p>
+        <p>Minigiochi di logopedia</p>
+    </footer>
+
+    <script src="../../js/DashBoardGiochi/DashBoardGiochi.js"></script>
+</body>
+</html>
