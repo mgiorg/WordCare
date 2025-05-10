@@ -1,64 +1,58 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Professionista</title>
-  <link rel="stylesheet" href="home.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Professionista</title>
+  <link rel="stylesheet" href="home.css" />
 </head>
 <body>
-  <div class="container">
-    
-    <!--Gestione profilo -->
-    <a href="../il tuo profilo/il_tuo_profilo.html" class="service-box">
-      <div class="service-icon"> 🩺</div>
-      <div class="service-title">Il Tuo Profilo</div>
-      <div class="service-description">
-        Crea e modifica il tuo profilo con dati professionali, disponibilità, e specializzazioni.
-      </div>
-    </a>
+  <!-- Sezione 1 - Contenitore principale -->
+  <div class="card horizontal main-container">
+    <!-- Template 3: Messaggio di benvenuto -->
+    <div class="welcomeBox">
+      <span id="welcomeMessage" class="welcomeMessage">Benvenuto!</span>
+    </div>
 
-    <!--Gestione appuntamenti -->
-    <a href="../calendario/calendario.html" class="service-box">
-      <div class="service-icon">📅</div>
-      <div class="service-title">Gestione appuntamenti</div>
-      <div class="service-description">
-        Calendario per prenotazioni con i pazienti, richieste di appuntamenti dai pazienti.
+    <!-- Template 2: Promemoria -->
+    <div class="card template2">
+      <div class="card_title__container">
+        <span class="card_title">Promemoria</span>
+        <p class="card_paragraph">Attività da non dimenticare</p>
       </div>
-    </a>
-    <!--Monitoraggio-->
-    <a href="#PazientiLatoDoc" class="service-box">
-      <div class="service-icon">👤</div>
-      <div class="service-title">I tuoi pazienti</div>
-      <div class="service-description">
-        Dashboard per accedere alla lista e i dettagli riguardandi i tuoi pazienti registrati.
+      <hr class="line" />
+      <ul class="card__list" id="promemoriaList"></ul>
+      <button onclick="location.href='/appuntamenti'" class="button">Vai alla tua agenda</button>
+    </div>
+
+    <!-- Template 2: Appuntamenti -->
+    <div class="card template2">
+      <div class="card_title__container">
+        <span class="card_title">Appuntamenti</span>
+        <p class="card_paragraph">Prossimi incontri</p>
       </div>
-    </a>
-    <!--Assegnazione esercizi -->
-    <a href="#minigiochi-terapeutici" class="service-box">
-      <div class="service-icon">🎮</div>
-      <div class="service-title">Assegnazione esercizi terapeutici </div>
-      <div class="service-description">
-        Scelta di esercizi personalizzati per i pazienti con tracking dei risultati.
-      </div>
-    </a>
-    <!-- Casella per Messaggistica -->
-    <a href="#messaggistica" class="service-box">
-      <div class="service-icon">💬</div>
-      <div class="service-title">Comunica con i tuoi pazienti</div>
-      <div class="service-description">
-        Chat o sistema di notifiche per comunicare con i pazienti.
-      </div>
-    </a>
+      <hr class="line" />
+      <ul class="card__list" id="appuntamentiList"></ul>
+      <button onclick="location.href='/appuntamenti'" class="button">Vai alla tua agenda</button>
+    </div>
   </div>
-<!--
-  <script>
-    // Codice JavaScript per eventuali interazioni future
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Pagina home caricata e pronta all\'uso');
-      // Puoi aggiungere qui ulteriori funzionalità interattive se necessario
-    });
-  </script>
--->
+
+  <!-- Sezione 2 - Servizi -->
+  <div class="services">
+    <div class="card service-card" onclick="location.href='/profilo'">
+      <div class="icon">👤</div>
+      <span class="label">Il tuo profilo</span>
+    </div>
+    <div class="card service-card" onclick="location.href='/appuntamenti'">
+      <div class="icon">🗓️</div>
+      <span class="label">La tua agenda</span>
+    </div>
+    <div class="card service-card" onclick="location.href='/pazienti'">
+      <div class="icon">🧑‍⚕️</div>
+      <span class="label">I tuoi pazienti</span>
+    </div>
+  </div>
+
+  <script src="home.js"></script>
 </body>
 </html>
