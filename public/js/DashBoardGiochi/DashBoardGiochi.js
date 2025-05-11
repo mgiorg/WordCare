@@ -9,7 +9,7 @@ const giochi = [
         tags: ["Discriminazione"],
         richiedeAssistenza: false,
         percorso: "../../../Giochi/CollegaImmagineCH_C/game.html",
-        immagine: "Immagini/Suoni_CH_C.png"
+        immagine: "../../images/DG/Suoni_CH_C.png"
     },
     {
         id: 2,
@@ -19,7 +19,7 @@ const giochi = [
         tags: ["Morfosintassi"],
         richiedeAssistenza: false,
         percorso: "../../../Giochi/CompletaFrase/game.html",
-        immagine: "../../img/giochi/gioco2.jpg"
+        immagine: "../../images/DG/Completa_frasi.png"
     },
     {
         id: 3,
@@ -29,7 +29,7 @@ const giochi = [
         tags: ["Metafonologia", "Riconoscimento Sillaba Iniziale"],
         richiedeAssistenza: false,
         percorso: "../../../Giochi/ConCheSillaba/game.html",
-        immagine: "../../img/giochi/gioco3.jpg"
+        immagine: "../../images/DG/ConCheSillaba.png"
     },
     {
         id: 4,
@@ -39,7 +39,7 @@ const giochi = [
         tags: ["Fonetica", "Fonologia", "Sordo/sono"],
         richiedeAssistenza: true,
         percorso: "../../../Giochi/GiocoCarte_BP/game.html",
-        immagine: "../../img/giochi/gioco4.jpg"
+        immagine: "../../images/DG/Carte_BP.png"
     },
     {
         id: 5,
@@ -49,7 +49,7 @@ const giochi = [
         tags: ["Memoria viso-spaziale", "Lessico", "MBT"],
         richiedeAssistenza: false,
         percorso: "../../../Giochi/Memory/game.html",
-        immagine: "../../img/giochi/gioco5.jpg"
+        immagine: "../../images/DG/memory.png"
     },
     {
         id: 6,
@@ -58,8 +58,8 @@ const giochi = [
         difficolta: 3,
         tags: ["MBT", "Movimenti Saccadici", "Lettura Globale"],
         richiedeAssistenza: true,
-        percorso: "../../../Giochi/CollegaImmagineCH_C/game.html",
-        immagine: "../../img/giochi/gioco6.jpg"
+        percorso: "../../../Giochi/Tachiscoscopio_parole/game.html",
+        immagine: "../../images/DG/tachi.png"
     },
 ];
 
