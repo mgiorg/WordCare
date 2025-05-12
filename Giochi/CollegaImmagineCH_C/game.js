@@ -85,6 +85,28 @@ function removeHighlight(event) {
     event.target.classList.remove('dragover');
 }
 
+function checkAnswers() {
+    let score = 0;
+
+    const chBoxImages = document.getElementById('ch-box').getElementsByTagName('img');
+    const cBoxImages = document.getElementById('c-box').getElementsByTagName('img');
+
+    // Controlla immagini nel box SUONI DURI (ch)
+    for (let img of chBoxImages) {
+        if (img.dataset.type === 'ch') score++;
+    }
+
+    // Controlla immagini nel box SUONI DOLCI (c)
+    for (let img of cBoxImages) {
+        if (img.dataset.type === 'c') score++;
+    }
+
+    score += 1;
+
+    document.getElementById('score-display').innerText = `Punteggio: ${score}`;
+}
+
+
 document.getElementById('ch-box').addEventListener('dragenter', highlight);
 document.getElementById('ch-box').addEventListener('dragleave', removeHighlight);
 document.getElementById('c-box').addEventListener('dragenter', highlight);
