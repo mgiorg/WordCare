@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
-
+hidde
 body {
   font-family: "Poppins", sans-serif;
   background: radial-gradient(circle, #eeaeca, #94bbe9);
@@ -75,7 +75,7 @@ li time {
   max-width: 400px;
 }
 .hidden {
-  display: none;
+  display: none !important;
 }
 form input {
   margin: 0.25rem 0;

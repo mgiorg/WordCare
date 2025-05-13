@@ -95,7 +95,10 @@ function creaAppuntamento(e) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dati)
-  }).then(r => r.ok && location.reload());
+  }).then(r => {
+    if (r.ok) location.reload();
+    else alert("Errore nel salvataggio");
+  });
 }
 
 function creaPromemoria(e) {
