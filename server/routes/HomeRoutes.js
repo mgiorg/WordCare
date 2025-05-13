@@ -9,6 +9,9 @@ const authRoutes = require('./AuthRoutes');
 router.get('/', (req, res) => {
 	res.sendFile(path.join(viewsPath, 'Home/home.html'));
 });
+router.get('/home', (req, res) => {
+	res.sendFile(path.join(viewsPath, 'Home/home.html'));
+});
 
 // Route to serve the about HTML page
 router.get('/about', (req, res) => {

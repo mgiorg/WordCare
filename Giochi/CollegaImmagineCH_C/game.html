@@ -7,6 +7,7 @@
     <title>Gioco di Classificazione</title>
 </head>
 <body>
+    <button class="exit-button" onclick="window.location.href='../../public/views/DashBoardGiochi/DashBoardGiochi.html'">⏴ Esci</button>
     <div class="container">
         <div class="left-column">
             <div id="image-container"></div>
@@ -14,8 +15,9 @@
         <div class="right-column">
             <div class="box" id="ch-box">SUONI DURI</div>
             <div class="box" id="c-box">SUONI DOLCI</div>
+            <button class="submit-button" onclick="checkAnswers()">Invia</button>
+            <div id="score-display"></div>
         </div>
     </div>
     <script src="game.js"></script>
 </body>
-</html>

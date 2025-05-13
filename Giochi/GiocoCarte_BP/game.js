@@ -37,10 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
     { color: 'red', word: 'porta', image: 'porta.png' },
     { color: 'red', word: 'pugno', image: 'pugno.png' }
   ];
-  
+
   let currentLevel = 1;
   let currentCard = null;
   let currentCardIndex = -1;
+  let cardsShown = 0; // Nuova variabile per contare le carte mostrate
 
   backgroundMusic.pause();
   musicToggle.textContent = '🔇';
@@ -57,10 +58,37 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   function newCard() {
-    if (deck.length === 0) {
-      currentCard = null;
+    if (cardsShown >= 5) { // Dopo 5 carte, passa al livello successivo automaticamente
+      if (currentLevel === 1) {
+        // Passa al secondo livello
+        currentLevel = 2;
+        deck = deckLevel2; // Cambia mazzo
+        cardsShown = 0; // Reset delle carte mostrate
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#000";
+        ctx.font = "36px Arial";
+        ctx.fillText("Livello 2: Iniziamo!", canvas.width / 2 - 100, canvas.height / 2);
+        setTimeout(newCard, 2000); // Mostra la nuova carta dopo un messaggio di transizione
+      } else {
+        // Livello 2 completato, fine del gioco
+        backgroundMusic.pause();
+        finishSound.play();
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#000";
+        ctx.font = "48px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Hai completato tutti i livelli!", canvas.width / 2, canvas.height / 2 - 50);
+
+        showMedal(); // Mostra la medaglia sotto la scritta
+        btnCorrect.disabled = true;
+        btnWrong.disabled = true;
+        startBackgroundColorLoop(); // Inizia il loop di colori di sfondo
+        updateScore();
+      }
       return;
     }
+
     let possibleCards = deck.filter(card => {
       const isDifferentFromLastCard = lastCard ? card.syllable !== lastCard.syllable : true;
       const isValidColor =
@@ -77,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
       lastTwoColors.shift();
     }
     updateGame();
+    cardsShown++; // Aumenta il numero di carte mostrate
   }
 
   function drawCard() {
@@ -157,51 +186,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   btnCorrect.addEventListener('click', function () {
     if (!currentCard) return;
-  
+
     addGlowEffect(); // Glow effect
-    score++;
+    score++; // Aumenta il punteggio
     deck.splice(currentCardIndex, 1);
-  
-    if (score >= 7 && currentLevel === 1) {
-      // Passa al secondo livello
-      currentLevel = 2;
-      deck = deckLevel2; // Cambia mazzo
-      score = 0; // Resetta il punteggio o continua ad accumulare
-      lastTwoColors = []; // Resetta colori precedenti
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#000";
-      ctx.font = "36px Arial";
-      ctx.fillText("Livello 2: Iniziamo!", canvas.width / 2 - 100, canvas.height / 2);
-      setTimeout(newCard, 2000); // Mostra la nuova carta dopo un messaggio di transizione
-      return;
-    }
-  
-    if (score >= 7 && currentLevel === 2) {
-      backgroundMusic.pause();
-      finishSound.play();
-  
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#000";
-      ctx.font = "48px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText("Hai completato tutti i livelli!", canvas.width / 2, canvas.height / 2 - 50);
-  
-      showMedal(); // Mostra la medaglia sotto la scritta
-      btnCorrect.disabled = true;
-      btnWrong.disabled = true;
-      startBackgroundColorLoop(); // Inizia il loop di colori di sfondo
-      updateScore();
-      return;
-    }
-  
+
     newCard();
   });
-  
 
   btnWrong.addEventListener('click', function () {
     if (!currentCard) return;
 
     addShakeEffect(); // Shake effect
+    score -= 0.5; // Decrementa il punteggio
     newCard();
   });
 

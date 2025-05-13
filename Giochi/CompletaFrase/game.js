@@ -40,6 +40,7 @@ const sentences = [
 let score = 0;
 let usedSentences = [];
 let currentSentence = {};
+let firstAttempt = true;
 
 function startGame() {
     score = 0;
@@ -56,6 +57,7 @@ function showNextSentence() {
         if (availableSentences.length > 0) {
             currentSentence = availableSentences[Math.floor(Math.random() * availableSentences.length)];
             usedSentences.push(currentSentence.sentence);
+            firstAttempt = true;
 
             let sentenceElement = document.getElementById('sentence');
             sentenceElement.innerText = currentSentence.sentence;
@@ -82,22 +84,26 @@ function checkAnswer(selectedOption, optionElement) {
     let sentenceElement = document.getElementById('sentence');
 
     if (selectedOption === currentSentence.correct) {
-        score++;
+        if (firstAttempt) {
+            score++;
+        }
+
         document.body.style.backgroundColor = "#a8e6a2"; // Verde per risposta corretta
         sentenceElement.classList.add("correct");
         optionElement.classList.add("correct");
+
+        document.getElementById('score').innerText = `PUNTEGGIO: ${score}`;
+
+        setTimeout(() => {
+            showNextSentence();
+            document.body.style.backgroundColor = "#ffcc70"; // Reset colore
+        }, 1000);
     } else {
+        firstAttempt = false;
         document.body.style.backgroundColor = "#f8a7a7"; // Rosso per risposta sbagliata
         sentenceElement.classList.add("wrong");
         optionElement.classList.add("wrong");
     }
-
-    document.getElementById('score').innerText = `PUNTEGGIO: ${score}`;
-
-    setTimeout(() => {
-        showNextSentence();
-        document.body.style.backgroundColor = "#ffcc70"; // Reset colore
-    }, 1000);
 }
 
 function exitGame() {

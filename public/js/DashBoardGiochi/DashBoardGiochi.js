@@ -3,12 +3,13 @@
 const giochi = [
     {
         id: 1,
-        titolo: "Collega le immaigini",
+        titolo: "Collega le immagini",
         descrizione: "Prendi e trascina le immagini con i suoni duri e suoni dolci nelle apposite aree",
         difficolta: 1,
         tags: ["Discriminazione"],
-        richiedeAssistenza:false,
-        percorso: "../../../Giochi/CollegaImmagineCH_C/game.html"
+        richiedeAssistenza: false,
+        percorso: "../../../Giochi/CollegaImmagineCH_C/game.html",
+        immagine: "../../images/DG/Suoni_CH_C.png"
     },
     {
         id: 2,
@@ -16,8 +17,9 @@ const giochi = [
         descrizione: "Completa con l'opzione che ti sembra più corretta.",
         difficolta: 1,
         tags: ["Morfosintassi"],
-        richiedeAssistenza:false,
-        percorso: "../../../Giochi/CompletaFrase/game.html"
+        richiedeAssistenza: false,
+        percorso: "../../../Giochi/CompletaFrase/game.html",
+        immagine: "../../images/DG/Completa_frasi.png"
     },
     {
         id: 3,
@@ -25,8 +27,9 @@ const giochi = [
         descrizione: "Con che sillaba inizia questa immagine?",
         difficolta: 3,
         tags: ["Metafonologia", "Riconoscimento Sillaba Iniziale"],
-        richiedeAssistenza:false,
-        percorso: "../../../Giochi/ConCheSillaba/game.html"
+        richiedeAssistenza: false,
+        percorso: "../../../Giochi/ConCheSillaba/game.html",
+        immagine: "../../images/DG/ConCheSillaba.png"
     },
     {
         id: 4,
@@ -34,8 +37,9 @@ const giochi = [
         descrizione: "Pronuncia correttamente le sillabe che trovi nelle immagini",
         difficolta: 2,
         tags: ["Fonetica", "Fonologia", "Sordo/sono"],
-        richiedeAssistenza:true,
-        percorso: "../../../Giochi/GiocoCarte_BP/game.html"
+        richiedeAssistenza: true,
+        percorso: "../../../Giochi/GiocoCarte_BP/game.html",
+        immagine: "../../images/DG/Carte_BP.png"
     },
     {
         id: 5,
@@ -43,8 +47,9 @@ const giochi = [
         descrizione: "Riesci a ricordare la posizione delle carte? Diamo il via alla sfida!",
         difficolta: 3,
         tags: ["Memoria viso-spaziale", "Lessico", "MBT"],
-        richiedeAssistenza:false,
-        percorso: "../../../Giochi/Memory/game.html"
+        richiedeAssistenza: false,
+        percorso: "../../../Giochi/Memory/game.html",
+        immagine: "../../images/DG/memory.png"
     },
     {
         id: 6,
@@ -52,10 +57,12 @@ const giochi = [
         descrizione: "Tachistoscopio, setta le impostazioni, e ripeti la parola prima che ne appaia una nuova",
         difficolta: 3,
         tags: ["MBT", "Movimenti Saccadici", "Lettura Globale"],
-        richiedeAssistenza:true,
-        percorso: "../../../Giochi/CollegaImmagineCH_C/game.html"
+        richiedeAssistenza: true,
+        percorso: "../../../Giochi/Tachiscoscopio_parole/game.html",
+        immagine: "../../images/DG/tachi.png"
     },
 ];
+
 
 // Funzione per visualizzare i puntini di difficoltà
 function creaPuntiniDifficolta(livello) {

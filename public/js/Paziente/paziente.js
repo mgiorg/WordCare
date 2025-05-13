@@ -11,9 +11,6 @@ $(function () {
 		}
 	});
 
-	// Caricamento delle informazioni utente
-	loadUserInfo();
-
 	function loadUserInfo() {
 		$.ajax({
 			url: '/api/patient-info',
@@ -32,4 +29,7 @@ $(function () {
 			}
 		});
 	}
+
+	// Caricamento delle informazioni utente
+	loadUserInfo();
 });

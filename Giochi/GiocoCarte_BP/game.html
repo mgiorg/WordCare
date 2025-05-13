@@ -64,9 +64,30 @@
     .shake {
       animation: shake 0.3s ease-in-out;
     }
+
+    #exitButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+  #exitButton:hover {
+    background-color: #c0392b;
+  }
+
   </style>
 </head>
 <body>
+  <button id="exitButton" onclick="window.location.href='../../public/views/DashBoardGiochi/DashBoardGiochi.html'">⏴ Esci</button>
   <button id="musicToggle">🔇</button>
   <div id="scoreDisplay">Punteggio: 0</div>
   <canvas id="gameCanvas" width="600" height="400"></canvas>

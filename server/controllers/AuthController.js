@@ -27,8 +27,6 @@ class AuthController {
 				return res.redirect('/views/error404.html');
 			}
 
-			console.log("Password inserita:", password);
-			console.log("Password salvata (hash):", user.password);
 			const passwordMatch = await bcrypt.compare(password, user.password);
 			if (!passwordMatch) {
 				req.session.errorInfo = {
@@ -48,6 +46,8 @@ class AuthController {
 			if (user.behavior === Behavior.Patient) {
 				const patient = await PatientRepository.findByUserId(user.id);
 				req.session.patientId = patient.id;
+				req.session.userName = patient.nome;
+				req.session.userSurname = patient.cognome;
 				return res.redirect('/paziente');
 			}
 			else if (user.behavior === Behavior.Professional) {

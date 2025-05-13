@@ -20,6 +20,8 @@ const imageDatabase = [
 let currentIndex = 0;
 let score = 0;
 let selectedItems = [];
+let attempts = 0;
+
 
 function startGame() {
     selectedItems = getRandomItems(imageDatabase, 5);
@@ -55,6 +57,8 @@ function showNextImage() {
         return;
     }
 
+    attempts = 0;
+
     const item = selectedItems[currentIndex];
     const correctSyllable = item.name.substring(0, 2).toUpperCase();
     const syllables = generateUniqueSyllables(correctSyllable);
@@ -65,6 +69,7 @@ function showNextImage() {
     const img = document.createElement("img");
     img.src = item.image;
     img.alt = item.name;
+    img.classList.add("fade-in");
     gameContainer.appendChild(img);
 
     const optionContainer = document.createElement("div");
@@ -80,20 +85,32 @@ function showNextImage() {
 
 function checkAnswer(button, selectedSyllable, correctSyllable) {
     const result = document.getElementById("result");
+
+    attempts++;
+
     if (selectedSyllable.toUpperCase() === correctSyllable) {
+        if (attempts === 1) {
+            score += 2;
+        } else if (attempts === 2) {
+            score += 1;
+        } // Altrimenti 0 punti
+
         result.textContent = "CORRETTO!";
-        result.style.color = "green";
-        score++;
+        result.classList.add("bounce");
         document.getElementById("score").textContent = "Punteggio: " + score;
         currentIndex++;
-        setTimeout(showNextImage, 1000);
+
+        setTimeout(() => {
+            result.classList.remove("bounce");
+            showNextImage();
+        }, 1000);
     } else {
         result.textContent = "SBAGLIATO, RIPROVA!";
-        result.style.color = "red";
-        button.style.backgroundColor = "red";  // Colora di rosso il pulsante sbagliato
-        button.disabled = true;  // Disabilita il pulsante sbagliato
+        button.style.backgroundColor = "red";
+        button.disabled = true;
     }
 }
+
 
 function endGame() {
     const gameContainer = document.getElementById("game-container");
@@ -109,53 +126,3 @@ function exitGame() {
 }
 
 document.addEventListener("DOMContentLoaded", startGame);
-
-
-function showNextImage() {
-    if (currentIndex >= selectedItems.length) {
-        endGame();
-        return;
-    }
-
-    const item = selectedItems[currentIndex];
-    const correctSyllable = item.name.substring(0, 2).toUpperCase();
-    const syllables = generateUniqueSyllables(correctSyllable);
-
-    const gameContainer = document.getElementById("game-container");
-    gameContainer.innerHTML = "";
-
-    const img = document.createElement("img");
-    img.src = item.image;
-    img.alt = item.name;
-    img.classList.add("fade-in"); // Applica l'effetto fade-in
-    gameContainer.appendChild(img);
-
-    const optionContainer = document.createElement("div");
-    syllables.forEach(syllable => {
-        const button = document.createElement("button");
-        button.textContent = syllable;
-        button.onclick = () => checkAnswer(button, syllable, correctSyllable);
-        optionContainer.appendChild(button);
-    });
-
-    gameContainer.appendChild(optionContainer);
-}
-
-function checkAnswer(button, selectedSyllable, correctSyllable) {
-    const result = document.getElementById("result");
-    if (selectedSyllable.toUpperCase() === correctSyllable) {
-        result.textContent = "CORRETTO!";
-        result.classList.add("bounce"); // Applica l'effetto di rimbalzo
-        score++;
-        document.getElementById("score").textContent = "Punteggio: " + score;
-        currentIndex++;
-        setTimeout(() => {
-            result.classList.remove("bounce");
-            showNextImage();
-        }, 1000);
-    } else {
-        result.textContent = "SBAGLIATO, RIPROVA!";
-        button.style.backgroundColor = "red";
-        button.disabled = true;
-    }
-}
