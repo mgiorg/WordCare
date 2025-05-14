@@ -5,48 +5,41 @@
   <title>Calendario Agenda</title>
   <link rel="stylesheet" href="calendario.css">
 </head>
-
 <body>
   <h1 id="titolo-mese">Calendario</h1>
   <ul id="calendar-list"></ul>
 
-  <!-- Modal -->
-  <div id="modal" class="hidden">
-    <div class="modal-content">
-      <h2 id="modal-title">Gestione Impegni</h2>
-      <p id="selected-date"></p>
+  <section id="gestione-impegni" class="hidden">
+    <h2>Gestione impegni per il <span id="data-attiva">[nessuna]</span></h2>
 
-      <div id="scelte">
-        <button id="btn-crea-app">Crea Appuntamento</button>
-        <button id="btn-crea-prom">Crea Promemoria</button>
-        <button id="btn-elimina">Elimina Impegno</button>
-      </div>
-
-      <form id="form-appuntamento" class="hidden">
+    <div>
+      <h3>Crea Appuntamento</h3>
+        <input type="date" name="data" required>
         <input type="time" name="ora" required>
         <input type="text" name="sede" placeholder="Sede" required>
-        <input type="text" name="nome" placeholder="Nome Paziente" required>
-        <input type="text" name="cognome" placeholder="Cognome Paziente" required>
-        <input type="text" name="patologia" placeholder="Patologia" required>
-        <button type="submit">Salva</button>
-      </form>
-
-      <form id="form-promemoria" class="hidden">
-        <input type="time" name="ora_notifica" required>
-        <input type="text" name="nota" placeholder="Nota" required>
-        <button type="submit">Salva</button>
-      </form>
-
-      <div id="lista-eliminazione" class="hidden">
-        <ul id="eventi-giorno"></ul>
-      </div>
-
-      <button id="close-modal">Chiudi</button>
+        <input type="number" name="paziente_id" placeholder="ID Paziente" required>
+        <input type="text" name="nome" placeholder="Nome (facoltativo)">
+        <input type="text" name="cognome" placeholder="Cognome (facoltativo)">
+        <input type="text" name="patologia" placeholder="Patologia (facoltativo)">
+        <button type="submit">Salva Appuntamento</button>
     </div>
-  </div>
+
+    <div>
+      <h3>Crea Promemoria</h3>
+        <form id="form-promemoria">
+          <input type="date" name="data" required>
+          <input type="time" name="ora_notifica" required>
+          <input type="text" name="nota" placeholder="Nota" required>
+          <button type="submit">Salva Promemoria</button>
+        </form>
+    </div>
+
+    <div>
+      <h3>Elimina impegni</h3>
+      <ul id="eventi-giorno"></ul>
+    </div>
+  </section>
 
   <script src="calendario.js"></script>
-  
 </body>
-
 </html>

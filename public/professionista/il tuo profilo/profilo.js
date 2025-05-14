@@ -36,15 +36,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-  document.getElementById('avatarInput').addEventListener('change', function (e) {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        document.getElementById('avatar').src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  });
 });

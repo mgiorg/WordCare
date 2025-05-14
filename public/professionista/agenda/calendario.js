@@ -89,28 +89,51 @@ function toggleVisibili(id) {
 function creaAppuntamento(e) {
   e.preventDefault();
   const dati = Object.fromEntries(new FormData(e.target).entries());
-  dati.data = dataSelezionata;
+
+  if (!dati.data) {
+    alert("Inserisci una data valida.");
+    return;
+  }
+
+  console.log("📤 Invio appuntamento:", dati);
 
   fetch("/agenda", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dati)
-  }).then(r => {
-    if (r.ok) location.reload();
-    else alert("Errore nel salvataggio");
+  }).then(res => {
+    if (res.ok) {
+      alert("✅ Appuntamento salvato!");
+      location.reload();
+    } else {
+      alert("❌ Errore nel salvataggio.");
+    }
   });
 }
 
 function creaPromemoria(e) {
   e.preventDefault();
   const dati = Object.fromEntries(new FormData(e.target).entries());
-  dati.data = dataSelezionata;
+
+  if (!dati.data) {
+    alert("Inserisci una data valida.");
+    return;
+  }
+
+  console.log("📤 Invio promemoria:", dati);
 
   fetch("/promemoria", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dati)
-  }).then(r => r.ok && location.reload());
+  }).then(res => {
+    if (res.ok) {
+      alert("✅ Promemoria salvato!");
+      location.reload();
+    } else {
+      alert("❌ Errore nel salvataggio.");
+    }
+  });
 }
 
 function mostraEliminazione() {
