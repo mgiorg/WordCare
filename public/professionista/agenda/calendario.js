@@ -69,13 +69,11 @@ function creaEventoHTML(data, ora, tipo, descrizione, id) {
 
 function apriModal(data) {
   dataSelezionata = data;
-  document.getElementById("modal").classList.remove("hidden");
   document.getElementById("selected-date").textContent = `Data selezionata: ${data}`;
   document.querySelectorAll("#modal form, #lista-eliminazione").forEach(el => el.classList.add("hidden"));
 }
 
 function chiudiModal() {
-  document.getElementById("modal").classList.add("hidden");
   document.querySelectorAll("#modal form, #lista-eliminazione").forEach(el => el.classList.add("hidden"));
   document.getElementById("form-appuntamento").reset();
   document.getElementById("form-promemoria").reset();

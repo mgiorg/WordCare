@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
-hidde
+
 body {
   font-family: "Poppins", sans-serif;
   background: radial-gradient(circle, #eeaeca, #94bbe9);
@@ -74,9 +74,6 @@ li time {
   width: 90%;
   max-width: 400px;
 }
-.hidden {
-  display: none !important;
-}
 form input {
   margin: 0.25rem 0;
   width: 100%;
@@ -128,7 +125,5 @@ ul#eventi-giorno li button {
   padding: 2px 5px;
   border-radius: 4px;
   cursor: pointer;
-}
-.hidden {
-  display: none;
+
 }
