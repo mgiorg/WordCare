@@ -1,0 +1,39 @@
+@import url('/public/professionista/homeprof/home.css'); /* eredita variabili e stili */
+
+.card-row {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  padding: 1rem;
+  background-color: #2f2f2f;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.card-row:hover {
+  background-color: #3a3b47;
+}
+
+#aggiungi-paziente {
+  margin-top: 2rem;
+  background-color: #1e1f29;
+  max-width: 700px;
+}
+
+#aggiungi-paziente input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #2a2b36;
+  color: var(--white);
+}
+
+#aggiungi-paziente .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

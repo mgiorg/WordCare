@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I tuoi pazienti</title>
+  <link rel="stylesheet" href="pazienti.css" />
+</head>
+<body>
+  <div class="welcomeBox">
+    <h1>I tuoi pazienti</h1>
+  </div>
+
+  <div id="lista-pazienti" class="card horizontal">
+    <!-- Lista pazienti statica -->
+    <a href="dettagli.html" class="card-row">
+    <div><strong>Anna Rossi</strong> - Età: 8 - Patologia: Disturbo articolatorio</div>
+    </a>
+    <div class="card-row">
+      <div><strong>Marco Bianchi</strong> - Età: 10 - Patologia: Balbuzie</div>
+    </div>
+    <div class="card-row">
+      <div><strong>Giulia Verdi</strong> - Età: 7 - Patologia: Ritardo del linguaggio</div>
+    </div>
+    <div class="card-row">
+      <div><strong>Luca Neri</strong> - Età: 9 - Patologia: Disprassia verbale</div>
+    </div>
+  </div>
+
+  <!-- Form aggiunta dimostrativo (non funziona) -->
+  <div class="card template2" id="aggiungi-paziente">
+    <div class="card_title__container">
+      <div class="card_title">Aggiungi nuovo paziente</div>
+      <div class="card_paragraph">Funzionalità dimostrativa – nessun salvataggio</div>
+    </div>
+    <div class="form-group">
+      <input type="text" id="paziente-id" placeholder="ID" />
+      <input type="text" id="paziente-nome" placeholder="Nome" />
+      <input type="text" id="paziente-cognome" placeholder="Cognome" />
+      <button class="button" onclick="alert('Demo: paziente non salvato')">Aggiungi</button>
+    </div>
+  </div>
+
+</body>
+</html>

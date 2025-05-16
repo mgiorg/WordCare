@@ -63,6 +63,17 @@ module.exports = {
 		res.json(rows);
 	  });
 	},
+
+	aggiungiPaziente: (req, res) => {
+		const { id, nome, cognome } = req.body;
+		const query = `INSERT INTO paziente (id, nome, cognome) VALUES (?, ?, ?)`;
+
+		db.run(query, [id, nome, cognome], function (err) {
+			if (err) return res.status(500).json({ error: 'Errore durante inserimento paziente' });
+			res.status(200).json({ success: true });
+		});
+	}, 
+
   
 	dettaglioPaziente: (req, res) => {
 	  // Invia direttamente la pagina HTML, il JS client farà una fetch se serve
