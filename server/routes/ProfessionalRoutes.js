@@ -20,15 +20,15 @@ function VerifyProfessionalSession(req, res, next) {
 
 // Dashboard
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'professional', 'homeprof','home.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'professional', 'homeprof', 'home.html'));
 });
 
 //Profilo professionista
 router.get('/profilo/view', VerifyProfessionalSession, (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'professionista', 'il tuo profilo', 'profilo.html'));
 });
-router.get('/profilo',ProfessionalController.DatiPersonali);
-router.post('/profilo',ProfessionalController.SalvaDatiProfilo);
+router.get('/profilo', ProfessionalController.DatiPersonali);
+router.post('/profilo', ProfessionalController.SalvaDatiProfilo);
 
 // Pazienti
 router.get('/pazienti', ProfessionalController.listPazienti);

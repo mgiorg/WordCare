@@ -34,27 +34,27 @@ function initDb() {
 		// --- Entità Paziente
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Paziente (
-			  id INTEGER PRIMARY KEY AUTOINCREMENT,
-			  user_id INTEGER NOT NULL,
-			  nome TEXT NOT NULL,
-			  cognome TEXT NOT NULL,
-			  data_nascita DATE,
-			  patologia TEXT,
-			  FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				user_id INTEGER NOT NULL,
+				nome TEXT NOT NULL,
+				cognome TEXT NOT NULL,
+				data_nascita DATE,
+				patologia TEXT,
+				FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE
 			);
 		`);
 
 		// --- Entità Professionista
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Professionista (
-			  id INTEGER PRIMARY KEY AUTOINCREMENT,
-			  user_id INTEGER NOT NULL,
-			  nome TEXT NOT NULL,
-			  cognome TEXT NOT NULL,
-			  data_nascita DATE,
-			  specializzazione TEXT,
-			  sede TEXT,
-			  FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				user_id INTEGER NOT NULL,
+				nome TEXT NOT NULL,
+				cognome TEXT NOT NULL,
+				data_nascita DATE,
+				specializzazione TEXT,
+				sede TEXT,
+				FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE
 
 			);
 		`);
@@ -62,82 +62,96 @@ function initDb() {
 		// --- Relazione in_cura (M:N Paziente - Professionista)
 		db.run(`
 			CREATE TABLE IF NOT EXISTS InCura (
-			  paziente INTEGER NOT NULL,
-			  professionista INTEGER NOT NULL,
-			  data_inizio DATE NOT NULL,
-			  data_fine DATE,
-			  note TEXT,
-			  PRIMARY KEY(paziente, professionista),
-			  FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE,
-			  FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE
+				paziente INTEGER NOT NULL,
+				professionista INTEGER NOT NULL,
+				data_inizio DATE NOT NULL,
+				data_fine DATE,
+				note TEXT,
+				PRIMARY KEY(paziente, professionista),
+				FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE,
+				FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE
 			);
 		`);
 
 		// --- Entità Promemoria
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Promemoria (
-			  id INTEGER PRIMARY KEY AUTOINCREMENT,
-			  data DATE NOT NULL,
-			  ora_notifica TIME NOT NULL,
-			  nota TEXT NOT NULL
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				data DATE NOT NULL,
+				ora_notifica TIME NOT NULL,
+				nota TEXT NOT NULL
 			);
 		`);
 
 		// --- Relazione post_it (M:N Professionista - Promemoria)
 		db.run(`
 			CREATE TABLE IF NOT EXISTS PostIt (
-			  professionista INTEGER NOT NULL,
-			  promemoria INTEGER NOT NULL,
+				professionista INTEGER NOT NULL,
+				promemoria INTEGER NOT NULL,
 
-			  PRIMARY KEY(professionista, promemoria),
-			  FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE,
-			  FOREIGN KEY(promemoria) REFERENCES Promemoria(id) ON DELETE CASCADE
+				PRIMARY KEY(professionista, promemoria),
+				FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE,
+				FOREIGN KEY(promemoria) REFERENCES Promemoria(id) ON DELETE CASCADE
 			);
 		`);
 
 		// --- Relazione Appuntamento (Paziente - Professionista) con attributi
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Appuntamento (
-			  id INTEGER PRIMARY KEY AUTOINCREMENT,
-			  paziente INTEGER NOT NULL,
-			  professionista INTEGER NOT NULL,
-			  data DATE NOT NULL,
-			  ora TIME NOT NULL,
-			  sede TEXT NOT NULL,
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				paziente INTEGER NOT NULL,
+				professionista INTEGER NOT NULL,
+				data DATE NOT NULL,
+				ora TIME NOT NULL,
+				sede TEXT NOT NULL,
 
-			  FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE,
-			  FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE,
-			  UNIQUE(paziente, professionista, data, ora)
+				FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE,
+				FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE,
+				UNIQUE(paziente, professionista, data, ora)
 			);
 		`);
 
 		// --- Entità Gioco
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Gioco (
-			  id INTEGER PRIMARY KEY AUTOINCREMENT,
-			  nome TEXT NOT NULL UNIQUE,
-			  tipologia TEXT NOT NULL,
-			  note TEXT
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				nome TEXT NOT NULL UNIQUE,
+				tipologia TEXT NOT NULL,
+				note TEXT
 			);
 		`);
 
 		// --- Relazione Assegnazione (Paziente - Professionista - Gioco) con attributi
 		db.run(`
 			CREATE TABLE IF NOT EXISTS Assegnazione (
-			  id INTEGER PRIMARY KEY AUTOINCREMENT,
-			  paziente INTEGER NOT NULL,
-			  professionista INTEGER NOT NULL,
-			  gioco INTEGER NOT NULL,
-			  scadenza DATE NOT NULL,
-			  ripetizioni_assegnate INTEGER NOT NULL CHECK(ripetizioni_assegnate >= 1),
-			  svolto INTEGER NOT NULL CHECK(svolto IN (0,1)),
-			  ripetizioni_svolte INTEGER NOT NULL CHECK(ripetizioni_svolte >= 0),
-			  punteggio INTEGER NOT NULL CHECK(punteggio >= 0),
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				paziente INTEGER NOT NULL,
+				professionista INTEGER NOT NULL,
+				gioco INTEGER NOT NULL,
+				scadenza DATE NOT NULL,
+				ripetizioni_assegnate INTEGER NOT NULL CHECK(ripetizioni_assegnate >= 1),
+				svolto INTEGER NOT NULL CHECK(svolto IN (0,1)),
+				ripetizioni_svolte INTEGER NOT NULL CHECK(ripetizioni_svolte >= 0),
+				punteggio INTEGER NOT NULL CHECK(punteggio >= 0),
 
-			  FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE,
-			  FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE,
-			  FOREIGN KEY(gioco) REFERENCES Gioco(id) ON DELETE CASCADE,
-			  UNIQUE(paziente, professionista, gioco)
+				FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE,
+				FOREIGN KEY(professionista) REFERENCES Professionista(id) ON DELETE CASCADE,
+				FOREIGN KEY(gioco) REFERENCES Gioco(id) ON DELETE CASCADE,
+				UNIQUE(paziente, professionista, gioco)
+			);
+		`);
+
+		// --- Relazione Agenda (appunti del paziente che si segna giorno per giorno)
+		db.run(`
+			CREATE TABLE IF NOT EXISTS Agenda (
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				paziente INTEGER NOT NULL,
+				data DATE NOT NULL,
+				titolo TEXT,
+				note TEXT,
+				segnalazione INTEGER NOT NULL CHECK(segnalazione IN (0,1)),
+
+				FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE
 			);
 		`);
 

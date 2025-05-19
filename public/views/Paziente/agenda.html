@@ -1,19 +1,20 @@
+<!-- File: agenda.html -->
 <!DOCTYPE html>
 <html lang="it">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>WordCare - Dashboard Paziente</title>
+	<title>WordCare - Agenda Paziente</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<!-- CSS generali della dashboard -->
 	<link rel="stylesheet" href="../../css/Paziente/paziente.css">
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
-		</script>
-	<script defer src="../../js/Paziente/paziente.js"></script>
+	<!-- CSS specifico per l'agenda -->
+	<link rel="stylesheet" href="../../css/Paziente/agenda.css">
 </head>
 
 <body>
+	<!-- Navbar identica a quella della dashboard -->
 	<nav class="navbar">
 		<div class="navbar-brand">WordCare</div>
 		<div class="menu-toggle"><span></span><span></span><span></span></div>
@@ -44,63 +45,66 @@
 			</a>
 		</div>
 	</nav>
+
 	<main class="dashboard">
-		<section class="greeting" id="dashboard">
-			<h1 class="patient-title"></h1>
-			<p>Oggi è una nuova opportunità per migliorare. Facciamo progressi insieme !</p>
-		</section>
-		<h2 class="stats-title">Statistiche</h2>
-		<section class="stats">
-			<div class="stat-card">
-				<div class="icon"><i class="fas fa-check-circle"></i></div>
-				<h3>Esercizi completati</h3><span id=""></span>
-			</div>
-			<div class="stat-card">
-				<div class="icon"><i class="fas fa-user-doctor"></i></div>
-				<h3>Professionista</h3><span id="nome-professionista-in-cura"></span>
-			</div>
-			<div class="stat-card">
-				<div class="icon"><i class="fas fa-calendar-check"></i></div>
-				<h3>Ultima visita</h3><span id="data-ultima-visita"></span>
-			</div>
-		</section>
-
-		<h2 class="upcoming-title">Prossimi Appuntamenti</h2>
-		<section class="upcoming-appointments">
-			<div class="appointment-card">
-				<div class="date-badge">
-					<div class="month">Mag</div>
-					<div class="day">15</div>
+		<section class="agenda-container">
+			<!-- Colonna calendario -->
+			<div class="calendar-section">
+				<div class="calendar-header">
+					<button id="prev-month" class="month-nav"><i class="fas fa-chevron-left"></i></button>
+					<h2 id="current-month">Maggio 2025</h2>
+					<button id="next-month" class="month-nav"><i class="fas fa-chevron-right"></i></button>
 				</div>
-				<div class="appointment-details">
-					<h3>Visita di controllo</h3>
-					<p><i class="fas fa-clock"></i> 10:30 - 11:30</p>
-					<p><i class="fas fa-user-md"></i> Dott. Rossi</p>
+				<div class="weekdays">
+					<span>Lun</span><span>Mar</span><span>Mer</span>
+					<span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span>
 				</div>
-				<div class="appointment-actions">
-					<button class="btn-reschedule"><i class="fas fa-calendar-alt"></i> Riprogramma</button>
-					<button class="btn-cancel"><i class="fas fa-times"></i> Annulla</button>
+				<div class="calendar-grid" id="calendar-days">
+					<!-- giorni generati da JS -->
 				</div>
 			</div>
 
-			<div class="appointment-card">
-				<div class="date-badge">
-					<div class="month">Giu</div>
-					<div class="day">02</div>
+			<!-- Colonna note -->
+			<div class="notes-section" id="notes-section">
+				<div class="notes-header">
+					<h2>Note per <span id="selected-date">16 Maggio 2025</span></h2>
+					<button id="add-note-btn" class="btn-add-note">
+						<i class="fas fa-plus"></i> Nuova nota
+					</button>
 				</div>
-				<div class="appointment-details">
-					<h3>Sessione di terapia</h3>
-					<p><i class="fas fa-clock"></i> 15:00 - 16:00</p>
-					<p><i class="fas fa-user-md"></i> Dott.ssa Bianchi</p>
+				<div class="notes-list" id="notes-list">
+					<div class="empty-notes-message">
+						<i class="fas fa-sticky-note empty-icon"></i>
+						<p>Nessuna nota per questo giorno.<br>Premi "Nuova nota" per aggiungerne una.</p>
+					</div>
 				</div>
-				<div class="appointment-actions">
-					<button class="btn-reschedule"><i class="fas fa-calendar-alt"></i> Riprogramma</button>
-					<button class="btn-cancel"><i class="fas fa-times"></i> Annulla</button>
+				<div class="note-form" id="note-form">
+					<h3>Aggiungi nota</h3>
+					<form id="add-note-form">
+						<div class="form-group">
+							<label for="note-title">Titolo</label>
+							<input type="text" id="note-title" name="titolo" placeholder="Titolo della nota" required>
+						</div>
+						<div class="form-group">
+							<label for="note-content">Contenuto</label>
+							<textarea id="note-content" name="note" placeholder="Scrivi qui le tue informazioni..."
+								rows="5" required></textarea>
+						</div>
+						<div class="form-group checkbox-group">
+							<input type="checkbox" id="note-alert" name="segnalazione">
+							<label for="note-alert">Segnala al professionista</label>
+						</div>
+						<div class="form-actions">
+							<button type="button" id="cancel-note" class="btn-cancel">Annulla</button>
+							<button type="submit" class="btn-save">Salva nota</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</section>
 	</main>
 
+	<!-- Footer identico a quello della dashboard -->
 	<footer class="footer">
 		<div class="footer-content">
 			<div class="footer-section">
@@ -125,6 +129,12 @@
 			<p>&copy; 2025 WordCare. Tutti i diritti riservati.</p>
 		</div>
 	</footer>
+
+	<!-- Script generali e script agenda -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script defer src="../../js/Paziente/paziente.js"></script>
+	<script defer src="../../js/Paziente/agenda.js"></script>
 </body>
 
 </html>

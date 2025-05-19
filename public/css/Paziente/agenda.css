@@ -1,0 +1,528 @@
+:root {
+	--today-bg: rgba(102, 126, 234, 0.2);
+	--today-border: var(--primary);
+	--selected-day-bg: rgba(118, 75, 162, 0.2);
+	--selected-day-border: var(--accent);
+	--has-notes-dot: var(--accent);
+	--weekend-bg: rgba(0, 0, 0, 0.02);
+	--transition-speed: 0.3s;
+	--hover-scale: 1.03;
+	--gradient-bg: linear-gradient(135deg, var(--primary), var(--accent));
+	--glass-effect: rgba(255, 255, 255, 0.75);
+	--note-hover-shadow: 0 10px 20px rgba(118, 75, 162, 0.15);
+	--calendar-day-size: 50px;
+	--notes-dot-size: 8px;
+	--notes-dot-offset: 6px;
+}
+
+.agenda-container {
+	display: flex;
+	gap: 2rem;
+	flex-wrap: wrap;
+	margin-top: 1.5rem;
+	animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Calendario */
+.calendar-section {
+	flex: 1 1 350px;
+	background: var(--white);
+	border-radius: 12px;
+	box-shadow: var(--card-shadow);
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	min-height: 500px;
+	border-top: 4px solid var(--primary);
+	position: relative;
+	overflow: hidden;
+}
+
+.calendar-section::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+	z-index: 0;
+}
+
+.calendar-section>* {
+	position: relative;
+	z-index: 1;
+}
+
+.calendar-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.5rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.calendar-header h2 {
+	font-size: 1.6rem;
+	color: var(--accent);
+	font-weight: 700;
+}
+
+.month-nav {
+	background: var(--gradient-bg);
+	color: var(--white);
+	width: 40px;
+	height: 40px;
+	border-radius: 8px;
+	/* Quadrati */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.month-nav:hover {
+	transform: scale(1.15);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.weekdays {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 10px;
+	text-align: center;
+	margin-bottom: .8rem;
+	font-weight: 600;
+	color: var(--accent);
+}
+
+.weekdays span {
+	font-size: .9rem;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.calendar-grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 10px;
+	flex-grow: 1;
+}
+
+.calendar-day {
+	width: var(--calendar-day-size);
+	height: var(--calendar-day-size);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	/* Quadrati */
+	position: relative;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all var(--transition-speed) ease;
+	margin: 0 auto;
+	font-size: 1.1rem;
+	background: var(--light-bg);
+}
+
+.calendar-day:hover {
+	background-color: rgba(102, 126, 234, 0.15);
+	transform: scale(var(--hover-scale));
+	font-weight: 700;
+}
+
+.day-other-month {
+	color: var(--subtext);
+	opacity: .4;
+}
+
+.day-current-month {
+	color: var(--text);
+	background: var(--white);
+}
+
+.day-weekend {
+	background-color: var(--weekend-bg);
+}
+
+.day-today {
+	background-color: var(--today-bg);
+	border: 2px solid var(--today-border);
+}
+
+.day-selected {
+	background-color: var(--selected-day-bg);
+	border: 2px solid var(--selected-day-border);
+	transform: scale(1.05);
+}
+
+.has-notes::after {
+	content: '';
+	position: absolute;
+	bottom: var(--notes-dot-offset);
+	right: var(--notes-dot-offset);
+	width: var(--notes-dot-size);
+	height: var(--notes-dot-size);
+	border-radius: 50%;
+	background-color: var(--has-notes-dot);
+	box-shadow: 0 0 4px rgba(118, 75, 162, 0.6);
+	animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		opacity: 0.6;
+		transform: scale(1);
+	}
+
+	50% {
+		opacity: 1;
+		transform: scale(1.2);
+	}
+
+	100% {
+		opacity: 0.6;
+		transform: scale(1);
+	}
+}
+
+/* Sezione note */
+.notes-section {
+	flex: 1 1 550px;
+	background: var(--white);
+	border-radius: 12px;
+	box-shadow: var(--card-shadow);
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	min-height: 500px;
+	border-top: 4px solid var(--accent);
+	position: relative;
+	overflow: hidden;
+}
+
+.notes-section::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg, rgba(118, 75, 162, 0.05), rgba(102, 126, 234, 0.05));
+	z-index: 0;
+}
+
+.notes-section>* {
+	position: relative;
+	z-index: 1;
+}
+
+.notes-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.5rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.notes-header h2 {
+	font-size: 1.6rem;
+	color: var(--accent);
+	font-weight: 700;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.btn-add-note {
+	background: var(--gradient-bg);
+	color: var(--white);
+	border-radius: 30px;
+	padding: .7rem 1.2rem;
+	display: flex;
+	align-items: center;
+	gap: .5rem;
+	transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	font-weight: 600;
+}
+
+.btn-add-note:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.notes-list {
+	flex-grow: 1;
+	overflow-y: auto;
+	padding-right: .5rem;
+	scrollbar-width: thin;
+	scrollbar-color: var(--primary) transparent;
+}
+
+.notes-list::-webkit-scrollbar {
+	width: 6px;
+}
+
+.notes-list::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.notes-list::-webkit-scrollbar-thumb {
+	background-color: var(--primary);
+	border-radius: 20px;
+}
+
+.empty-notes-message {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 200px;
+	color: var(--subtext);
+	text-align: center;
+	background: var(--glass-effect);
+	border-radius: 12px;
+	padding: 2rem;
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+}
+
+.empty-icon {
+	font-size: 3.5rem;
+	margin-bottom: 1.5rem;
+	opacity: .6;
+	color: var(--accent);
+}
+
+.note-item {
+	position: relative;
+	background: linear-gradient(90deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+	border-radius: 10px;
+	padding: 1.2rem;
+	margin-bottom: 1.2rem;
+	border-left: 4px solid var(--primary);
+	transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.note-actions {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	display: flex;
+	gap: 0.5rem;
+}
+
+.note-item.alert {
+	border-left-color: var(--danger);
+}
+
+.note-item:hover {
+	transform: translateY(-3px);
+	box-shadow: var(--note-hover-shadow);
+}
+
+.note-item h3 {
+	font-size: 1.2rem;
+	margin-bottom: .7rem;
+	color: var(--accent);
+	font-weight: 600;
+}
+
+.note-item p {
+	font-size: 1rem;
+	color: var(--text);
+	margin-bottom: .8rem;
+	line-height: 1.5;
+}
+
+.note-meta {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: .85rem;
+	color: var(--subtext);
+	background: rgba(255, 255, 255, 0.5);
+	padding: .5rem;
+	border-radius: 6px;
+}
+
+.note-alert-badge {
+	background-color: var(--danger);
+	color: var(--white);
+	border-radius: 20px;
+	padding: .3rem .8rem;
+	font-size: .8rem;
+	display: inline-flex;
+	align-items: center;
+	gap: .3rem;
+	font-weight: 600;
+	box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+.btn-note-action {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.9rem;
+	transition: background 0.2s, transform 0.2s;
+}
+
+.btn-delete {
+	color: var(--danger);
+	background: rgba(220, 53, 69, 0.1);
+}
+
+.btn-delete:hover {
+	background-color: rgba(220, 53, 69, 0.2);
+	transform: scale(1.1);
+}
+
+/* Form nota */
+.note-form {
+	background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+	border-radius: 12px;
+	padding: 1.8rem;
+	margin-top: 1.5rem;
+	display: none;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+	animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.note-form h3 {
+	margin-bottom: 1.2rem;
+	color: var(--accent);
+	font-size: 1.3rem;
+	font-weight: 600;
+	text-align: center;
+}
+
+.note-form h3::after {
+	content: '';
+	display: block;
+	width: 50px;
+	height: 3px;
+	background: var(--gradient-bg);
+	margin: .5rem auto 0;
+	border-radius: 3px;
+}
+
+.form-group {
+	margin-bottom: 1.2rem;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: .6rem;
+	font-weight: 500;
+	color: var(--text);
+}
+
+.form-group input,
+.form-group textarea {
+	width: 100%;
+	padding: .85rem;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	font-family: inherit;
+	transition: border-color .2s, box-shadow .2s;
+	background: rgba(255, 255, 255, 0.9);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+	outline: none;
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.checkbox-group {
+	display: flex;
+	align-items: center;
+	gap: .8rem;
+	background: rgba(255, 255, 255, 0.6);
+	padding: .8rem;
+	border-radius: 8px;
+}
+
+.checkbox-group input {
+	width: 18px;
+	height: 18px;
+	accent-color: var(--accent);
+}
+
+.checkbox-group label {
+	margin-bottom: 0;
+	font-weight: 500;
+}
+
+.form-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	margin-top: 1.8rem;
+}
+
+.btn-save {
+	background: var(--gradient-bg);
+	color: var(--white);
+	border-radius: 8px;
+	padding: .8rem 1.5rem;
+	transition: transform .2s, box-shadow .2s;
+	font-weight: 600;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-save:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-cancel {
+	background: rgba(0, 0, 0, 0.08);
+	color: var(--text);
+	border-radius: 8px;
+	padding: .8rem 1.5rem;
+	transition: background .2s, transform .2s;
+	font-weight: 600;
+}
+
+.btn-cancel:hover {
+	background: rgba(0, 0, 0, 0.12);
+	transform: translateY(-2px);
+}
+
+/* Responsive già presente nella dashboard */
