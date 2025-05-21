@@ -52,7 +52,7 @@ class AuthController {
 			}
 			else if (user.behavior === Behavior.Professional) {
 				//TODO: Implementare la sessione con tutti i dati del professionista
-				res.redirect('/professionista');
+				res.redirect('/profilo');
 			}
 			else return res.status(401).sendFile('views/error404.html', { root: 'public' });
 		} catch (err) {

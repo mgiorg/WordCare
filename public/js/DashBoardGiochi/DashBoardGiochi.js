@@ -58,7 +58,7 @@ const giochi = [
         difficolta: 3,
         tags: ["MBT", "Movimenti Saccadici", "Lettura Globale"],
         richiedeAssistenza: true,
-        percorso: "../../../Giochi/Tachiscoscopio_parole/game.html",
+        percorso: "../../../Giochi/Tachiscoscopio_Parole/game.html",
         immagine: "../../images/DG/tachi.png"
     },
 ];
@@ -68,13 +68,13 @@ const giochi = [
 function creaPuntiniDifficolta(livello) {
     const difficoltaDiv = document.createElement('div');
     difficoltaDiv.className = 'difficulty';
-    
+
     for (let i = 1; i <= 3; i++) {
         const dot = document.createElement('div');
         dot.className = i <= livello ? 'difficulty-dot active' : 'difficulty-dot inactive';
         difficoltaDiv.appendChild(dot);
     }
-    
+
     return difficoltaDiv;
 }
 
@@ -82,19 +82,19 @@ function creaPuntiniDifficolta(livello) {
 function caricaGiochi(giochi) {
     const container = document.getElementById('gamesContainer');
     container.innerHTML = ''; // Pulisce il contenitore
-    
+
     giochi.forEach(gioco => {
         // Crea la card del gioco
         const card = document.createElement('div');
         card.className = 'game-card';
         card.setAttribute('data-id', gioco.id);
-        
+
         // Aggiunge immagine
         const immagine = document.createElement('div');
         immagine.className = 'game-image';
         immagine.style.backgroundImage = `url('${gioco.immagine}')`;
         card.appendChild(immagine);
-        
+
         // Se richiede assistenza, aggiunge il badge
         if (gioco.richiedeAssistenza) {
             const badge = document.createElement('div');
@@ -104,30 +104,30 @@ function caricaGiochi(giochi) {
             badge.appendChild(icon);
             card.appendChild(badge);
         }
-        
+
         // Aggiunge le informazioni del gioco
         const info = document.createElement('div');
         info.className = 'game-info';
-        
+
         // Titolo
         const titolo = document.createElement('h3');
         titolo.className = 'game-title';
         titolo.textContent = gioco.titolo;
         info.appendChild(titolo);
-        
+
         // Descrizione
         const descrizione = document.createElement('p');
         descrizione.className = 'game-description';
         descrizione.textContent = gioco.descrizione;
         info.appendChild(descrizione);
-        
+
         // Difficoltà
         info.appendChild(creaPuntiniDifficolta(gioco.difficolta));
-        
+
         // Tags
         const tagsDiv = document.createElement('div');
         tagsDiv.className = 'game-tags';
-        
+
         // Aggiunge altri tag
         gioco.tags.forEach(tag => {
             const tagSpan = document.createElement('span');
@@ -135,15 +135,15 @@ function caricaGiochi(giochi) {
             tagSpan.textContent = tag;
             tagsDiv.appendChild(tagSpan);
         });
-        
+
         info.appendChild(tagsDiv);
         card.appendChild(info);
-        
+
         // Aggiunge evento click per aprire il gioco
         card.addEventListener('click', () => {
             window.location.href = gioco.percorso;
         });
-        
+
         container.appendChild(card);
     });
 }
@@ -151,10 +151,10 @@ function caricaGiochi(giochi) {
 // Funzione per filtrare i giochi in base alla ricerca
 function filtraGiochi() {
     const searchInput = document.getElementById('searchGames');
-    
+
     searchInput.addEventListener('input', () => {
         const testoDaCercare = searchInput.value.toLowerCase();
-        
+
         const giochiFiltratiPerTesto = giochi.filter(gioco => {
             return (
                 gioco.titolo.toLowerCase().includes(testoDaCercare) ||
@@ -162,7 +162,7 @@ function filtraGiochi() {
                 gioco.tags.some(tag => tag.toLowerCase().includes(testoDaCercare))
             );
         });
-        
+
         caricaGiochi(giochiFiltratiPerTesto);
     });
 }

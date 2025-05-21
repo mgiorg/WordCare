@@ -3,7 +3,6 @@ const path = require('path');
 
 const router = express.Router();
 const viewsPath = path.join(__dirname, '../../public/views');
-const authRoutes = require('./AuthRoutes');
 
 // Route to serve the main HTML page
 router.get('/', (req, res) => {
