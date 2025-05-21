@@ -1,14 +1,14 @@
-// Carica la libreria Google Charts
 google.charts.load('current', { packages: ['corechart'] });
 google.charts.setOnLoadCallback(drawCharts);
+document.getElementById('graficoEsercizi');
+document.getElementById('graficoMedia');
 
-// Disegna entrambi i grafici
+
 function drawCharts() {
   drawEserciziSettimanali();
   drawMediaSettimane();
 }
 
-// === Grafico 1: Esercizi svolti nella settimana ===
 function drawEserciziSettimanali() {
   const data = google.visualization.arrayToDataTable([
     ['Giorno', 'Esercizi svolti'],
@@ -24,14 +24,17 @@ function drawEserciziSettimanali() {
   const options = {
     title: 'Esercizi giornalieri (1-10)',
     legend: { position: 'bottom' },
-    vAxis: { minValue: 0, maxValue: 10 }
+    backgroundColor: '#1e1f29',
+    titleTextStyle: { color: '#ffffff' },
+    vAxis: { minValue: 0, maxValue: 10, textStyle: { color: '#ffffff' } },
+    hAxis: { textStyle: { color: '#ffffff' } },
+    legendTextStyle: { color: '#ffffff' }
   };
 
   const chart = new google.visualization.ColumnChart(document.getElementById('graficoEsercizi'));
   chart.draw(data, options);
 }
 
-// === Grafico 2: Media risultati ultime 6 settimane ===
 function drawMediaSettimane() {
   const data = google.visualization.arrayToDataTable([
     ['Settimana', 'Media'],
@@ -47,9 +50,14 @@ function drawMediaSettimane() {
     title: 'Media settimanale dei risultati (1-10)',
     curveType: 'function',
     legend: { position: 'bottom' },
-    vAxis: { minValue: 0, maxValue: 10 }
+    backgroundColor: '#1e1f29',
+    titleTextStyle: { color: '#ffffff' },
+    vAxis: { minValue: 0, maxValue: 10, textStyle: { color: '#ffffff' } },
+    hAxis: { textStyle: { color: '#ffffff' } },
+    legendTextStyle: { color: '#ffffff' }
   };
 
   const chart = new google.visualization.LineChart(document.getElementById('graficoMedia'));
   chart.draw(data, options);
 }
+
