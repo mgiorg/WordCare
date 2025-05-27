@@ -1,6 +1,7 @@
 # Dependencies
 node_modules/
 package-lock.json
+package.json
 eslint.config.mjs
 jsconfig.json
 
@@ -53,7 +54,7 @@ out/
 
 # Database files
 *.sqlite
-#*.db
+*.db
 
 # Config files with sensitive data
 config.js

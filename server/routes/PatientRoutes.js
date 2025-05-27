@@ -24,7 +24,10 @@ function VerifyPatientSession(req, res, next) {
 // Dashboard paziente
 router.get('/paziente', VerifyPatientSession, (req, res) => PatientController.Patient(req, res));
 
-router.get('/paziente/eserizi', VerifyPatientSession, (req, res) => PatientController.Esercizi(req, res));
+//router.get('/paziente/eserizi', VerifyPatientSession, (req, res) => PatientController.Esercizi(req, res));
+router.get("/paziente/esercizi", (req, res) => {
+	res.sendFile(path.join(viewsPath, 'DashBoardGiochi/DashBoardGiochi.html'));
+})
 
 router.get('/paziente/agenda', VerifyPatientSession, (req, res) => {
 	res.sendFile(path.join(viewsPath, '/Paziente/agenda.html'));
