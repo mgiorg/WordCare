@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gioco delle Sillabe</title>
-    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="/views/Giochi/ConCheSillaba/game.css">
 </head>
+
 <body>
-    <button id="exit-button" onclick="window.location.href='../../public/views/DashBoardGiochi/DashBoardGiochi.html'">⏴ Esci</button>
+    <button id="exit-button" onclick="window.history.back()">⏴ Esci</button>
     <h1>Con che sillaba comincia?</h1>
     <p id="score">Punteggio: 0</p>
     <div id="game-container"></div>
     <p id="result"></p>
-    <script src="game.js"></script>
+    <script src="/views/Giochi/ConCheSillaba/game.js"></script>
 </body>
+
 </html>

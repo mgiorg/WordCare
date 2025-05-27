@@ -10,6 +10,7 @@ const authRoutes = require('./routes/AuthRoutes');
 const patientRoutes = require('./routes/PatientRoutes');
 const professionalRoutes = require('./routes/ProfessionalRoutes');
 const apiRoutes = require('./routes/ApiRoutes');
+const gameRoutes = require('./routes/GameRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -38,6 +39,7 @@ app.use('/', homeRoutes);
 app.use('/', authRoutes);
 app.use('/', patientRoutes);
 app.use('/', professionalRoutes);
+app.use('/', gameRoutes);
 app.use('/api', apiRoutes);
 
 // Avvio server

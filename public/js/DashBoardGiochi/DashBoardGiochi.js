@@ -8,7 +8,7 @@ const giochi = [
         difficolta: 1,
         tags: ["Discriminazione"],
         richiedeAssistenza: false,
-        percorso: "../../../Giochi/CollegaImmagineCH_C/game.html",
+        percorso: "/collegaImmagini",
         immagine: "../../images/DG/Suoni_CH_C.png"
     },
     {

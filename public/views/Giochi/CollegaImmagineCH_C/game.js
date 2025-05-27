@@ -1,31 +1,31 @@
 const images = [
-    { src: 'arancia.jpg', type: 'c' },
-    { src: 'cenerentola.jpg', type: 'c' },
-    { src: 'cervello.jpg', type: 'c' },
-    { src: 'cervo.jpg', type: 'c' },
-    { src: 'cespuglio.jpg', type: 'c' },
-    { src: 'cesto.jpg', type: 'c' },
-    { src: 'ciambella.jpg', type: 'c' },
-    { src: 'ciccione.jpg', type: 'c' },
-    { src: 'cielo.jpg', type: 'c' },
-    { src: 'ciliegia.jpg', type: 'c' },
-    { src: 'cinema.jpg', type: 'c' },
-    { src: 'cipolla.jpg', type: 'c' },
-    { src: 'ciuccio.jpg', type: 'c' },
-    { src: 'cappello.jpg', type: 'ch' },
-    { src: 'carota.jpg', type: 'ch' },
-    { src: 'castello.jpg', type: 'ch' },
-    { src: 'chiave.jpg', type: 'ch' },
-    { src: 'chitarra.jpg', type: 'ch' },
-    { src: 'coccinella.jpg', type: 'ch' },
-    { src: 'cocco.jpg', type: 'ch' },
-    { src: 'coccodrillo.jpg', type: 'ch' },
-    { src: 'comodino.jpg', type: 'ch' },
-    { src: 'computer.jpg', type: 'ch' },
-    { src: 'coniglio.jpg', type: 'ch' },
-    { src: 'cubo.jpg', type: 'ch' },
-    { src: 'cuore.jpg', type: 'ch' },
-    { src: 'cuscino.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/arancia.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cenerentola.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cervello.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cervo.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cespuglio.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cesto.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/ciambella.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/ciccione.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cielo.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/ciliegia.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cinema.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cipolla.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/ciuccio.jpg', type: 'c' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cappello.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/carota.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/castello.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/chiave.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/chitarra.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/coccinella.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cocco.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/coccodrillo.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/comodino.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/computer.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/coniglio.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cubo.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cuore.jpg', type: 'ch' },
+    { src: '/views/Giochi/CollegaImmagineCH_C/cuscino.jpg', type: 'ch' },
 ];
 
 function shuffle(array) {
@@ -54,7 +54,7 @@ function startGame() {
 }
 
 function dragStart(event) {
-    event.dataTransfer.setData('text/plain', event.target.id); 
+    event.dataTransfer.setData('text/plain', event.target.id);
 }
 
 
@@ -68,7 +68,7 @@ function drop(event) {
     const draggedImage = document.getElementById(imageId); // Trova l'immagine corretta
 
     // Troviamo il contenitore giusto, evitando problemi di selezione errata
-    const targetBox = event.target.closest('.box'); 
+    const targetBox = event.target.closest('.box');
 
     if (draggedImage && targetBox) {
         targetBox.appendChild(draggedImage.cloneNode(true)); // Aggiungiamo l'immagine
