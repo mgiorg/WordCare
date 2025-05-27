@@ -53,7 +53,7 @@ out/
 
 # Database files
 *.sqlite
-*.db
+#*.db
 
 # Config files with sensitive data
 config.js
