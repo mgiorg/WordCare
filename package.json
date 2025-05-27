@@ -1,0 +1,28 @@
+{
+  "name": "web-project",
+  "version": "1.0.0",
+  "description": "A web project with client-server architecture using Node.js and Express.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/App.js",
+    "dev": "nodemon server/App.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "gsap": "^3.13.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.26.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jquery": "^3.5.32",
+    "eslint": "^9.26.0",
+    "globals": "^16.1.0",
+    "nodemon": "^3.1.10"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
