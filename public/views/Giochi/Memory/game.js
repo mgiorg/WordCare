@@ -6,12 +6,12 @@ let flippedCards = [];
 function startGame() {
     const selectedCategory = document.getElementById("category").value;
     const playerNames = document.getElementById("players").value.split(",");
-    
+
     if (playerNames.length < 2) {
         alert("Inserisci almeno due giocatori!");
         return;
     }
-    
+
     players = playerNames.map(player => player.trim());
     players.forEach(player => scores[player] = 0);
 
@@ -47,9 +47,9 @@ function initializeGame(category) {
 
 function getCategoryImages(category) {
     const categories = {
-        house: ["casa.jpg", "letto.jpg", "pc.jpg", "porta.jpg", "sedia.jpg", "vasca.jpg", "orologio.jpg", "piatto.jpg"],
-        jobs: ["medico.jpg", "cuoco.jpg", "astronauta.jpg", "poliziotto.jpg", "insegnante.jpg", "operaio.jpg", "fotografo.jpg", "cantante.jpg"],
-        animals: ["cane.jpg", "gatto.jpg", "panda.jpg", "leone.jpg", "tartaruga.jpg", "serpente.jpg", "elefante.jpg", "uccello.jpg"]
+        house: ["/views/Giochi/Memory/images/casa.jpg", "/views/Giochi/Memory/images/letto.jpg", "/views/Giochi/Memory/images/pc.jpg", "/views/Giochi/Memory/images/porta.jpg", "/views/Giochi/Memory/images/sedia.jpg", "/views/Giochi/Memory/images/vasca.jpg", "/views/Giochi/Memory/images/orologio.jpg", "/views/Giochi/Memory/images/piatto.jpg"],
+        jobs: ["/views/Giochi/Memory/images/medico.jpg", "/views/Giochi/Memory/images/cuoco.jpg", "/views/Giochi/Memory/images/astronauta.jpg", "/views/Giochi/Memory/images/poliziotto.jpg", "/views/Giochi/Memory/images/insegnante.jpg", "/views/Giochi/Memory/images/operaio.jpg", "/views/Giochi/Memory/images/fotografo.jpg", "/views/Giochi/Memory/images/cantante.jpg"],
+        animals: ["/views/Giochi/Memory/images/cane.jpg", "/views/Giochi/Memory/images/gatto.jpg", "/views/Giochi/Memory/images/panda.jpg", "/views/Giochi/Memory/images/leone.jpg", "/views/Giochi/Memory/images/tartaruga.jpg", "/views/Giochi/Memory/images/serpente.jpg", "/views/Giochi/Memory/images/elefante.jpg", "/views/Giochi/Memory/images/uccello.jpg"]
     };
     return categories[category];
 }

@@ -9,6 +9,9 @@
 </head>
 
 <body>
+	<span style="position: absolute; top: 20px; left: 20px; z-index: 1000;">
+		<button class="back-button" onclick="window.location.href='/home'">← Torna alla Home</button>
+	</span>
 	<!--* Background shapes *-->
 	<div class="bg-shapes">
 		<div class="shape shape-1"></div>
@@ -92,12 +95,12 @@
 		<div class="overlay-container">
 			<div class="overlay">
 				<div class="overlay-panel overlay-left">
-					<h1>Bentornato!</h1>
+					<h1 style="color: white !important">Bentornato!</h1>
 					<p>Per accedere ai tuoi contenuti, effettua il login con i tuoi dati personali</p>
 					<button class="ghost" id="signIn">Accedi</button>
 				</div>
 				<div class="overlay-panel overlay-right">
-					<h1>Benvenuto!</h1>
+					<h1 style="color: white !important">Benvenuto!</h1>
 					<p>Inserisci i tuoi dati personali e inizia il tuo percorso con noi</p>
 					<button class="ghost" id="signUp">Registrati</button>
 				</div>

@@ -151,7 +151,7 @@ function initDb() {
 				note TEXT,
 				segnalazione INTEGER NOT NULL CHECK(segnalazione IN (0,1)),
 
-				FOREIGN KEY(paziente) REFERENCES Paziente(id) ON DELETE CASCADE
+				FOREIGN KEY(paziente) REFERENCES Paziente(user_id) ON DELETE CASCADE
 			);
 		`);
 

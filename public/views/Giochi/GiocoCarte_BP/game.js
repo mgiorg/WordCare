@@ -13,29 +13,29 @@ document.addEventListener('DOMContentLoaded', function () {
   let lastCard = null;
 
   let deck = [
-    { color: 'blue', syllable: 'BA', image: 'ba.png' },
-    { color: 'blue', syllable: 'BE', image: 'be.png' },
-    { color: 'blue', syllable: 'BI', image: 'bi.png' },
-    { color: 'blue', syllable: 'BO', image: 'bo.png' },
-    { color: 'blue', syllable: 'BU', image: 'bu.png' },
-    { color: 'yellow', syllable: 'PA', image: 'pa.png' },
-    { color: 'yellow', syllable: 'PE', image: 'pe.png' },
-    { color: 'yellow', syllable: 'PI', image: 'pi.png' },
-    { color: 'yellow', syllable: 'PO', image: 'po.png' },
-    { color: 'yellow', syllable: 'PU', image: 'pu.png' }
+    { color: 'blue', syllable: 'BA', image: '/views/Giochi/GiocoCarte_BP/ba.png' },
+    { color: 'blue', syllable: 'BE', image: '/views/Giochi/GiocoCarte_BP/be.png' },
+    { color: 'blue', syllable: 'BI', image: '/views/Giochi/GiocoCarte_BP/bi.png' },
+    { color: 'blue', syllable: 'BO', image: '/views/Giochi/GiocoCarte_BP/bo.png' },
+    { color: 'blue', syllable: 'BU', image: '/views/Giochi/GiocoCarte_BP/bu.png' },
+    { color: 'yellow', syllable: 'PA', image: '/views/Giochi/GiocoCarte_BP/pa.png' },
+    { color: 'yellow', syllable: 'PE', image: '/views/Giochi/GiocoCarte_BP/pe.png' },
+    { color: 'yellow', syllable: 'PI', image: '/views/Giochi/GiocoCarte_BP/pi.png' },
+    { color: 'yellow', syllable: 'PO', image: '/views/Giochi/GiocoCarte_BP/po.png' },
+    { color: 'yellow', syllable: 'PU', image: '/views/Giochi/GiocoCarte_BP/pu.png' }
   ];
 
   let deckLevel2 = [
-    { color: 'green', word: 'bastone', image: 'bastone.png' },
-    { color: 'green', word: 'bersaglio', image: 'bersaglio.png' },
-    { color: 'green', word: 'bicchiere', image: 'bicchiere.png' },
-    { color: 'green', word: 'bottone', image: 'bottone.png' },
-    { color: 'green', word: 'busta', image: 'busta.png' },
-    { color: 'red', word: 'papà', image: 'papa.png' },
-    { color: 'red', word: 'pesce', image: 'pesce.png' },
-    { color: 'red', word: 'pianta', image: 'pianta.png' },
-    { color: 'red', word: 'porta', image: 'porta.png' },
-    { color: 'red', word: 'pugno', image: 'pugno.png' }
+    { color: 'green', word: 'bastone', image: '/views/Giochi/GiocoCarte_BP/bastone.png' },
+    { color: 'green', word: 'bersaglio', image: '/views/Giochi/GiocoCarte_BP/bersaglio.png' },
+    { color: 'green', word: 'bicchiere', image: '/views/Giochi/GiocoCarte_BP/bicchiere.png' },
+    { color: 'green', word: 'bottone', image: '/views/Giochi/GiocoCarte_BP/bottone.png' },
+    { color: 'green', word: 'busta', image: '/views/Giochi/GiocoCarte_BP/busta.png' },
+    { color: 'red', word: 'papà', image: '/views/Giochi/GiocoCarte_BP/papa.png' },
+    { color: 'red', word: 'pesce', image: '/views/Giochi/GiocoCarte_BP/pesce.png' },
+    { color: 'red', word: 'pianta', image: '/views/Giochi/GiocoCarte_BP/pianta.png' },
+    { color: 'red', word: 'porta', image: '/views/Giochi/GiocoCarte_BP/porta.png' },
+    { color: 'red', word: 'pugno', image: '/views/Giochi/GiocoCarte_BP/pugno.png' }
   ];
 
   let currentLevel = 1;
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const imgY = y + 40;
       ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
     };
-  
+
     // Modifica il testo mostrato a seconda del livello
     const text = currentLevel === 1 ? currentCard.syllable : currentCard.word;
     ctx.font = "36px Arial";
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const textX = (canvas.width - textWidth) / 2;
     const textY = y + cardHeight + 40;
     ctx.fillText(text, textX, textY);
-  }  
+  }
 
   function updateScore() {
     scoreDisplay.textContent = "Punteggio: " + score;

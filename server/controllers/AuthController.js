@@ -18,24 +18,28 @@ class AuthController {
 			const user = await UserRepository.findUserByUsername(username);
 
 			if (!user) {
-				req.session.errorInfo = {
-					code: 401,
-					title: 'Utente non trovato',
-					message: `Username "${username}" non esiste`,
+				// Redirect alla pagina di errore con query string
+				const params = new URLSearchParams({
+					code: '401',
+					title: 'Accesso negato',
+					message: 'Le credenziali fornite non sono valide. Nessun utente trovato con questo username.',
 					returnUrl: '/login'
-				};
-				return res.redirect('/views/error404.html');
+				});
+
+				return res.redirect(`/error.html?${params.toString()}`);
 			}
 
 			const passwordMatch = await bcrypt.compare(password, user.password);
 			if (!passwordMatch) {
-				req.session.errorInfo = {
-					code: 401,
-					title: 'Password errata',
-					message: 'La password inserita non è corretta',
+				// Redirect alla pagina di errore con query string
+				const params = new URLSearchParams({
+					code: '401',
+					title: 'Accesso negato',
+					message: 'Le credenziali fornite non sono valide. La password non corrisponde a quella in nostro possesso.',
 					returnUrl: '/login'
-				};
-				return res.redirect('/views/error404.html');
+				});
+
+				return res.redirect(`/error.html?${params.toString()}`);
 			}
 
 			// Imposta la sessione
@@ -52,12 +56,28 @@ class AuthController {
 			}
 			else if (user.behavior === Behavior.Professional) {
 				//TODO: Implementare la sessione con tutti i dati del professionista
-				res.redirect('/profilo');
 			}
-			else return res.status(401).sendFile('views/error404.html', { root: 'public' });
+			else {
+				// Redirect alla pagina di errore con query string
+				const params = new URLSearchParams({
+					code: '500',
+					title: 'Accesso negato',
+					message: 'Il tuo account non ha i permessi per accedere a questa applicazione.',
+					returnUrl: '/login'
+				});
+
+				return res.redirect(`/error.html?${params.toString()}`);
+			}
 		} catch (err) {
 			console.error('Errore durante il login:', err.message);
-			res.status(500).sendFile('views/error404.html', { root: 'public' });
+			// Redirect alla pagina di errore con query string
+			const params = new URLSearchParams({
+				code: '500',
+				title: 'Errore imprevisto',
+				message: 'Si è verificato un errore durante il login. Riprova più tardi.',
+				returnUrl: '/login'
+			});
+			return res.redirect(`/error.html?${params.toString()}`);
 		}
 	}
 
@@ -92,20 +112,37 @@ class AuthController {
 				req.session.userRole = newUser.behavior;
 				req.session.patientId = patientId;
 
+				req.session.userName = patient.nome;
+				req.session.userSurname = patient.cognome;
+				req.session.patientId = patient.id;
+
 				// Reindirizza direttamente alla dashboard del paziente
 				res.redirect('/paziente');
 			}
 			else {
-
+				//TODO: Aggiungi la logica per il professionista
 			}
 		} catch (err) {
 			if (err.message.includes('UNIQUE')) {
-				return res.status(400).sendFile('views/error404.html', { root: 'public' });
+				// Redirect alla pagina di errore con query string
+				const params = new URLSearchParams({
+					code: '404',
+					title: 'Errore imprevisto',
+					message: 'Si è verificato un errore durante la registrazione. Esiste già un utente con la tua mail o il tuo username.',
+					returnUrl: '/login'
+				});
+				return res.redirect(`/error.html?${params.toString()}`);
 			}
 
 			console.error('Errore durante la registrazione:', err.message);
-			res.status(500).sendFile('views/error404.html', { root: 'public' });
-			return;
+			// Redirect alla pagina di errore con query string
+			const params = new URLSearchParams({
+				code: '400',
+				title: 'Errore imprevisto',
+				message: 'Si è verificato un errore durante la registrazione. Riprova più tardi.',
+				returnUrl: '/login'
+			});
+			return res.redirect(`/error.html?${params.toString()}`);
 		}
 	}
 
@@ -114,7 +151,14 @@ class AuthController {
 		req.session.destroy(err => {
 			if (err) {
 				console.error('Errore durante il logout:', err);
-				return res.status(500).send('Errore durante il logout');
+				// Redirect alla pagina di errore con query string
+				const params = new URLSearchParams({
+					code: '500',
+					title: 'Errore nel logout',
+					message: 'Si è verificato un errore durante il logout. Riprova più tardi.',
+					returnUrl: '/login'
+				});
+				return res.redirect(`/error.html?${params.toString()}`);
 			}
 			res.redirect('/login');
 		});

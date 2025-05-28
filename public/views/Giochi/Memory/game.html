@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game</title>
-    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="/views/Giochi/Memory/game.css">
 </head>
+
 <body>
-    <button id="exitButton" onclick="window.location.href='../../public/views/DashBoardGiochi/DashBoardGiochi.html'">⏴ Esci</button>
+    <button id="exitButton" onclick="window.history.back()">⏴ Esci</button>
 
     <div id="settings-container">
         <h1>Memory Game</h1>
@@ -17,7 +19,7 @@
             <option value="jobs">Mestieri</option>
             <option value="animals">Animali</option>
         </select>
-        
+
         <label for="players">Inserisci i nomi dei giocatori:</label>
         <input type="text" id="players" placeholder="Es. Marco, Luca">
         <button onclick="startGame()">Inizia</button>
@@ -36,6 +38,7 @@
         <button onclick="exitGame()">Esci</button>
     </div>
 
-    <script src="game.js"></script>
+    <script src="/views/Giochi/Memory/game.js"></script>
 </body>
+
 </html>

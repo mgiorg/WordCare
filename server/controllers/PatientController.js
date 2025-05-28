@@ -16,14 +16,28 @@ class PatientController {
 			const userId = req.session.userId;
 			const user = await UserRepository.findById(userId);
 			if (!user) {
-				return res.status(404).send('User not found');
+				// Redirect alla pagina di errore con query string
+				const params = new URLSearchParams({
+					code: '404',
+					title: 'Utente non trovato',
+					message: "Si è verificato un errore: l'utente non è stato trovato.",
+					returnUrl: '/login'
+				});
+				return res.redirect(`/error.html?${params.toString()}`);
 			}
 
 			// Renderizza la vista del paziente
 			res.sendFile(path.join(__dirname, '../../public/views/Paziente/paziente.html'));
 		} catch (err) {
 			console.error('Error in patient dashboard:', err);
-			res.status(500).send('Internal Server Error');
+			// Redirect alla pagina di errore con query string
+			const params = new URLSearchParams({
+				code: '500',
+				title: 'Errore interno del server',
+				message: "Si è verificato un errore durante il recupero della dashboard del paziente.",
+				returnUrl: '/login'
+			});
+			return res.redirect(`/error.html?${params.toString()}`);
 		}
 	}
 
@@ -33,10 +47,24 @@ class PatientController {
 			const user = await UserRepository.findById(userId);
 			const patient = await PatientRepository.findByUserId(userId);
 			if (!user) {
-				return res.status(404).json({ message: 'Utente non trovato' });
+				// Redirect alla pagina di errore con query string
+				const params = new URLSearchParams({
+					code: '404',
+					title: 'Utente non trovato',
+					message: "Si è verificato un errore: l'utente non è stato trovato.",
+					returnUrl: '/login'
+				});
+				return res.redirect(`/error.html?${params.toString()}`);
 			}
 			if (!patient) {
-				return res.status(404).json({ message: 'Paziente non trovato' });
+				// Redirect alla pagina di errore con query string
+				const params = new URLSearchParams({
+					code: '404',
+					title: 'Paziente non trovato',
+					message: "Si è verificato un errore: non è stato trovato un profilo paziente associato alle tue credenziali.",
+					returnUrl: '/login'
+				});
+				return res.redirect(`/error.html?${params.toString()}`);
 			}
 
 			res.json({
@@ -46,7 +74,14 @@ class PatientController {
 			});
 		} catch (error) {
 			console.error('Errore nel recupero della dashboard:', error);
-			res.status(500).json({ message: 'Errore interno del server' });
+			// Redirect alla pagina di errore con query string
+			const params = new URLSearchParams({
+				code: '500',
+				title: 'Errore interno del server',
+				message: "Si è verificato un errore durante il recupero della dashboard del paziente.",
+				returnUrl: '/login'
+			});
+			return res.redirect(`/error.html?${params.toString()}`);
 		}
 	}
 }

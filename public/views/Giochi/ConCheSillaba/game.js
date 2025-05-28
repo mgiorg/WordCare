@@ -1,20 +1,18 @@
 const imageDatabase = [
-    { name: "BICICLETTA", image: "images/bicicletta.jpg" },
-    { name: "CANE", image: "images/cane.jpg" },
-    { name: "DADO", image: "images/dado.jpg" },
-    { name: "FOCA", image: "images/foca.jpg" },
-    { name: "GIRAFFA", image: "images/giraffa.jpg" },
-    { name: "LIMONE", image: "images/limone.jpg" },
-    { name: "MACCHINA", image: "images/macchina.jpg" },
-    { name: "NAVETTA", image: "images/navetta.jpg" },
-    { name: "PENNARELLO", image: "images/pennarello.jpg" },
-    { name: "SEDIA", image: "images/sedia.jpg" },
-    { name: "TAVOLO", image: "images/tavolo.jpg" },
-    { name: "VESTITO", image: "images/vestito.jpg" },
-    { name: "ZAINO", image: "images/zaino.jpg" },
-    { name: "ZEBRA", image: "images/zebra.jpg" },
-
-
+    { name: "BICICLETTA", image: "/views/Giochi/ConCheSillaba/images/bicicletta.jpg" },
+    { name: "CANE", image: "/views/Giochi/ConCheSillaba/images/cane.jpg" },
+    { name: "DADO", image: "/views/Giochi/ConCheSillaba/images/dado.jpg" },
+    { name: "FOCA", image: "/views/Giochi/ConCheSillaba/images/foca.jpg" },
+    { name: "GIRAFFA", image: "/views/Giochi/ConCheSillaba/images/giraffa.jpg" },
+    { name: "LIMONE", image: "/views/Giochi/ConCheSillaba/images/limone.jpg" },
+    { name: "MACCHINA", image: "/views/Giochi/ConCheSillaba/images/macchina.jpg" },
+    { name: "NAVETTA", image: "/views/Giochi/ConCheSillaba/images/navetta.jpg" },
+    { name: "PENNARELLO", image: "/views/Giochi/ConCheSillaba/images/pennarello.jpg" },
+    { name: "SEDIA", image: "/views/Giochi/ConCheSillaba/images/sedia.jpg" },
+    { name: "TAVOLO", image: "/views/Giochi/ConCheSillaba/images/tavolo.jpg" },
+    { name: "VESTITO", image: "/views/Giochi/ConCheSillaba/images/vestito.jpg" },
+    { name: "ZAINO", image: "/views/Giochi/ConCheSillaba/images/zaino.jpg" },
+    { name: "ZEBRA", image: "/views/Giochi/ConCheSillaba/images/zebra.jpg" },
 ];
 
 let currentIndex = 0;

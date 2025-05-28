@@ -8,7 +8,15 @@ const AgendaRepository = require('../repositories/AgendaRepository');
 
 router.get('/patient-info', (req, res) => {
 	if (!req.session.userId) {
-		return res.status(401).json({ error: 'Non loggato' });
+		// Redirect alla pagina di errore con query string
+		const params = new URLSearchParams({
+			code: '401',
+			title: 'Utente non loggato',
+			message: 'Si è verificato un errore: non sei loggato.',
+			returnUrl: '/login'
+		});
+
+		return res.redirect(`/error.html?${params.toString()}`);
 	}
 
 	// Recupera il nome dalla sessione
@@ -17,44 +25,18 @@ router.get('/patient-info', (req, res) => {
 	return res.json({ nome, cognome });
 });
 
-/**
- * GET /api/error-info
- * → Riceve opzionalmente in query: code, returnUrl
- * → Puoi mappare code→titolo/messaggio o usare dei valori di default
- */
-router.get('/error-info', (req, res) => {
-	const { code, returnUrl } = req.query;
-
-	// Mappa di esempio per titoli e messaggi
-	const errorMap = {
-		'404': {
-			title: 'Pagina non trovata',
-			message: 'La pagina richiesta non esiste.',
-		},
-		'500': {
-			title: 'Errore interno',
-			message: 'Si è verificato un errore imprevisto sul server.',
-		},
-	};
-
-	const entry = errorMap[code] || {
-		title: 'Oops! Qualcosa è andato storto',
-		message: "Si è verificato un errore durante l'operazione.",
-	};
-
-	res.json({
-		code: code || '500',
-		title: entry.title,
-		message: entry.message,
-		// Usa il returnUrl passato in query, o di default rimanda al login
-		returnUrl: returnUrl || '/login',
-	});
-});
-
 // Ritorna tutte le note del paziente loggato
 router.get('/paziente-agenda', async (req, res) => {
 	if (!req.session.userId) {
-		return res.status(401).json({ error: 'Non loggato' });
+		// Redirect alla pagina di errore con query string
+		const params = new URLSearchParams({
+			code: '401',
+			title: 'Utente non loggato',
+			message: 'Si è verificato un errore: non sei loggato.',
+			returnUrl: '/login'
+		});
+
+		return res.redirect(`/error.html?${params.toString()}`);
 	}
 	try {
 		const pazienteId = req.session.userId;
@@ -63,14 +45,30 @@ router.get('/paziente-agenda', async (req, res) => {
 		res.json(notes);
 	} catch (err) {
 		console.error('Errore fetching agenda:', err);
-		res.status(500).json({ error: 'Errore server' });
+		// Redirect alla pagina di errore con query string
+		const params = new URLSearchParams({
+			code: '500',
+			title: 'Errore dati agenda',
+			message: "Si è verificato un errore: non sono riuscito a recuperare le informazioni dell'agenda.",
+			returnUrl: '/login'
+		});
+
+		return res.redirect(`/error.html?${params.toString()}`);
 	}
 });
 
 // Salva una nuova nota
 router.post('/paziente-agenda', express.json(), async (req, res) => {
 	if (!req.session.userId) {
-		return res.status(401).json({ error: 'Non loggato' });
+		// Redirect alla pagina di errore con query string
+		const params = new URLSearchParams({
+			code: '401',
+			title: 'Utente non loggato',
+			message: 'Si è verificato un errore: non sei loggato.',
+			returnUrl: '/login'
+		});
+
+		return res.redirect(`/error.html?${params.toString()}`);
 	}
 	try {
 		const pazienteId = req.session.userId;
@@ -85,7 +83,15 @@ router.post('/paziente-agenda', express.json(), async (req, res) => {
 		res.json(newNote);
 	} catch (err) {
 		console.error('Errore nel salvataggio nota:', err);
-		res.status(500).json({ error: 'Errore server' });
+		// Redirect alla pagina di errore con query string
+		const params = new URLSearchParams({
+			code: '500',
+			title: 'Errore creazione nota',
+			message: "Si è verificato un errore: non sono riuscito a salvare la nota.",
+			returnUrl: '/login'
+		});
+
+		return res.redirect(`/error.html?${params.toString()}`);
 	}
 });
 
@@ -100,11 +106,27 @@ router.delete('/paziente-agenda/:id', async (req, res) => {
 		if (changes > 0) {
 			return res.json({ success: true });
 		} else {
-			return res.status(404).json({ error: 'Nota non trovata' });
+			// Redirect alla pagina di errore con query string
+			const params = new URLSearchParams({
+				code: '500',
+				title: 'Errore cancellazione nota',
+				message: "Si è verificato un errore: non sono riuscito a trovare la nota.",
+				returnUrl: '/login'
+			});
+
+			return res.redirect(`/error.html?${params.toString()}`);
 		}
 	} catch (err) {
 		console.error('Errore eliminazione nota:', err);
-		return res.status(500).json({ error: 'Errore server' });
+		// Redirect alla pagina di errore con query string
+		const params = new URLSearchParams({
+			code: '400',
+			title: 'Errore server',
+			message: "Si è verificato un errore: riprovare più tardi.",
+			returnUrl: '/login'
+		});
+
+		return res.redirect(`/error.html?${params.toString()}`);
 	}
 });
 
@@ -130,7 +152,15 @@ router.put('/paziente-agenda/:id', express.json(), async (req, res) => {
 		return res.json(updated);
 	} catch (err) {
 		console.error('Errore aggiornamento nota:', err);
-		return res.status(500).json({ error: 'Errore server' });
+		// Redirect alla pagina di errore con query string
+		const params = new URLSearchParams({
+			code: '500',
+			title: 'Errore modifica nota',
+			message: "Si è verificato un errore: non sono riuscito a modificare la nota selezionata.",
+			returnUrl: '/login'
+		});
+
+		return res.redirect(`/error.html?${params.toString()}`);
 	}
 });
 

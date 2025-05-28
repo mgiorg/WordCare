@@ -18,7 +18,15 @@ function VerifyPatientSession(req, res, next) {
 	if (req.session.userId && req.session.userRole === Behavior.Patient) {
 		return next();
 	}
-	return res.redirect('/login');
+	// Redirect alla pagina di errore con query string
+	const params = new URLSearchParams({
+		code: '401',
+		title: 'Accesso negato',
+		message: 'Non hai i permessi per accedere a questa risorsa.',
+		returnUrl: '/login'
+	});
+
+	return res.redirect(`/error.html?${params.toString()}`);
 }
 
 // Dashboard paziente
