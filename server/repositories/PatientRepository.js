@@ -69,6 +69,47 @@ class PatientRepository {
 			});
 		});
 	}
+
+	async getNomeProfessionistaInCura(userId) {
+		const query = `SELECT p.nome, p.cognome
+					   FROM Paziente pa
+					   JOIN InCura ic ON pa.id = ic.paziente
+					   JOIN Professionista p ON ic.professionista = p.id
+					   WHERE pa.user_id = ? AND ic.data_fine IS NULL`;
+
+		return new Promise((resolve, reject) => {
+			db.get(query, [userId], (err, row) => {
+				if (err) return reject(err);
+				if (!row) return resolve(null);
+				resolve(`${row.nome} ${row.cognome}`);
+			});
+		});
+	}
+
+	async getUltimaVisita(userId) {
+		const query = `
+		SELECT a.data
+		FROM Paziente pa
+		JOIN InCura ic ON pa.id = ic.paziente
+		JOIN Appuntamento a ON a.paziente = pa.id AND a.professionista = ic.professionista
+		WHERE pa.user_id = ?
+		AND ic.data_fine IS NULL
+		AND a.data <= DATE('now')
+		ORDER BY a.data DESC
+		LIMIT 1
+	`;
+		return new Promise((resolve, reject) => {
+			db.get(query, [userId], (err, row) => {
+				if (err) return reject(err);
+				if (!row) return resolve(null);
+
+				const [year, month, day] = row.data.split('-'); // '2025-05-28' → ['2025', '05', '28']
+				const formattedDate = `${day}-${month}-${year}`; // → '28/05/2025'
+
+				resolve(formattedDate);
+			});
+		});
+	}
 }
 
 module.exports = new PatientRepository();

@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WordCare - Dashboard Minigiochi</title>
     <link rel="stylesheet" href="../../css/DashBoardGiochi/DashBoardGiochi.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        button {
+            border-radius: 30px !important;
+            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #FFFFFF !important;
+            font-size: 14px !important;
+            font-weight: bold !important;
+            padding: 16px 45px !important;
+            letter-spacing: 1px !important;
+            text-transform: uppercase !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -14,24 +32,27 @@
             <h1>WordCare</h1>
         </div>
     </header>
-    
+
     <div class="container">
         <div class="dashboard-header">
+            <span style="position: relative;">
+                <button class="back-button"" onclick=" window.history.back()">← ESCI</button>
+            </span>
             <h2 class="dashboard-title">I Nostri Minigiochi</h2>
             <div class="search-box">
                 <i class="fas fa-search"></i>
                 <input type="text" id="searchGames" placeholder="Cerca gioco...">
             </div>
         </div>
-        
+
         <div class="games-grid" id="gamesContainer">
             <!-- I giochi inseriti tramite JavaScript -->
         </div>
-        
+
         <div class="legend">
             <h3 class="legend-title">Legenda</h3>
             <div class="legend-item">
-                    <i class="fas fa-user-friends", class="legend-icon caregiver-badge"></i>
+                <i class="fas fa-user-friends" , class="legend-icon caregiver-badge"></i>
                 <div class="legend-text">Richiede assistenza di un care-giver</div>
             </div>
             <div class="legend-item">
@@ -43,14 +64,15 @@
                     </div>
                 </div>
                 <div class="legend-text">Livello di difficoltà (da 1 a 3)</div>
+            </div>
         </div>
-    </div>
-    
-    <footer>
-        <p>&copy; 2025 WordCare - Tutti i diritti riservati</p>
-        <p>Minigiochi di logopedia</p>
-    </footer>
 
-    <script src="../../js/DashBoardGiochi/DashBoardGiochi.js"></script>
+        <footer>
+            <p>&copy; 2025 WordCare - Tutti i diritti riservati</p>
+            <p>Minigiochi di logopedia</p>
+        </footer>
+
+        <script src="../../js/DashBoardGiochi/DashBoardGiochi.js"></script>
 </body>
+
 </html>

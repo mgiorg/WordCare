@@ -5,6 +5,8 @@
 const UserRepository = require('../repositories/UserRepository');
 const PatientRepository = require('../repositories/PatientRepository');
 const Behavior = require('../models/enums/ProfileBehavior');
+const InCuraRepository = require('../repositories/InCuraRepository');
+const ProfessionistaRepository = require('../repositories/ProfessionalRepository');
 const path = require('path');
 
 class PatientController {
@@ -80,6 +82,33 @@ class PatientController {
 				title: 'Errore interno del server',
 				message: "Si è verificato un errore durante il recupero della dashboard del paziente.",
 				returnUrl: '/login'
+			});
+			return res.redirect(`/error.html?${params.toString()}`);
+		}
+	}
+
+	async getProfessionistaInCura(req, res) {
+		try {
+			const paziente = await PatientRepository.findByUserId(req.session.userId);
+			const relazione = await InCuraRepository.findActiveByPazienteId(paziente.id);
+			const professionista = await ProfessionistaRepository.findById(relazione.professionista);
+
+			res.json({
+				nome: professionista.nome,
+				cognome: professionista.cognome,
+				data_nascita: professionista.data_nascita,
+				specializzazione: professionista.specializzazione,
+				sede: professionista.sede,
+				data_inizio: relazione.data_inizio
+			});
+		} catch (err) {
+			console.error('Errore nel recupero del professionista:', err);
+			// Redirect alla pagina di errore con query string
+			const params = new URLSearchParams({
+				code: '500',
+				title: 'Errore nel server',
+				message: "Si è verificato un errore: non è stato possibile recuperare il professionista in cura.",
+				returnUrl: '/paziente'
 			});
 			return res.redirect(`/error.html?${params.toString()}`);
 		}

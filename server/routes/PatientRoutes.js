@@ -5,6 +5,7 @@
 const express = require('express');
 const PatientController = require('../controllers/PatientController');
 const Behavior = require('../models/enums/ProfileBehavior');
+const AppuntamentoRepository = require('../repositories/AppuntamentoRepository');
 const { VERSION_NUMBER } = require('sqlite3');
 
 const path = require('path');
@@ -39,6 +40,20 @@ router.get("/paziente/esercizi", (req, res) => {
 
 router.get('/paziente/agenda', VerifyPatientSession, (req, res) => {
 	res.sendFile(path.join(viewsPath, '/Paziente/agenda.html'));
+});
+
+router.get('/paziente/professionista-in-cura', VerifyPatientSession, (req, res) => {
+	PatientController.getProfessionistaInCura(req, res)
+});
+
+router.get('/paziente/appuntamenti', VerifyPatientSession, async (req, res) => {
+	try {
+		const appuntamenti = await AppuntamentoRepository.getByPazienteUserId(req.session.userId);
+		res.json(appuntamenti);
+	} catch (err) {
+		console.error("Errore recupero appuntamenti:", err);
+		res.status(500).json({ error: 'Errore interno' });
+	}
 });
 
 // In futuro potrai aggiungere:

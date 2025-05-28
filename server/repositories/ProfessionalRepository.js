@@ -5,7 +5,7 @@
 const { db } = require('../database/Database');
 const Profesional = require('../models/Professionista');
 
-class PatientRepository {
+class ProfessionalRepository {
 	/**
 	 * Trova un paziente in base all'ID.
 	 * @param {number} id - ID del paziente.
@@ -73,4 +73,4 @@ class PatientRepository {
 	}
 }
 
-module.exports = new PatientRepository();
+module.exports = new ProfessionalRepository();

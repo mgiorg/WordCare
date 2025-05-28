@@ -24,7 +24,7 @@ router.get('/memory', (req, res) => {
     res.sendFile(path.join(viewsPath, 'Giochi/Memory/game.html'));
 });
 
-router.get('/tachiscopioParole', (req, res) => {
+router.get('/tachiscoscopioParole', (req, res) => {
     res.sendFile(path.join(viewsPath, 'Giochi/Tachiscoscopio_Parole/game.html'));
 });
 

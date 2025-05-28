@@ -5,25 +5,36 @@
 const express = require('express');
 const router = express.Router();
 const AgendaRepository = require('../repositories/AgendaRepository');
+const PatientRepository = require('../repositories/PatientRepository');
 
-router.get('/patient-info', (req, res) => {
+router.get('/patient-info', async (req, res) => {
 	if (!req.session.userId) {
-		// Redirect alla pagina di errore con query string
 		const params = new URLSearchParams({
 			code: '401',
 			title: 'Utente non loggato',
 			message: 'Si è verificato un errore: non sei loggato.',
 			returnUrl: '/login'
 		});
-
 		return res.redirect(`/error.html?${params.toString()}`);
 	}
 
-	// Recupera il nome dalla sessione
 	const nome = req.session.userName;
 	const cognome = req.session.userSurname;
-	return res.json({ nome, cognome });
+
+	try {
+		let professionista = await PatientRepository.getNomeProfessionistaInCura(req.session.userId);
+		if (!professionista) professionista = "Non assegnato";
+
+		let ultimaVisita = await PatientRepository.getUltimaVisita(req.session.userId);
+		if (!ultimaVisita) ultimaVisita = "Non disponibile";
+
+		return res.json({ nome, cognome, professionista, ultimaVisita });
+	} catch (err) {
+		console.error('Errore nel recupero delle info paziente:', err);
+		return res.status(500).json({ error: 'Errore interno' });
+	}
 });
+
 
 // Ritorna tutte le note del paziente loggato
 router.get('/paziente-agenda', async (req, res) => {

@@ -13,6 +13,112 @@
 	<script defer src="../../js/Paziente/paziente.js"></script>
 </head>
 
+<div id="modal-professionista" class="modal">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h2>
+				<div class="header-icon">
+					<i class="fas fa-user-doctor"></i>
+				</div>
+				Dati del Professionista
+			</h2>
+			<button class="close-btn" onclick="closeModal()">
+				<i class="fas fa-times"></i>
+			</button>
+		</div>
+
+		<div class="modal-body">
+			<ul class="professional-info">
+				<li class="info-item">
+					<div class="info-icon">
+						<i class="fas fa-user"></i>
+					</div>
+					<div class="info-content">
+						<div class="info-label">Nome</div>
+						<div class="info-value" id="prof-nome"></div>
+					</div>
+				</li>
+
+				<li class="info-item">
+					<div class="info-icon">
+						<i class="fas fa-user"></i>
+					</div>
+					<div class="info-content">
+						<div class="info-label">Cognome</div>
+						<div class="info-value" id="prof-cognome"></div>
+					</div>
+				</li>
+
+				<li class="info-item">
+					<div class="info-icon">
+						<i class="fas fa-calendar-alt"></i>
+					</div>
+					<div class="info-content">
+						<div class="info-label">Data di Nascita</div>
+						<div class="info-value" id="prof-data-nascita"></div>
+					</div>
+				</li>
+
+				<li class="info-item">
+					<div class="info-icon">
+						<i class="fas fa-stethoscope"></i>
+					</div>
+					<div class="info-content">
+						<div class="info-label">Specializzazione</div>
+						<div class="info-value" id="prof-specializzazione"></div>
+					</div>
+				</li>
+
+				<li class="info-item">
+					<div class="info-icon">
+						<i class="fas fa-map-marker-alt"></i>
+					</div>
+					<div class="info-content">
+						<div class="info-label">Sede</div>
+						<div class="info-value" id="prof-sede"></div>
+					</div>
+				</li>
+
+				<li class="info-item">
+					<div class="info-icon">
+						<i class="fas fa-clock"></i>
+					</div>
+					<div class="info-content">
+						<div class="info-label">In Cura Dal</div>
+						<div class="info-value" id="prof-data-inizio"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn btn-primary" onclick="contactProfessional()">
+				<i class="fas fa-envelope"></i>
+				Contatta
+			</button>
+		</div>
+	</div>
+</div>
+
+<div id="modal-appuntamenti" class="modal">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h2>
+				<div class="header-icon">
+					<i class="fas fa-calendar"></i>
+				</div>
+				Tutti gli appuntamenti
+			</h2>
+			<button id="close-appointments-modal" class="close-appointments-btn">
+				<i class="fas fa-times"></i>
+			</button>
+		</div>
+		<div class="modal-body" id="lista-appuntamenti">
+			<!-- Verrà popolata dinamicamente -->
+		</div>
+	</div>
+</div>
+
 <body>
 	<nav class="navbar">
 		<div class="navbar-brand">WordCare</div>
@@ -55,7 +161,7 @@
 				<div class="icon"><i class="fas fa-check-circle"></i></div>
 				<h3>Esercizi completati</h3><span id=""></span>
 			</div>
-			<div class="stat-card">
+			<div class="stat-card" id="professionista-card">
 				<div class="icon"><i class="fas fa-user-doctor"></i></div>
 				<h3>Professionista</h3><span id="nome-professionista-in-cura"></span>
 			</div>
@@ -67,36 +173,29 @@
 
 		<h2 class="upcoming-title">Prossimi Appuntamenti</h2>
 		<section class="upcoming-appointments">
-			<div class="appointment-card">
-				<div class="date-badge">
-					<div class="month">Mag</div>
-					<div class="day">15</div>
-				</div>
-				<div class="appointment-details">
-					<h3>Visita di controllo</h3>
-					<p><i class="fas fa-clock"></i> 10:30 - 11:30</p>
-					<p><i class="fas fa-user-md"></i> Dott. Rossi</p>
-				</div>
-				<div class="appointment-actions">
-					<button class="btn-reschedule"><i class="fas fa-calendar-alt"></i> Riprogramma</button>
-					<button class="btn-cancel"><i class="fas fa-times"></i> Annulla</button>
+			<div class="appointments-container">
+				<div class="appointment-card">
+					<div class="date-badge">
+						<div class="month">Giu</div>
+						<div class="day">02</div>
+					</div>
+					<div class="appointment-details">
+						<h3>Sessione di terapia</h3>
+						<p><i class="fas fa-clock"></i> 15:00 - 16:00</p>
+						<p><i class="fas fa-user-md"></i> Dott.ssa Bianchi</p>
+					</div>
+					<div class="appointment-actions">
+						<button class="btn-reschedule"><i class="fas fa-calendar-alt"></i> Riprogramma</button>
+						<button class="btn-cancel"><i class="fas fa-times"></i> Annulla</button>
+					</div>
 				</div>
 			</div>
 
-			<div class="appointment-card">
-				<div class="date-badge">
-					<div class="month">Giu</div>
-					<div class="day">02</div>
-				</div>
-				<div class="appointment-details">
-					<h3>Sessione di terapia</h3>
-					<p><i class="fas fa-clock"></i> 15:00 - 16:00</p>
-					<p><i class="fas fa-user-md"></i> Dott.ssa Bianchi</p>
-				</div>
-				<div class="appointment-actions">
-					<button class="btn-reschedule"><i class="fas fa-calendar-alt"></i> Riprogramma</button>
-					<button class="btn-cancel"><i class="fas fa-times"></i> Annulla</button>
-				</div>
+			<div class="appointments-footer">
+				<button class="btn-view-all" id="btn-all-appointments">
+					<i class="fas fa-list"></i>
+					<span>Tutti gli appuntamenti</span>
+				</button>
 			</div>
 		</section>
 	</main>

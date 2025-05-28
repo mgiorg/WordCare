@@ -18,7 +18,7 @@ const giochi = [
         difficolta: 1,
         tags: ["Morfosintassi"],
         richiedeAssistenza: false,
-        percorso: "../../../Giochi/CompletaFrase/game.html",
+        percorso: "/completaFrase",
         immagine: "../../images/DG/Completa_frasi.png"
     },
     {
@@ -28,7 +28,7 @@ const giochi = [
         difficolta: 3,
         tags: ["Metafonologia", "Riconoscimento Sillaba Iniziale"],
         richiedeAssistenza: false,
-        percorso: "../../../Giochi/ConCheSillaba/game.html",
+        percorso: "/conCheSillaba",
         immagine: "../../images/DG/ConCheSillaba.png"
     },
     {
@@ -38,7 +38,7 @@ const giochi = [
         difficolta: 2,
         tags: ["Fonetica", "Fonologia", "Sordo/sono"],
         richiedeAssistenza: true,
-        percorso: "../../../Giochi/GiocoCarte_BP/game.html",
+        percorso: "/giocoCarte",
         immagine: "../../images/DG/Carte_BP.png"
     },
     {
@@ -48,7 +48,7 @@ const giochi = [
         difficolta: 3,
         tags: ["Memoria viso-spaziale", "Lessico", "MBT"],
         richiedeAssistenza: false,
-        percorso: "../../../Giochi/Memory/game.html",
+        percorso: "/memory",
         immagine: "../../images/DG/memory.png"
     },
     {
@@ -58,7 +58,7 @@ const giochi = [
         difficolta: 3,
         tags: ["MBT", "Movimenti Saccadici", "Lettura Globale"],
         richiedeAssistenza: true,
-        percorso: "../../../Giochi/Tachiscoscopio_Parole/game.html",
+        percorso: "/tachiscoscopioParole",
         immagine: "../../images/DG/tachi.png"
     },
 ];
