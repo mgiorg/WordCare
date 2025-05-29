@@ -1,7 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
-
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: system-ui, sans-serif;
   background: radial-gradient(circle, #eeaeca, #94bbe9);
   text-align: center;
   margin: 0;
@@ -19,7 +17,8 @@ h1 {
   gap: 0.5rem;
   list-style: none;
   padding: 0;
-  max-width: 90vw;
+  width: 100%;
+  max-width: 700px;
   margin: auto;
 }
 
@@ -57,51 +56,6 @@ li time {
   border-color: crimson;
 }
 
-/* Modal */
-#modal {
-  position: fixed;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-}
-form input {
-  margin: 0.25rem 0;
-  width: 100%;
-  padding: 0.5rem;
-}
-button {
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-}
-ul#eventi-giorno {
-  text-align: left;
-  list-style: none;
-  padding: 0;
-}
-ul#eventi-giorno li {
-  padding: 0.25rem 0;
-}
-ul#eventi-giorno li button {
-  float: right;
-  background: crimson;
-  color: white;
-  border: none;
-  padding: 2px 5px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-
 #gestione-impegni {
   margin-top: 2rem;
   background: #ffffffaa;
@@ -110,14 +64,58 @@ ul#eventi-giorno li button {
   max-width: 600px;
   margin-inline: auto;
 }
+
 #gestione-impegni form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
   margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
-#eventi-giorno li {
-  padding: 0.25rem 0;
+
+#gestione-impegni input,
+#gestione-impegni button {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+#gestione-impegni input:focus {
+  border-color: #888;
+}
+
+#gestione-impegni button {
+  background-color: #5562eb;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+
+#gestione-impegni button:hover {
+  background-color: #3944b3;
+}
+
+ul#eventi-giorno {
+  text-align: left;
   list-style: none;
+  padding: 0;
 }
-#eventi-giorno li button {
+
+ul#eventi-giorno li {
+  padding: 0.25rem 0;
+}
+
+ul#eventi-giorno li button {
   float: right;
   background: crimson;
   color: white;
@@ -125,5 +123,4 @@ ul#eventi-giorno li button {
   padding: 2px 5px;
   border-radius: 4px;
   cursor: pointer;
-
 }
