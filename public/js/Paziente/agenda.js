@@ -36,7 +36,7 @@ function loadNotes() {
 				notesMap[key].push(note);
 			});
 			renderCalendar(currentMonth, currentYear);
-			selectDate(today);
+			selectDate(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
 		},
 		error: function (xhr, status, err) {
 			console.error('Errore caricamento note:', err);
@@ -209,6 +209,7 @@ $(function () {
 
 	// inizializza dati
 	today = new Date();
+	today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 	selectedDate = new Date(today);
 	currentMonth = today.getMonth();
 	currentYear = today.getFullYear();

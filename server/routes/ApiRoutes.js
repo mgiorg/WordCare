@@ -50,7 +50,7 @@ router.get('/paziente-agenda', async (req, res) => {
 		return res.redirect(`/error.html?${params.toString()}`);
 	}
 	try {
-		const pazienteId = req.session.userId;
+		const pazienteId = req.session.patientId;
 		const notes = await AgendaRepository.findByPatientId(pazienteId);
 		// Nota: i nomi dei campi sono { id, data, titolo, note, segnalazione }
 		res.json(notes);
@@ -82,7 +82,7 @@ router.post('/paziente-agenda', express.json(), async (req, res) => {
 		return res.redirect(`/error.html?${params.toString()}`);
 	}
 	try {
-		const pazienteId = req.session.userId;
+		const pazienteId = req.session.patientId;
 		const { data, titolo, note, segnalazione } = req.body;
 		const newNote = await AgendaRepository.create({
 			paziente: pazienteId,
@@ -110,7 +110,7 @@ router.delete('/paziente-agenda/:id', async (req, res) => {
 	if (!req.session.userId) {
 		return res.status(401).json({ error: 'Non loggato' });
 	}
-	const pazienteId = req.session.userId;
+	const pazienteId = req.session.patientId;
 	const noteId = parseInt(req.params.id, 10);
 	try {
 		const changes = await AgendaRepository.deleteById(pazienteId, noteId);
@@ -146,7 +146,7 @@ router.put('/paziente-agenda/:id', express.json(), async (req, res) => {
 	if (!req.session.userId) {
 		return res.status(401).json({ error: 'Non loggato' });
 	}
-	const pazienteId = req.session.userId;
+	const pazienteId = req.session.patientId;
 	const noteId = parseInt(req.params.id, 10);
 	const { data, titolo, note, segnalazione } = req.body;
 
