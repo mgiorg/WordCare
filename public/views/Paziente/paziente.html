@@ -10,9 +10,17 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
 		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
 		</script>
+
+	<!-- Driver.js CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css" />
+	<link rel="stylesheet" href="../../css/Paziente/tutorial.css">
+	<!-- Driver.js Script -->
+	<script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
+
 	<script defer src="../../js/Paziente/dashboard.js"></script>
 	<script defer src="../../js/Paziente/modals.js"></script>
 	<script defer src="../../js/utils.js"></script>
+	<script defer src="../../js/Paziente/dashboard-tutorial.js"></script>
 </head>
 
 <div id="modal-professionista" class="modal">
@@ -159,7 +167,7 @@
 		</section>
 		<h2 class="stats-title">Statistiche</h2>
 		<section class="stats">
-			<div class="stat-card">
+			<div class="stat-card" id="esercizi-card">
 				<div class="icon"><i class="fas fa-check-circle"></i></div>
 				<h3>Esercizi completati</h3><span id=""></span>
 			</div>
