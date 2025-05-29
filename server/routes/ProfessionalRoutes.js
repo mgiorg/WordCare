@@ -18,7 +18,7 @@ function VerifyProfessionalSession(req, res, next) {
 }
 
 router.get('/home', VerifyProfessionalSession, (req, res) => {
-  res.sendFile(path.join(viewsPath, 'professional', 'homeprof', 'home.html'));
+  res.sendFile(path.join(viewsPath, 'professionista', 'homeprof', 'home.html'));
 });
 
 router.get('/profilo/view', VerifyProfessionalSession, (req, res) => {
@@ -31,7 +31,7 @@ router.get('/pazienti', VerifyProfessionalSession, ProfessionalController.listPa
 router.post('/pazienti/aggiungi', VerifyProfessionalSession, ProfessionalController.aggiungiPaziente);
 router.get('/pazienti/:id', VerifyProfessionalSession, ProfessionalController.dettaglioPaziente);
 router.get('/pazienti/:id/view', VerifyProfessionalSession, (req, res) => {
-  res.sendFile(path.join(viewsPath, 'professional', 'paziente.html'));
+  res.sendFile(path.join(viewsPath, 'professionista', 'paziente.html'));
 });
 
 router.get('/agenda', VerifyProfessionalSession, ProfessionalController.listaAppuntamenti);

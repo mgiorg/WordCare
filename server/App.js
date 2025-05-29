@@ -38,7 +38,7 @@ app.use(session({
 app.use('/', homeRoutes);
 app.use('/', authRoutes);
 app.use('/', patientRoutes);
-app.use('/', professionalRoutes);
+app.use('/professionista', professionalRoutes);
 app.use('/', gameRoutes);
 app.use('/api', apiRoutes);
 
