@@ -121,6 +121,16 @@ class ProfessionalController {
       res.status(500).json({ error: 'Errore DB' });
     }
   }
+
+  async eliminaPromemoria(req, res) {
+    try {
+      await ProfessionalRepository.eliminaPromemoria(req.params.id);
+      res.status(200).json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: 'Errore DB' });
+    }
+  }
+
 }
 
 module.exports = new ProfessionalController();
