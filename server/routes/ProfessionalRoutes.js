@@ -1,6 +1,5 @@
 /**
- * WordCare - ProfessionalRoutes.js
- * versione provvisoria da correggere e finire
+ * WordCare - ProfessionalRoutes.js (versione aggiornata)
  */
 
 const express = require('express');
@@ -19,35 +18,39 @@ function VerifyProfessionalSession(req, res, next) {
 }
 
 // Dashboard
-router.get('/', (req, res) => {
+router.get('/', VerifyProfessionalSession, (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'professional', 'homeprof', 'home.html'));
 });
 
-//Profilo professionista
+// Profilo professionista
 router.get('/profilo/view', VerifyProfessionalSession, (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'professionista', 'il tuo profilo', 'profilo.html'));
 });
-router.get('/profilo', ProfessionalController.DatiPersonali);
-router.post('/profilo', ProfessionalController.SalvaDatiProfilo);
+router.get('/profilo', VerifyProfessionalSession, ProfessionalController.DatiPersonali);
+router.post('/profilo', VerifyProfessionalSession, ProfessionalController.SalvaDatiProfilo);
 
 // Pazienti
-router.get('/pazienti', ProfessionalController.listPazienti);
-router.get('/pazienti/:id', ProfessionalController.dettaglioPaziente);
+router.get('/pazienti', VerifyProfessionalSession, ProfessionalController.listPazienti);
+router.post('/pazienti/aggiungi', VerifyProfessionalSession, ProfessionalController.aggiungiPaziente);
+router.get('/pazienti/:id', VerifyProfessionalSession, ProfessionalController.dettaglioPaziente);
+router.get('/pazienti/:id/view', VerifyProfessionalSession, (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'professional', 'paziente.html'));
+});
 
 // Appuntamenti
+router.get('/agenda', VerifyProfessionalSession, ProfessionalController.listaAppuntamenti);
+router.post('/agenda', VerifyProfessionalSession, ProfessionalController.creaAppuntamento);
+router.post('/agenda/:id/elimina', VerifyProfessionalSession, ProfessionalController.eliminaAppuntamento);
 router.get('/appuntamenti/view', VerifyProfessionalSession, (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'professionista', 'calendario', 'calendario.html'));
 });
-router.get('/agenda', ProfessionalController.listaAppuntamenti);
-router.post('/agenda', ProfessionalController.creaAppuntamento);
-router.post('/agenda/:id/elimina', ProfessionalController.eliminaAppuntamento);
 
 // Giochi
-router.get('/giochi', ProfessionalController.listaGiochi);
-router.post('/assegnazioni', ProfessionalController.assegnaGioco);
+router.get('/giochi', VerifyProfessionalSession, ProfessionalController.listaGiochi);
+router.post('/assegnazioni', VerifyProfessionalSession, ProfessionalController.assegnaGioco);
 
 // Promemoria
-router.get('/promemoria', ProfessionalController.listaPromemoria);
-router.post('/promemoria', ProfessionalController.creaPromemoria);
+router.get('/promemoria', VerifyProfessionalSession, ProfessionalController.listaPromemoria);
+router.post('/promemoria', VerifyProfessionalSession, ProfessionalController.creaPromemoria);
 
 module.exports = router;
