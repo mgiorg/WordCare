@@ -10,7 +10,9 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
 		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
 		</script>
-	<script defer src="../../js/Paziente/paziente.js"></script>
+	<script defer src="../../js/Paziente/dashboard.js"></script>
+	<script defer src="../../js/Paziente/modals.js"></script>
+	<script defer src="../../js/utils.js"></script>
 </head>
 
 <div id="modal-professionista" class="modal">
@@ -165,7 +167,7 @@
 				<div class="icon"><i class="fas fa-user-doctor"></i></div>
 				<h3>Professionista</h3><span id="nome-professionista-in-cura"></span>
 			</div>
-			<div class="stat-card">
+			<div class="stat-card" id="ultima-visita-card">
 				<div class="icon"><i class="fas fa-calendar-check"></i></div>
 				<h3>Ultima visita</h3><span id="data-ultima-visita"></span>
 			</div>
@@ -174,23 +176,8 @@
 		<h2 class="upcoming-title">Prossimi Appuntamenti</h2>
 		<section class="upcoming-appointments">
 			<div class="appointments-container">
-				<div class="appointment-card">
-					<div class="date-badge">
-						<div class="month">Giu</div>
-						<div class="day">02</div>
-					</div>
-					<div class="appointment-details">
-						<h3>Sessione di terapia</h3>
-						<p><i class="fas fa-clock"></i> 15:00 - 16:00</p>
-						<p><i class="fas fa-user-md"></i> Dott.ssa Bianchi</p>
-					</div>
-					<div class="appointment-actions">
-						<button class="btn-reschedule"><i class="fas fa-calendar-alt"></i> Riprogramma</button>
-						<button class="btn-cancel"><i class="fas fa-times"></i> Annulla</button>
-					</div>
-				</div>
+				<!-- La card verrà popolata dinamicamente via JS -->
 			</div>
-
 			<div class="appointments-footer">
 				<button class="btn-view-all" id="btn-all-appointments">
 					<i class="fas fa-list"></i>

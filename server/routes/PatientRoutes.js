@@ -56,8 +56,33 @@ router.get('/paziente/appuntamenti', VerifyPatientSession, async (req, res) => {
 	}
 });
 
-// In futuro potrai aggiungere:
-// router.get('/profilo', onlyLoggedPatients, PatientController.profile);
-// router.post('/esercizi', onlyLoggedPatients, PatientController.saveExerciseData);
+router.get('/paziente/prossimo-appuntamento', VerifyPatientSession, async (req, res) => {
+	try {
+		const userId = req.session.userId; // o req.user.id, secondo come gestisci la sessione
+		if (!userId) {
+			const params = new URLSearchParams({
+				code: '401',
+				title: 'Accesso negato',
+				message: 'Non hai i permessi per accedere a questa risorsa.',
+				returnUrl: '/login'
+			});
+
+			return res.redirect(`/error.html?${params.toString()}`);
+		}
+
+		const app = await AppuntamentoRepository.getProssimoAppuntamento(userId);
+		res.json(app || null);
+	} catch (err) {
+		console.error('Errore recupero prossimo appuntamento:', err);
+		const params = new URLSearchParams({
+			code: '401',
+			title: 'Accesso negato',
+			message: 'Non hai i permessi per accedere a questa risorsa.',
+			returnUrl: '/login'
+		});
+
+		return res.redirect(`/error.html?${params.toString()}`);
+	}
+});
 
 module.exports = router;
