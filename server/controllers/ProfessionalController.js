@@ -10,15 +10,36 @@ const Behavior = require('../models/enums/ProfileBehavior');
 
 class ProfessionalController {
   async DatiPersonali(req, res) {
-    try {
-      const userId = req.session.userId;
-      const dati = await ProfessionalRepository.getProfiloCompleto(userId);
-      if (!dati) return res.status(404).json({ error: 'Profilo non trovato' });
-      res.json(dati);
-    } catch (err) {
-      res.status(500).json({ error: 'Errore nel recupero dati profilo' });
+  console.log("🔍 Accesso a /professionista/profilo");
+  console.log("Session userId:", req.session.userId);
+
+  try {
+    const userId = req.session.userId;
+    const dati = await ProfessionalRepository.getProfiloCompleto(userId);
+
+    if (!dati) {
+      console.log("❌ Profilo non trovato nel DB");
+      return res.status(404).json({ error: 'Profilo non trovato' });
     }
+
+    // Stampa per confermare cosa stai restituendo
+    console.log("✅ Profilo restituito:", dati);
+
+    res.json({
+      id: userId,
+      nome: dati.nome || '',
+      cognome: dati.cognome || '',
+      data_nascita: dati.data_nascita || '',
+      specializzazione: dati.specializzazione || '',
+      sede: dati.sede || ''
+    });
+
+  } catch (err) {
+    console.error('❌ Errore interno nel recupero profilo:', err);
+    res.status(500).json({ error: 'Errore interno' });
   }
+}
+
 
   async SalvaDatiProfilo(req, res) {
     try {
