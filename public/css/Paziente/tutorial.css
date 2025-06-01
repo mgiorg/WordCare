@@ -31,17 +31,19 @@
     border: 2px solid transparent;
     background-clip: padding-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    min-width: 320px;
-    max-width: 450px;
+    min-width: 15rem;
+    max-width: 20rem;
+    max-height: 38rem;;
     position: fixed !important;
-    bottom: 20px !important;
-    left: 20px !important;
-    transform: none !important;
+    bottom: auto !important;
+    left: 1.25rem !important;
+    transform: translateY(-50%) !important;
     z-index: 10000 !important;
     pointer-events: auto !important;
     opacity: 1;
     transition: opacity 0.3s ease, transform 0.3s ease;
     overflow: hidden;
+    top: 50% !important;
 }
 
 /* === BORDO GRADIENTE AROUND POPOVER === */
@@ -80,11 +82,30 @@
     border-radius: 50%;
     padding: 0.5rem;
     font-size: 1rem;
-    width: 35px;
-    height: 35px;
+    width: 2rem;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* === BOTTONE DI CHIUSURA (X) === */
+.driver-popover.driverjs-theme .driver-popover-close-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: transparent;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--white);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    z-index: 1;
+}
+
+.driver-popover.driverjs-theme .driver-popover-close-btn:hover {
+    transform: scale(1.2);
 }
 
 /* === DESCRIZIONE === */
@@ -93,6 +114,8 @@
     font-size: 1.05rem;
     color: var(--text);
     background: var(--white);
+    white-space: pre-line; /* interpreta \n e ritorni a capo */
+    line-height: 1.5;
 }
 
 /* === FOOTER === */
@@ -116,7 +139,7 @@
 .driver-popover.driverjs-theme .driver-popover-navigation-btns button {
     background: linear-gradient(135deg, var(--primary), var(--accent));
     color: var(--white);
-    border: none;
+    text-shadow: none !important;
     border-radius: var(--radius);
     padding: 0.5rem 1.2rem;
     font-weight: 600;

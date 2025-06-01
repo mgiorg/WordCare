@@ -6,6 +6,8 @@ const express = require('express');
 const router = express.Router();
 const AgendaRepository = require('../repositories/AgendaRepository');
 const PatientRepository = require('../repositories/PatientRepository');
+const UserRepository = require('../repositories/UserRepository');
+const GameRepository = require('../repositories/GameRepository');
 
 router.get('/patient-info', async (req, res) => {
 	if (!req.session.userId) {
@@ -15,7 +17,7 @@ router.get('/patient-info', async (req, res) => {
 			message: 'Si è verificato un errore: non sei loggato.',
 			returnUrl: '/login'
 		});
-		return res.redirect(`/error.html?${params.toString()}`);
+		return res.redirect('/error.html?${params.toString()}');
 	}
 
 	const nome = req.session.userName;
@@ -32,6 +34,91 @@ router.get('/patient-info', async (req, res) => {
 	} catch (err) {
 		console.error('Errore nel recupero delle info paziente:', err);
 		return res.status(500).json({ error: 'Errore interno' });
+	}
+});
+
+router.get('/profilo/info', async (req, res) => {
+	if (!req.session.userId) {
+		const params = new URLSearchParams({
+			code: '401',
+			title: 'Utente non loggato',
+			message: 'Si è verificato un errore: non sei loggato.',
+			returnUrl: '/login'
+		});
+		return res.redirect(`/error.html?${params.toString()}`);
+	}
+
+	const userId = req.session.userId;
+
+	try {
+		const paziente = await PatientRepository.findByUserId(userId);
+		const user = await UserRepository.findById(userId);
+
+		if (!paziente || !user) {
+			return res.status(404).json({ error: 'Paziente o utente non trovato' });
+		}
+
+		let professionista = await PatientRepository.getNomeProfessionistaInCura(userId);
+		if (!professionista) professionista = "Non assegnato";
+
+		let ultimaVisita = await PatientRepository.getUltimaVisita(userId);
+		if (!ultimaVisita) ultimaVisita = "Non disponibile";
+
+		return res.json({
+			nome: paziente.nome,
+			cognome: paziente.cognome,
+			data_nascita: paziente.data_nascita,
+			patologia: paziente.patologia,
+			username: user.username,
+			email: user.email,
+			professionista,
+			ultimaVisita
+		});
+	} catch (err) {
+		console.error('Errore nel recupero delle info paziente:', err);
+		return res.status(500).json({ error: 'Errore interno' });
+	}
+});
+
+router.put('/profilo/info', async (req, res) => {
+	if (!req.session.userId) {
+		return res.status(401).json({ error: 'Utente non loggato' });
+	}
+
+	const userId = req.session.userId;
+	const { user, paziente } = req.body;
+
+	if (!user || !paziente) {
+		return res.status(400).json({ error: 'Dati incompleti' });
+	}
+
+	try {
+		// Verifica se username è già in uso da un altro utente
+		const userByUsername = await UserRepository.findUserByUsername(user.username);
+		if (userByUsername && userByUsername.id !== userId) {
+			return res.status(409).json({ error: 'Username già in uso' });
+		}
+
+		// Verifica se email è già in uso da un altro utente
+		const userByEmail = await UserRepository.findUserByEmail(user.email);
+		if (userByEmail && userByEmail.id !== userId) {
+			return res.status(409).json({ error: 'Email già in uso' });
+		}
+
+		// Aggiorna User (username + email)
+		await UserRepository.updateUser(userId, {
+			username: user.username,
+			email: user.email
+		});
+
+		// Aggiorna Paziente
+		await PatientRepository.updateByUserId(userId, paziente);
+
+		return res.json({ success: true });
+
+	} catch (err) {
+		console.error('Errore durante il salvataggio del profilo:', err);
+		return res.status(500).json({ error: 'Errore interno del server' });
 	}
 });
 
@@ -172,6 +259,34 @@ router.put('/paziente-agenda/:id', express.json(), async (req, res) => {
 		});
 
 		return res.redirect(`/error.html?${params.toString()}`);
+	}
+});
+
+router.get('/esercizi-svolti', async (req, res) => {
+	if (!req.session.userId) {
+		return res.status(401).json({ error: 'Utente non autenticato' });
+	}
+
+	try {
+		const totale = await GameRepository.countEserciziSvolti(req.session.userId);
+		res.json({ totale });
+	} catch (err) {
+		console.error('Errore nel recupero degli esercizi svolti:', err);
+		res.status(500).json({ error: 'Errore interno del server' });
+	}
+});
+
+router.get('/esercizi', async (req, res) => {
+	if (!req.session.userId) {
+		return res.status(401).json({ error: 'Utente non autenticato' });
+	}
+
+	try {
+		const esercizi = await GameRepository.getAllEserciziByUser(req.session.userId);
+		return res.json(esercizi);
+	} catch (err) {
+		console.error('Errore nel recupero degli esercizi:', err);
+		return res.status(500).json({ error: 'Errore interno del server' });
 	}
 });
 

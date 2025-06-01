@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WordCare - Il Mio Profilo</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" href="../../css/Paziente/profilo.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+		</script>
+    <script defer src="../../js/Paziente/profilo.js"></script>
+</head>
+
+<body>
+	<nav class="navbar">
+		<div class="navbar-brand">WordCare</div>
+		<div class="menu-toggle"><span></span><span></span><span></span></div>
+		<ul class="navbar-links">
+			<li><a href="/paziente"><i class="fas fa-home"></i> Dashboard</a></li>
+			<li><a href="/paziente/agenda"><i class="fas fa-calendar-alt"></i> Agenda</a></li>
+			<li><a href="/paziente/esercizi"><i class="fas fa-tasks"></i> Esercizi</a></li>
+		</ul>
+		<div style="display: flex; align-items: center;">
+			<div class="navbar-avatar" style="margin-right: 20px;">
+				<img src="../../images/avatars/Avatar1.png" alt="Avatar">
+				<div class="avatar-dropdown">
+					<div class="user-name"></div>
+					<a href="/paziente/profilo"><i class="fas fa-user"></i> Il mio profilo</a>
+				</div>
+			</div>
+			<a href="/logout">
+				<button class="Btn">
+					<div class="sign">
+						<svg viewBox="0 0 512 512">
+							<path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+						</svg>
+					</div>
+					<div class="text">Logout</div>
+				</button>
+			</a>
+		</div>
+	</nav>
+
+	<main class="profile-container">
+		<div class="profile-header">
+			<h1><i class="fas fa-user-circle"></i> Il Mio Profilo</h1>
+			<p>Gestisci le tue informazioni personali e di contatto</p>
+		</div>
+
+		<div class="profile-card">
+			<div id="message" class="message">
+				<i class="fas fa-check-circle"></i>
+				<span></span>
+			</div>
+
+			<div class="avatar-section">
+				<img src="../../images/avatars/Avatar1.png" alt="Foto Profilo" class="profile-avatar">
+				<div class="avatar-info">
+					<h2 id="full-name">Mario Rossi</h2>
+					<p id="user-email">mario.rossi@email.com</p>
+				</div>
+			</div>
+
+			<form id="profile-form" class="profile-form">
+				<div class="form-row">
+					<div class="form-group">
+						<label class="form-label" for="nome">
+							<i class="fas fa-user"></i>
+							Nome
+						</label>
+						<input type="text" id="nome" name="nome" class="form-input" value="Mario" disabled>
+					</div>
+					<div class="form-group">
+						<label class="form-label" for="cognome">
+							<i class="fas fa-user"></i>
+							Cognome
+						</label>
+						<input type="text" id="cognome" name="cognome" class="form-input" value="Rossi" disabled>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group">
+						<label class="form-label" for="username">
+							<i class="fas fa-at"></i>
+							Username
+						</label>
+						<input type="text" id="username" name="username" class="form-input" value="mario.rossi" disabled>
+					</div>
+					<div class="form-group">
+						<label class="form-label" for="email">
+							<i class="fas fa-envelope"></i>
+							Email
+						</label>
+						<input type="email" id="email" name="email" class="form-input" value="mario.rossi@email.com" disabled>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group">
+						<label class="form-label" for="data_nascita">
+							<i class="fas fa-calendar-alt"></i>
+							Data di Nascita
+						</label>
+						<input type="date" id="data_nascita" name="data_nascita" class="form-input" value="1990-05-15" disabled>
+					</div>
+					<div class="form-group">
+						<label class="form-label" for="patologia">
+							<i class="fas fa-notes-medical"></i>
+							Patologia
+						</label>
+						<input type="text" id="patologia" name="patologia" class="form-input" value="Disfonia spasmodica" disabled>
+					</div>
+				</div>
+
+				<div class="button-group">
+					<button type="button" id="edit-btn" class="btn btn-primary">
+						<i class="fas fa-edit"></i>
+						Modifica Profilo
+					</button>
+					<button type="button" id="save-btn" class="btn btn-primary" style="display: none;" disabled>
+						<i class="fas fa-save"></i>
+						Salva Modifiche
+					</button>
+					<button type="button" id="cancel-btn" class="btn btn-secondary" style="display: none;">
+						<i class="fas fa-times"></i>
+						Annulla
+					</button>
+				</div>
+			</form>
+		</div>
+	</main>
+
+	<footer class="footer">
+		<div class="footer-content">
+			<div class="footer-section">
+				<h3>WordCare</h3>
+				<p>Supporto personalizzato per il tuo sviluppo vocale e linguistico</p>
+			</div>
+			<div class="footer-section">
+				<h3>Collegamenti Rapidi</h3>
+				<ul>
+					<li><a href="/paziente">Home</a></li>
+					<li><a href="/paziente/esercizi">Esercizi</a></li>
+					<li><a href="/paziente/agenda">Agenda</a></li>
+				</ul>
+			</div>
+			<div class="footer-section">
+				<h3>Contattaci</h3>
+				<p><i class="fas fa-envelope"></i> info@wordcare.it</p>
+				<p><i class="fas fa-phone"></i> +39 02 1234567</p>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>&copy; 2025 WordCare. Tutti i diritti riservati.</p>
+		</div>
+	</footer>
+</body>
+
+</html>

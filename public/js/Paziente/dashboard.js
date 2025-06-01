@@ -61,6 +61,20 @@ function loadProssimoAppuntamento() {
 	});
 }
 
+function loadEserciziSvolti() {
+	$.ajax({
+		url: '/api/esercizi-svolti',
+		method: 'GET',
+		dataType: 'json',
+		success: function (data) {
+			$("#esercizi-card span").text(data.totale || '0');
+		},
+		error: function (err) {
+			console.error('Errore nel recupero degli esercizi svolti:', err);
+		}
+	});
+}
+
 $(function () {
 	// Gestione del dropdown dell'avatar
 	$(".navbar-avatar").on("click", function () {
@@ -76,4 +90,5 @@ $(function () {
 
 	loadUserInfo();
 	loadProssimoAppuntamento();
+	loadEserciziSvolti();
 });
