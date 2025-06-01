@@ -1,8 +1,58 @@
-google.charts.load('current', { packages: ['corechart'] });
-google.charts.setOnLoadCallback(drawCharts);
-document.getElementById('graficoEsercizi');
-document.getElementById('graficoMedia');
+// /professionista/i tuoi pazienti/dettagli/dettagli.js
 
+document.addEventListener('DOMContentLoaded', () => {
+  const patientId = getPatientIdFromUrl();
+
+  // Carica dati anagrafici paziente
+  fetch(`/pazienti/${patientId}/dati`)
+    .then(res => res.json())
+    .then(data => {
+      const header = document.querySelector('.card_title__container');
+      header.innerHTML = `
+        <div class="card_paragraph">ID Paziente: ${data.id} &nbsp; | &nbsp; Patologia: ${data.patologia}</div>
+        <div class="card_paragraph">Nome: ${data.nome} &nbsp; | &nbsp; Cognome: ${data.cognome}</div>
+        <div class="card_paragraph">Data di nascita: ${formatDate(data.data_nascita)} &nbsp; | &nbsp;
+          <a href="#" style="color: var(--paragraph); text-decoration: underline;">Cartella Clinica</a>
+        </div>
+      `;
+    });
+
+  // Carica esercizi assegnati
+  fetch(`/pazienti/${patientId}/esercizi`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.querySelector('tbody');
+      tbody.innerHTML = '';
+
+      data.forEach(es => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="checkbox" ${es.ripetizioni_svolte >= es.ripetizioni_assegnate ? 'checked' : ''}></td>
+          <td>${es.gioco}</td>
+          <td>${formatDate(es.scadenza)}</td>
+          <td>${es.ripetizioni_svolte}/${es.ripetizioni_assegnate}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    });
+
+  // Inizializza i grafici statici
+  google.charts.load('current', { packages: ['corechart'] });
+  google.charts.setOnLoadCallback(drawCharts);
+});
+
+function getPatientIdFromUrl() {
+  const parts = window.location.pathname.split('/');
+  return parts[2]; // /pazienti/:id/view
+}
+
+function formatDate(data) {
+  if (!data) return '';
+  const [y, m, d] = data.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+// ----------------- GRAFICI STATICI ------------------
 
 function drawCharts() {
   drawEserciziSettimanali();
@@ -60,4 +110,3 @@ function drawMediaSettimane() {
   const chart = new google.visualization.LineChart(document.getElementById('graficoMedia'));
   chart.draw(data, options);
 }
-

@@ -6,11 +6,11 @@ const { db } = require('../database/Database');
 const Profesional = require('../models/Professionista');
 
 class ProfessionalRepository {
-  async getProfiloCompleto(userId) {
+    async getProfiloCompleto(userId) {
     const query = `
-      SELECT u.nome, u.cognome, p.data_nascita, p.specializzazione, p.sede
-      FROM user u
-      JOIN professionista p ON u.id = p.id
+      SELECT u.id AS id, u.nome, u.cognome, p.data_nascita, p.specializzazione, p.sede
+      FROM User u
+      JOIN Professionista p ON u.id = p.user_id
       WHERE u.id = ?`;
     return new Promise((resolve, reject) => {
       db.get(query, [userId], (err, row) => {
@@ -20,15 +20,16 @@ class ProfessionalRepository {
     });
   }
 
-  async salvaProfilo(userId, dati) {
+
+    async salvaProfilo(userId, dati) {
     return new Promise((resolve, reject) => {
       db.run(
-        `UPDATE user SET nome = ?, cognome = ? WHERE id = ?`,
+        `UPDATE User SET nome = ?, cognome = ? WHERE id = ?`,
         [dati.nome, dati.cognome, userId],
         function (err) {
           if (err) return reject(err);
           db.run(
-            `UPDATE professionista SET data_nascita = ?, specializzazione = ?, sede = ? WHERE id = ?`,
+            `UPDATE Professionista SET data_nascita = ?, specializzazione = ?, sede = ? WHERE user_id = ?`,
             [dati.data_nascita, dati.specializzazione, dati.sede, userId],
             function (err2) {
               if (err2) return reject(err2);
@@ -39,6 +40,7 @@ class ProfessionalRepository {
       );
     });
   }
+
 
   async getPazientiInCura(professionalId) {
     const query = `
