@@ -27,9 +27,7 @@
                     alt="Avatar">
                 <div class="avatar-dropdown">
                     <div class="user-name"></div>
-                    <a href="#"><i class="fas fa-user"></i> Il mio profilo</a>
-                    <a href="#"><i class="fas fa-envelope"></i> Messaggi</a>
-                    <a href="#"><i class="fas fa-cog"></i> Impostazioni</a>
+                    <a href="/paziente/profilo"><i class="fas fa-user"></i> Il mio profilo</a>
                 </div>
             </div>
             <a href="/logout">
@@ -45,79 +43,38 @@
         </div>
     </nav>
 
-    <main class="dashboard">
-        <section class="exercises-container">
-            <!-- Header con titolo e selezione -->
-            <div class="exercises-header">
-                <h2>I tuoi esercizi</h2>
-                <div class="exercises-filter">
-                    <select id="game-filter" class="filter-select">
-                        <option value="all">Tutti gli esercizi</option>
-                        <option value="assigned">Esercizi assegnati</option>
-                        <option value="completed">Esercizi completati</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Grid degli esercizi -->
-            <div class="exercises-grid" id="exercises-grid">
-                <!-- Gli esercizi verranno generati dinamicamente da JavaScript -->
-            </div>
-
-            <!-- Template per la card degli esercizi -->
-            <template id="exercise-card-template">
-                <div class="exercise-card">
-                    <div class="exercise-image">
-                        <img src="" alt="Exercise Image">
-                        <div class="exercise-badge"></div>
-                    </div>
-                    <div class="exercise-info">
-                        <h3 class="exercise-title"></h3>
-                        <p class="exercise-description"></p>
-                        <div class="exercise-meta">
-                            <span class="exercise-difficulty"></span>
-                            <span class="exercise-duration"></span>
-                        </div>
-                        <div class="exercise-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill"></div>
-                            </div>
-                            <span class="progress-text">0%</span>
-                        </div>
-                        <button class="btn-start-exercise">
-                            <i class="fas fa-play"></i> Inizia
-                        </button>
-                    </div>
-                </div>
-            </template>
-        </section>
-    </main>
-
-    <!-- Footer identico a quello della dashboard -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>WordCare</h3>
-                <p>Supporto personalizzato per il tuo sviluppo vocale e linguistico</p>
-            </div>
-            <div class="footer-section">
-                <h3>Collegamenti Rapidi</h3>
-                <ul>
-                    <li><a href="/paziente">Home</a></li>
-                    <li><a href="/paziente/esercizi">Esercizi</a></li>
-                    <li><a href="/paziente/agenda">Agenda</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contattaci</h3>
-                <p><i class="fas fa-envelope"></i> info@wordcare.it</p>
-                <p><i class="fas fa-phone"></i> +39 02 1234567</p>
-            </div>
+    <main class="exercise-dashboard">
+        <div id="exercise-container" class="exercise-container">
+          <!-- Card popolate dinamicamente -->
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 WordCare. Tutti i diritti riservati.</p>
+    
+        <div class="no-results" style="display:none;">
+          <p><i class="fas fa-exclamation-circle"></i> Nessun esercizio trovato.</p>
         </div>
-    </footer>
+    
+        <div class="error" style="display:none;">
+          <p><i class="fas fa-exclamation-triangle"></i> Errore nel caricamento degli esercizi.</p>
+        </div>
+      </main>
+    
+      <footer class="exercise-footer">
+        <a class="link-dashboard" href="/paziente/esercitazione-libera">
+          <i class="fas fa-dumbbell"></i> Allenati liberamente con tutti gli esercizi
+        </a>
+      </footer>
+    
+      <!-- Template nascosto per le card -->
+      <template id="exercise-card-template">
+        <div class="exercise-card">
+          <img class="exercise-img" src="" alt="immagine esercizio">
+          <div class="exercise-info">
+            <h3 class="exercise-name"></h3>
+            <p class="exercise-type"></p>
+            <p class="exercise-note"></p>
+            <span class="badge"></span>
+          </div>
+        </div>
+      </template>
 
     <!-- Script generali e script esercizi -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"

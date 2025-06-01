@@ -70,6 +70,33 @@ class PatientRepository {
 		});
 	}
 
+	/**
+	 * Aggiorna i dati anagrafici del paziente.
+	 * @param {number} userId - ID dell'utente associato.
+	 * @param {Object} data - Oggetto contenente nome, cognome, data_nascita, patologia.
+	 * @returns {Promise<void>}
+	 */
+	async updateByUserId(userId, data) {
+		const query = `
+			UPDATE Paziente
+			SET nome = ?, cognome = ?, data_nascita = ?, patologia = ?
+			WHERE user_id = ?
+		`;
+
+		return new Promise((resolve, reject) => {
+			db.run(query, [
+				data.nome,
+				data.cognome,
+				data.data_nascita,
+				data.patologia,
+				userId
+			], function (err) {
+				if (err) return reject(err);
+				resolve();
+			});
+		});
+	}
+
 	async getNomeProfessionistaInCura(userId) {
 		const query = `SELECT p.nome, p.cognome
 					   FROM Paziente pa

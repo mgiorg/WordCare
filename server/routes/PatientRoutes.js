@@ -33,17 +33,24 @@ function VerifyPatientSession(req, res, next) {
 // Dashboard paziente
 router.get('/paziente', VerifyPatientSession, (req, res) => PatientController.Patient(req, res));
 
-//router.get('/paziente/eserizi', VerifyPatientSession, (req, res) => PatientController.Esercizi(req, res));
 router.get("/paziente/esercizi", (req, res) => {
-	res.sendFile(path.join(viewsPath, 'DashBoardGiochi/DashBoardGiochi.html'));
+	res.sendFile(path.join(viewsPath, '/Paziente/esercizi.html'));
 })
 
 router.get('/paziente/agenda', VerifyPatientSession, (req, res) => {
 	res.sendFile(path.join(viewsPath, '/Paziente/agenda.html'));
 });
 
+router.get("/paziente/profilo", VerifyPatientSession, (req, res) => {
+	res.sendFile(path.join(viewsPath, '/Paziente/profilo.html'));
+});
+
 router.get('/paziente/professionista-in-cura', VerifyPatientSession, (req, res) => {
 	PatientController.getProfessionistaInCura(req, res)
+});
+
+router.get("/paziente/esercitazione-libera", VerifyPatientSession, (req, res) => {
+	res.sendFile(path.join(viewsPath, '/DashBoardGiochi/DashBoardGiochi.html'));
 });
 
 router.get('/paziente/appuntamenti', VerifyPatientSession, async (req, res) => {
