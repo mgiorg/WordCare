@@ -24,18 +24,18 @@ class AppuntamentoRepository {
 
 	async getByProfessionistaId(professionalId) {
 		const query = `
-      SELECT a.*, p.nome AS paziente_nome, p.cognome AS paziente_cognome
-      FROM appuntamento a
-      JOIN paziente p ON a.paziente_id = p.id
-      WHERE a.professionista_id = ?
-    `;
+			SELECT a.*, p.nome AS paziente_nome, p.cognome AS paziente_cognome
+			FROM Appuntamento a
+			JOIN Paziente p ON a.paziente = p.id
+			WHERE a.professionista = ?
+		`;
 		return new Promise((resolve, reject) => {
 			db.all(query, [professionalId], (err, rows) => {
-				if (err) return reject(err);
-				resolve(rows);
+			if (err) return reject(err);
+			resolve(rows);
 			});
 		});
-	}
+		}
 
 	async getProssimoAppuntamento(userId) {
 		const sql = `
@@ -62,16 +62,16 @@ class AppuntamentoRepository {
 
 	async crea({ paziente_id, data, ora, sede, professionalId }) {
 		const query = `
-      INSERT INTO appuntamento (paziente_id, professionista_id, data, ora, sede)
-      VALUES (?, ?, ?, ?, ?)
-    `;
+			INSERT INTO Appuntamento (paziente, professionista, data, ora, sede)
+			VALUES (?, ?, ?, ?, ?)
+		`;
 		return new Promise((resolve, reject) => {
 			db.run(query, [paziente_id, professionalId, data, ora, sede], function (err) {
-				if (err) return reject(err);
-				resolve(this.lastID);
+			if (err) return reject(err);
+			resolve(this.lastID);
 			});
 		});
-	}
+		}
 
 	async elimina(id) {
 		const query = `DELETE FROM appuntamento WHERE id = ?`;
