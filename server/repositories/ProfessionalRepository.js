@@ -7,18 +7,21 @@ const Profesional = require('../models/Professionista');
 
 class ProfessionalRepository {
     async getProfiloCompleto(userId) {
-    const query = `
-      SELECT u.id AS id, u.nome, u.cognome, p.data_nascita, p.specializzazione, p.sede
-      FROM User u
-      JOIN Professionista p ON u.id = p.user_id
-      WHERE u.id = ?`;
-    return new Promise((resolve, reject) => {
-      db.get(query, [userId], (err, row) => {
-        if (err) return reject(err);
-        resolve(row);
+      const query = `
+        SELECT u.id AS id, p.nome, p.cognome, p.data_nascita, p.specializzazione, p.sede
+        FROM User u
+        JOIN Professionista p ON u.id = p.user_id
+        WHERE u.id = ?
+      `;
+
+      return new Promise((resolve, reject) => {
+        db.get(query, [userId], (err, row) => {
+          if (err) return reject(err);
+          resolve(row);
+        });
       });
-    });
-  }
+    }
+
 
 
     async salvaProfilo(userId, dati) {
