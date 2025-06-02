@@ -47,10 +47,11 @@ class ProfessionalRepository {
 
   async getPazientiInCura(professionalId) {
     const query = `
-      SELECT p.id, p.nome, p.cognome, p.eta, p.patologia
-      FROM in_cura ic
-      JOIN paziente p ON ic.paziente_id = p.id
-      WHERE ic.professionista_id = ?`;
+      SELECT p.id, p.nome, p.cognome, p.data_nascita, p.patologia
+      FROM InCura ic
+      JOIN Paziente p ON ic.paziente = p.id
+      WHERE ic.professionista = ?`;
+
     return new Promise((resolve, reject) => {
       db.all(query, [professionalId], (err, rows) => {
         if (err) return reject(err);
@@ -59,15 +60,51 @@ class ProfessionalRepository {
     });
   }
 
-  async aggiungiPaziente({ id, nome, cognome }) {
-    const query = `INSERT INTO paziente (id, nome, cognome) VALUES (?, ?, ?)`;
-    return new Promise((resolve, reject) => {
-      db.run(query, [id, nome, cognome], function (err) {
+  async aggiungiPaziente({ nome, cognome, data_nascita, patologia }, professionalId) {
+  return new Promise((resolve, reject) => {
+    const timestamp = Date.now();
+    const email = `paziente${timestamp}@demo.com`;
+    const username = `paziente${timestamp}`;
+    const password = 'demo123';
+    const behavior = 'patient';
+
+    // 1. Crea nuovo utente
+    db.run(
+      `INSERT INTO User (email, username, password, behavior) VALUES (?, ?, ?, ?)`,
+      [email, username, password, behavior],
+      function (err) {
         if (err) return reject(err);
-        resolve(true);
-      });
-    });
-  }
+
+        const user_id = this.lastID;
+  console.log("⚙️ step 1 (user) ok");
+        // 2. Crea paziente
+        db.run(
+          `INSERT INTO Paziente (user_id, nome, cognome, data_nascita, patologia) VALUES (?, ?, ?, ?, ?)`,
+          [user_id, nome, cognome, data_nascita, patologia],
+          function (err2) {
+            if (err2) return reject(err2);
+
+            const paziente_id = this.lastID;
+            const oggi = new Date().toISOString().split('T')[0];
+  console.log("⚙️ step 2 (paziente) ok");            
+            // 3. Inserisce relazione in cura
+            db.run(
+              `INSERT INTO InCura (paziente, professionista, data_inizio) VALUES (?, ?, ?)`,
+              [paziente_id, professionalId, oggi],
+              function (err3) {
+                if (err3) return reject(err3);
+                resolve(true);
+    console.log("⚙️ step 3 (InCura) ok");
+              }
+            );
+          }
+        );
+      }
+    );
+  });
+}
+
+
 
   async getListaGiochi() {
     return new Promise((resolve, reject) => {

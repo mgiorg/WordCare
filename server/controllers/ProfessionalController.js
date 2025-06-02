@@ -10,9 +10,6 @@ const Behavior = require('../models/enums/ProfileBehavior');
 
 class ProfessionalController {
   async DatiPersonali(req, res) {
-  console.log("🔍 Accesso a /professionista/profilo");
-  console.log("Session userId:", req.session.userId);
-
   try {
     const userId = req.session.userId;
     const dati = await ProfessionalRepository.getProfiloCompleto(userId);
@@ -63,13 +60,19 @@ class ProfessionalController {
   }
 
   async aggiungiPaziente(req, res) {
-    try {
-      await ProfessionalRepository.aggiungiPaziente(req.body);
-      res.status(200).json({ success: true });
-    } catch (err) {
-      res.status(500).json({ error: 'Errore durante inserimento paziente' });
-    }
+  try {
+    const userId = req.session.userId;
+    const professional = await ProfessionalRepository.findByUserId(userId);
+    const professionalId = professional.id;
+    await ProfessionalRepository.aggiungiPaziente(req.body, professionalId);
+    console.log("✅ Paziente inserito correttamente.");
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("❌ Errore durante inserimento paziente:", err);
+    res.status(500).json({ error: 'Errore durante inserimento paziente' });
   }
+}
+
 
   dettaglioPaziente(req, res) {
     res.sendFile(path.join(__dirname, '..', 'public', 'professional', 'paziente.html'));

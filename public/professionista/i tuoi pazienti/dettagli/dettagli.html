@@ -35,6 +35,17 @@
       </table>
     </div>
 
+<!-- Link alla Dashboard dei Giochi -->
+<div class="card template2">
+  <div class="card_title__container">
+    <div class="card_title">🎮 Prova i giochi</div>
+    <hr class="line">
+    <button class="button" onclick="location.href='/views/DashBoardGiochi/DashBoardGiochi.html'">
+      Vai alla Dashboard dei Giochi
+    </button>
+  </div>
+</div>
+
     <!-- Assegna Nuovo Esercizio -->
     <div class="card template2">
       <div class="card_title__container">
@@ -44,9 +55,12 @@
       <form>
         <label>Gioco:</label>
         <select class="custom-select">
+          <option>Collega le immagini</option>
+          <option>Completa la frase</option>
+          <option>Alla ricerca delle sillabe</option>
+          <option>B o P?</option>
           <option>Memory</option>
-          <option>Puzzle</option>
-          <option>Sequenze</option>
+          <option>Leggi e ripeti</option>
         </select>
         <br><br>
         <label>Ripetizioni:</label>
@@ -69,7 +83,7 @@
     <!-- Grafico Esercizi -->
     <div class="card template2">
       <div class="card_title__container">
-        <div class="card_title">Esercizi settimanali</div>
+        <div class="card_title">Esercizi settimanali (Esempio senza dati)</div>
         <hr class="line">
       </div>
       <div id="graficoEsercizi" style="width: 100%; height: 300px;"></div>
@@ -78,7 +92,7 @@
     <!-- Grafico Media -->
     <div class="card template2">
       <div class="card_title__container">
-        <div class="card_title">Media ultime 6 settimane</div>
+        <div class="card_title">Media ultime 6 settimane (Esempio senza dati)</div>
         <hr class="line">
       </div>
       <div id="graficoMedia" style="width: 100%; height: 300px;"></div>

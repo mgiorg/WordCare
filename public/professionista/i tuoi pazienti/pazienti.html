@@ -15,19 +15,21 @@
     <!-- Verrà riempito dinamicamente da pazienti.js -->
   </div>
 
-  <!-- Form aggiunta dimostrativo (non funziona) -->
+<!-- Card aggiungi paziente -->
   <div class="card template2" id="aggiungi-paziente">
-    <div class="card_title__container">
-      <div class="card_title">Aggiungi nuovo paziente</div>
-      <div class="card_paragraph">Funzionalità dimostrativa – nessun salvataggio</div>
-    </div>
-    <div class="form-group">
-      <input type="text" id="paziente-id" placeholder="ID" />
-      <input type="text" id="paziente-nome" placeholder="Nome" />
-      <input type="text" id="paziente-cognome" placeholder="Cognome" />
-      <button class="button" onclick="alert('Demo: paziente non salvato')">Aggiungi</button>
-    </div>
+  <div class="card_title__container">
+    <div class="card_title">Aggiungi nuovo paziente</div>
+    <div class="card_paragraph">Inserisci tutti i dati richiesti</div>
   </div>
+  <form id="form-aggiungi-paziente" class="form-group">
+    <input type="text" id="nome" placeholder="Nome" required />
+    <input type="text" id="cognome" placeholder="Cognome" required />
+    <input type="date" id="data_nascita" placeholder="Data di nascita" />
+    <input type="text" id="patologia" placeholder="Patologia" />
+    <button class="button" type="submit">Aggiungi</button>
+  </form>
+</div>
+
   <script src="/professionista/i tuoi pazienti/pazienti.js"></script>
 </body>
 </html>
