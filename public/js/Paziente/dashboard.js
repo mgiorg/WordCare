@@ -113,6 +113,10 @@ $(function () {
 		}
 	});
 
+	$(".menu-toggle").on("click", function () {
+		$(".navbar-links").toggleClass("active");
+	});
+
 	loadUserInfo();
 	loadProssimoAppuntamento();
 	loadEserciziSvolti();
