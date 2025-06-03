@@ -42,6 +42,23 @@ function caricaEventi() {
     fetch("/professionista/agenda").then(r => r.json()),
     fetch("/professionista/promemoria").then(r => r.json())
   ]).then(([apps, proms]) => {
+    // Demo identici alla home
+    if (!apps || apps.length === 0) {
+      apps = [
+        { id: "demo1", data: "2025-06-04", ora: "10:00", paziente_nome: "Marco", paziente_cognome: "Verdi" },
+        { id: "demo2", data: "2025-06-05", ora: "14:00", paziente_nome: "Sara", paziente_cognome: "Rossi" },
+        { id: "demo3", data: "2025-06-06", ora: "16:30", paziente_nome: "Luca", paziente_cognome: "Bianchi" }
+      ];
+    }
+
+    if (!proms || proms.length === 0) {
+      proms = [
+        { id: "demo4", data: "2025-06-05", ora_notifica: "09:00", nota: "Controllare referti paziente Rossi" },
+        { id: "demo5", data: "2025-06-06", ora_notifica: "11:30", nota: "Inviare report alla logopedista" },
+        { id: "demo6", data: "2025-06-07", ora_notifica: "15:00", nota: "Telefonata di follow-up a Bianchi" }
+      ];
+    }
+
     apps.forEach(app => {
       creaEventoHTML(app.data, app.ora, "appuntamento", `${app.paziente_nome} ${app.paziente_cognome}`, app.id);
     });
@@ -72,11 +89,11 @@ function creaAppuntamento(e) {
   e.preventDefault();
   const form = new FormData(e.target);
   const dati = {
-  data: form.get('data'),
-  ora: form.get('ora'),
-  sede: form.get('sede'),
-  paziente_id: form.get('paziente_id')
-};
+    data: form.get('data'),
+    ora: form.get('ora'),
+    sede: form.get('sede'),
+    paziente_id: form.get('paziente_id')
+  };
 
   if (!dati.data) {
     alert("Inserisci una data valida.");
