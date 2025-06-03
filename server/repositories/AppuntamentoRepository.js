@@ -74,7 +74,7 @@ class AppuntamentoRepository {
 		}
 
 	async elimina(id) {
-		const query = `DELETE FROM appuntamento WHERE id = ?`;
+		const query = `DELETE FROM Appuntamento WHERE id = ?`;
 		return new Promise((resolve, reject) => {
 			db.run(query, [id], function (err) {
 				if (err) return reject(err);

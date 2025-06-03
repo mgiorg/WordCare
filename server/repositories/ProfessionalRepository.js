@@ -128,18 +128,18 @@ class ProfessionalRepository {
   }
 
   async getPromemoria(professionalId) {
-    const query = `
-      SELECT pr.*
-      FROM promemoria pr
-      JOIN post_it pi ON pi.promemoria_id = pr.id
-      WHERE pi.professionista_id = ?`;
-    return new Promise((resolve, reject) => {
-      db.all(query, [professionalId], (err, rows) => {
-        if (err) return reject(err);
-        resolve(rows);
-      });
+  const query = `
+    SELECT pr.*
+    FROM Promemoria pr
+    JOIN PostIt pi ON pi.promemoria = pr.id
+    WHERE pi.professionista = ?`;
+  return new Promise((resolve, reject) => {
+    db.all(query, [professionalId], (err, rows) => {
+      if (err) return reject(err);
+      resolve(rows);
     });
-  }
+  });
+}
 
   async creaPromemoria({ data, ora_notifica, nota, professionalId }) {
     return new Promise((resolve, reject) => {
@@ -150,7 +150,7 @@ class ProfessionalRepository {
           if (err) return reject(err);
           const promemoriaId = this.lastID;
           db.run(
-            `INSERT INTO post_it (professionista_id, promemoria_id) VALUES (?, ?)`,
+            `INSERT INTO post_it (professionista, promemoria) VALUES (?, ?)`,
             [professionalId, promemoriaId],
             function (err2) {
               if (err2) return reject(err2);

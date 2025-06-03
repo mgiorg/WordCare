@@ -9,6 +9,7 @@ const AppuntamentoRepository = require('../repositories/AppuntamentoRepository')
 const Behavior = require('../models/enums/ProfileBehavior');
 
 class ProfessionalController {
+
   async DatiPersonali(req, res) {
   try {
     const userId = req.session.userId;

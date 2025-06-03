@@ -1,14 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Welcome message
-  fetch("/profilo")
+  fetch("/professionista/profilo")
     .then(res => res.json())
     .then(data => {
+      console.log("✅ Dati ricevuti:", data);
       const welcome = document.getElementById("welcomeMessage");
-      welcome.textContent = `Benvenuto, Dr. ${data.nome} ${data.cognome}`;
+      if (welcome) {
+        welcome.textContent = `Bentornato, Dr. ${data.cognome} ${data.nome}`;
+      }
+    })
+    .catch(err => {
+      console.error("❌ Errore nel caricamento del profilo:", err);
     });
 
+
   // Appuntamenti
-  fetch("/appuntamenti")
+  fetch("/professionista/agenda")
     .then(res => res.json())
     .then(data => {
       const today = new Date();
@@ -30,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   // Promemoria
-  fetch("/promemoria")
+  fetch("/professionista/promemoria")
     .then(res => res.json())
     .then(data => {
       const today = new Date();

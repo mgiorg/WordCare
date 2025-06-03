@@ -41,11 +41,11 @@ router.get('/appuntamenti/view', VerifyProfessionalSession, (req, res) => {
   res.sendFile(path.join(viewsPath, 'professionista', 'calendario', 'calendario.html'));
 });
 
-router.get('/giochi', VerifyProfessionalSession, ProfessionalController.listaGiochi);
-router.post('/assegnazioni', VerifyProfessionalSession, ProfessionalController.assegnaGioco);
-
 router.get('/promemoria', VerifyProfessionalSession, ProfessionalController.listaPromemoria);
 router.post('/promemoria', VerifyProfessionalSession, ProfessionalController.creaPromemoria);
 router.post('/promemoria/:id/elimina', VerifyProfessionalSession, ProfessionalController.eliminaPromemoria);
+
+router.get('/giochi', VerifyProfessionalSession, ProfessionalController.listaGiochi);
+router.post('/assegnazioni', VerifyProfessionalSession, ProfessionalController.assegnaGioco);
 
 module.exports = router;

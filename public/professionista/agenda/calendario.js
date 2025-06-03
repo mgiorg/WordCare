@@ -9,11 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   generaCalendario(anno, mese);
   caricaEventi();
 
-  document.getElementById("close-modal").onclick = chiudiModal;
-  document.getElementById("btn-crea-app").onclick = () => toggleVisibili("form-appuntamento");
-  document.getElementById("btn-crea-prom").onclick = () => toggleVisibili("form-promemoria");
-  document.getElementById("btn-elimina").onclick = mostraEliminazione;
-
   document.getElementById("form-appuntamento").onsubmit = creaAppuntamento;
   document.getElementById("form-promemoria").onsubmit = creaPromemoria;
 });
@@ -44,11 +39,11 @@ function generaCalendario(anno, mese) {
 
 function caricaEventi() {
   Promise.all([
-    fetch("/agenda").then(r => r.json()),
-    fetch("/promemoria").then(r => r.json())
+    fetch("/professionista/agenda").then(r => r.json()),
+    fetch("/professionista/promemoria").then(r => r.json())
   ]).then(([apps, proms]) => {
     apps.forEach(app => {
-      creaEventoHTML(app.data, app.ora, "appuntamento", `${app.nome} ${app.cognome} (${app.patologia})`, app.id);
+      creaEventoHTML(app.data, app.ora, "appuntamento", `${app.paziente_nome} ${app.paziente_cognome}`, app.id);
     });
     proms.forEach(prom => {
       creaEventoHTML(prom.data, prom.ora_notifica, "promemoria", prom.nota, prom.id);
@@ -69,24 +64,19 @@ function creaEventoHTML(data, ora, tipo, descrizione, id) {
 
 function apriModal(data) {
   dataSelezionata = data;
-  document.getElementById("selected-date").textContent = `Data selezionata: ${data}`;
-  document.querySelectorAll("#modal form, #lista-eliminazione").forEach(el => el.classList.add("hidden"));
-}
-
-function chiudiModal() {
-  document.querySelectorAll("#modal form, #lista-eliminazione").forEach(el => el.classList.add("hidden"));
-  document.getElementById("form-appuntamento").reset();
-  document.getElementById("form-promemoria").reset();
-}
-
-function toggleVisibili(id) {
-  document.querySelectorAll("#modal form, #lista-eliminazione").forEach(el => el.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
+  document.getElementById("data-attiva").textContent = data;
+  mostraEliminazione();
 }
 
 function creaAppuntamento(e) {
   e.preventDefault();
-  const dati = Object.fromEntries(new FormData(e.target).entries());
+  const form = new FormData(e.target);
+  const dati = {
+  data: form.get('data'),
+  ora: form.get('ora'),
+  sede: form.get('sede'),
+  paziente_id: form.get('paziente_id')
+};
 
   if (!dati.data) {
     alert("Inserisci una data valida.");
@@ -95,7 +85,7 @@ function creaAppuntamento(e) {
 
   console.log("📤 Invio appuntamento:", dati);
 
-  fetch("/agenda", {
+  fetch("/professionista/agenda", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dati)
@@ -120,7 +110,7 @@ function creaPromemoria(e) {
 
   console.log("📤 Invio promemoria:", dati);
 
-  fetch("/promemoria", {
+  fetch("/professionista/promemoria", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dati)
@@ -149,10 +139,9 @@ function mostraEliminazione() {
       li.appendChild(btn);
       lista.appendChild(li);
     });
-  toggleVisibili("lista-eliminazione");
 }
 
 function eliminaEvento(id, isAppuntamento) {
-  const url = isAppuntamento ? `/agenda/${id}/elimina` : `/promemoria/${id}/elimina`;
+  const url = isAppuntamento ? `/professionista/agenda/${id}/elimina` : `/professionista/promemoria/${id}/elimina`;
   fetch(url, { method: "POST" }).then(r => r.ok && location.reload());
 }
