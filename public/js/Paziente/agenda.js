@@ -152,6 +152,18 @@ function selectDate(dateObj) {
 
 // === Init e eventi ===
 $(function () {
+	// Gestione del dropdown dell'avatar
+	$(".navbar-avatar").on("click", function () {
+		$(".avatar-dropdown").toggleClass("active");
+	});
+
+	// Chiudi il dropdown quando si clicca altrove
+	$(document).on("click", function (event) {
+		if (!$(event.target).closest('.navbar-avatar').length) {
+			$(".avatar-dropdown").removeClass("active");
+		}
+	});
+	
 	$calendarDays = $('#calendar-days');
 	$currentMonthEl = $('#current-month');
 	$prevBtn = $('#prev-month');

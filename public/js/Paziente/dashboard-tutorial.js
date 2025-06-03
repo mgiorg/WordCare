@@ -1,10 +1,5 @@
 const tutorialKey = 'tutorialVisto';
 
-if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-    // è un vero reload, puoi decidere se rimuovere la chiave oppure no
-    localStorage.removeItem(tutorialKey);
-}
-
 if (!localStorage.getItem(tutorialKey)) {
     const driver = window.driver.js.driver;
 
@@ -117,4 +112,9 @@ if (!localStorage.getItem(tutorialKey)) {
     });
 
     driverObj.drive();
+}
+
+if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+    // è un vero reload, puoi decidere se rimuovere la chiave oppure no
+    localStorage.removeItem(tutorialKey);
 }
