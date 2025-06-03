@@ -1,3 +1,31 @@
+const motivationalPhrases = [
+	"Oggi è una nuova opportunità per migliorare. Facciamo progressi insieme!",
+	"Ogni passo conta. Non fermarti adesso!",
+	"Piccoli progressi portano a grandi risultati.",
+	"Credi in te stesso: sei più forte di quanto pensi.",
+	"Non guardare quanto manca, guarda quanto hai già fatto.",
+	"La costanza è il segreto del cambiamento.",
+	"Ogni giorno è una possibilità per diventare una versione migliore di te stesso.",
+	"Continua a camminare: ogni passo ti avvicina al traguardo.",
+	"Il successo è fatto di piccoli sforzi ripetuti ogni giorno.",
+	"Non è importante quanto vai veloce, ma che tu non ti fermi.",
+	"Rallenta se serve, ma non smettere mai.",
+	"Oggi può essere il giorno in cui tutto cambia.",
+	"Sii fiero di ogni progresso, anche il più piccolo.",
+	"Non arrenderti: i risultati arrivano a chi persiste.",
+	"Hai già superato tanto. Continua così!",
+	"Ogni allenamento ti avvicina al tuo obiettivo.",
+	"Dai il massimo, sempre. Anche oggi.",
+	"Ogni giornata è un nuovo inizio.",
+	"Corpo e mente si rafforzano insieme.",
+	"Scegli di migliorare, un passo alla volta."
+];
+
+function mostraFraseMotivazionale() {
+	const frase = motivationalPhrases[Math.floor(Math.random() * motivationalPhrases.length)];
+	$('#fraseMotivazionale').text(frase);
+}
+
 function loadUserInfo() {
 	$.ajax({
 		url: '/api/patient-info',
@@ -88,4 +116,5 @@ $(function () {
 	loadUserInfo();
 	loadProssimoAppuntamento();
 	loadEserciziSvolti();
+	mostraFraseMotivazionale();
 });
