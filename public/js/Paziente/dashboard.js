@@ -1,4 +1,3 @@
-// Caricamento delle informazioni utente
 function loadUserInfo() {
 	$.ajax({
 		url: '/api/patient-info',
@@ -76,12 +75,10 @@ function loadEserciziSvolti() {
 }
 
 $(function () {
-	// Gestione del dropdown dell'avatar
 	$(".navbar-avatar").on("click", function () {
 		$(".avatar-dropdown").toggleClass("active");
 	});
 
-	// Chiudi il dropdown quando si clicca altrove
 	$(document).on("click", function (event) {
 		if (!$(event.target).closest('.navbar-avatar').length) {
 			$(".avatar-dropdown").removeClass("active");

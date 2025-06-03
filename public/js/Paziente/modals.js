@@ -39,8 +39,6 @@ function loadProfessionistaInfo() {
 	});
 }
 
-// === Funzioni Modali Appuntamenti ===
-
 function openAppointmentsModal() {
 	const modal = document.getElementById('modal-appuntamenti');
 	modal.classList.add('show');
@@ -108,7 +106,6 @@ function renderAppuntamenti(data) {
 	openAppointmentsModal();
 }
 
-// === Eventi ===
 
 $(function () {
 	// Modal Professionista

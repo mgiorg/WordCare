@@ -7,7 +7,7 @@ if (!localStorage.getItem(tutorialKey)) {
         showProgress: true,
         progressText: 'Passaggio {{current}} di {{total}}',
         overlayColor: '#000000',
-        overlayOpacity: 0.6, // oppure 0.5
+        overlayOpacity: 0.6,
         animate: true,
         smoothScroll: true,
         allowClose: true,
@@ -115,6 +115,5 @@ if (!localStorage.getItem(tutorialKey)) {
 }
 
 if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-    // è un vero reload, puoi decidere se rimuovere la chiave oppure no
     localStorage.removeItem(tutorialKey);
 }

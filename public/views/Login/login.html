@@ -1,135 +1,185 @@
 <!DOCTYPE html>
 <html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WordCare - Login Dinamico</title>
+    <link rel="stylesheet" href="../../css/Login/login.css" />
+  </head>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>WordCare - Login Dinamico</title>
-	<link rel="stylesheet" href="../../css/Login/login.css" />
-</head>
+  <body>
+    <span style="position: absolute; top: 20px; left: 20px; z-index: 1000">
+      <button class="back-button" onclick="window.location.href='/home'">
+        ← Torna alla Home
+      </button>
+    </span>
+    <div class="bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+    </div>
 
-<body>
-	<span style="position: absolute; top: 20px; left: 20px; z-index: 1000;">
-		<button class="back-button" onclick="window.location.href='/home'">← Torna alla Home</button>
-	</span>
-	<!--* Background shapes *-->
-	<div class="bg-shapes">
-		<div class="shape shape-1"></div>
-		<div class="shape shape-2"></div>
-		<div class="shape shape-3"></div>
-		<div class="shape shape-4"></div>
-	</div>
+    <div class="login-header">
+      <div class="card">
+        <div class="loader">
+          <h2>WordCare</h2>
+          <div class="words">
+            <div class="words-inner">
+              <h2 class="word">studia</h2>
+              <h2 class="word">impara</h2>
+              <h2 class="word">esercitati</h2>
+              <h2 class="word">migliora</h2>
+              <h2 class="word">studia</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-	<!--* Header con logo e animazione *-->
-	<div class="login-header">
-		<div class="card">
-			<div class="loader">
-				<h2>WordCare</h2>
-				<div class="words">
-					<div class="words-inner">
-						<h2 class="word">studia</h2>
-						<h2 class="word">impara</h2>
-						<h2 class="word">esercitati</h2>
-						<h2 class="word">migliora</h2>
-						<h2 class="word">studia</h2> <!--* duplicato *-->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container-dinamico" id="container">
+      <div class="form-container sign-up-container">
+        <form action="/register" method="POST">
+          <h1>Registrati</h1>
+          <div class="input-group">
+            <input
+              type="text"
+              name="name"
+              autocomplete="off"
+              class="input"
+              required
+            />
+            <label class="user-label">Nome</label>
+          </div>
+          <div class="input-group">
+            <input
+              type="text"
+              name="surname"
+              autocomplete="off"
+              class="input"
+              required
+            />
+            <label class="user-label">Cognome</label>
+          </div>
+          <div class="input-group">
+            <input
+              type="email"
+              name="email"
+              autocomplete="off"
+              class="input"
+              required
+            />
+            <label class="user-label">Email</label>
+          </div>
+          <div class="input-group">
+            <input
+              type="text"
+              name="username"
+              autocomplete="off"
+              class="input"
+              required
+            />
+            <label class="user-label">Username</label>
+          </div>
+          <div class="input-group">
+            <input
+              type="password"
+              name="password"
+              autocomplete="off"
+              class="input"
+              required
+            />
+            <label class="user-label">Password</label>
+          </div>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="userType"
+                value="professional"
+                required
+              />
+              <span>Professionista</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="userType" value="patient" required />
+              <span>Paziente</span>
+            </label>
+          </div>
+          <button type="submit">Registrati</button>
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form action="/login" method="POST">
+          <h1>Accedi</h1>
+          <div class="input-group">
+            <input
+              type="text"
+              name="username"
+              autocomplete="off"
+              class="input"
+              required
+            />
+            <label class="user-label">Username</label>
+          </div>
+          <div class="input-group">
+            <input
+              type="password"
+              name="password"
+              autocomplete="off"
+              class="input"
+              required
+            />
+            <label class="user-label">Password</label>
+          </div>
+          <a href="#" class="forgot-password">Password dimenticata?</a>
+          <button type="submit">Accedi</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1 style="color: white !important">Bentornato!</h1>
+            <p>
+              Per accedere ai tuoi contenuti, effettua il login con i tuoi dati
+              personali
+            </p>
+            <button class="ghost" id="signIn">Accedi</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1 style="color: white !important">Benvenuto!</h1>
+            <p>
+              Inserisci i tuoi dati personali e inizia il tuo percorso con noi
+            </p>
+            <button class="ghost" id="signUp">Registrati</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-	<!--* Main login container *-->
-	<div class="container-dinamico" id="container">
-		<div class="form-container sign-up-container">
-			<form action="/register" method="POST">
-				<h1>Registrati</h1>
-				<div class="input-group">
-					<input type="text" name="name" autocomplete="off" class="input" required>
-					<label class="user-label">Nome</label>
-				</div>
-				<div class="input-group">
-					<input type="text" name="surname" autocomplete="off" class="input" required>
-					<label class="user-label">Cognome</label>
-				</div>
-				<div class="input-group">
-					<input type="email" name="email" autocomplete="off" class="input" required>
-					<label class="user-label">Email</label>
-				</div>
-				<div class="input-group">
-					<input type="text" name="username" autocomplete="off" class="input" required>
-					<label class="user-label">Username</label>
-				</div>
-				<div class="input-group">
-					<input type="password" name="password" autocomplete="off" class="input" required>
-					<label class="user-label">Password</label>
-				</div>
-				<div class="radio-group">
-					<label class="radio-option">
-						<input type="radio" name="userType" value="professional" required>
-						<span>Professionista</span>
-					</label>
-					<label class="radio-option">
-						<input type="radio" name="userType" value="patient" required>
-						<span>Paziente</span>
-					</label>
-				</div>
-				<button type="submit">Registrati</button>
-			</form>
-		</div>
-		<div class="form-container sign-in-container">
-			<form action="/login" method="POST">
-				<h1>Accedi</h1>
-				<div class="input-group">
-					<input type="text" name="username" autocomplete="off" class="input" required>
-					<label class="user-label">Username</label>
-				</div>
-				<div class="input-group">
-					<input type="password" name="password" autocomplete="off" class="input" required>
-					<label class="user-label">Password</label>
-				</div>
-				<a href="#" class="forgot-password">Password dimenticata?</a>
-				<button type="submit">Accedi</button>
-			</form>
-		</div>
-		<!--* OVERLAY *-->
-		<div class="overlay-container">
-			<div class="overlay">
-				<div class="overlay-panel overlay-left">
-					<h1 style="color: white !important">Bentornato!</h1>
-					<p>Per accedere ai tuoi contenuti, effettua il login con i tuoi dati personali</p>
-					<button class="ghost" id="signIn">Accedi</button>
-				</div>
-				<div class="overlay-panel overlay-right">
-					<h1 style="color: white !important">Benvenuto!</h1>
-					<p>Inserisci i tuoi dati personali e inizia il tuo percorso con noi</p>
-					<button class="ghost" id="signUp">Registrati</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <script>
+      const signUpButton = document.getElementById("signUp");
+      const signInButton = document.getElementById("signIn");
+      const container = document.getElementById("container");
 
-	<script>
-		const signUpButton = document.getElementById('signUp');
-		const signInButton = document.getElementById('signIn');
-		const container = document.getElementById('container');
+      // Click su "Registrati"
+      signUpButton.addEventListener("click", () => {
+        container.classList.add("right-panel-active");
+      });
 
-		// Click su "Registrati"
-		signUpButton.addEventListener('click', () => {
-			container.classList.add("right-panel-active");
-		});
+      // Click su "Accedi"
+      signInButton.addEventListener("click", () => {
+        container.classList.remove("right-panel-active");
+      });
 
-		// Click su "Accedi"
-		signInButton.addEventListener('click', () => {
-			container.classList.remove("right-panel-active");
-		});
-
-		// Focus sul primo input all'apertura della pagina
-		window.addEventListener('load', () => {
-			setTimeout(() => {
-				document.querySelector('.sign-in-container input[name="username"]').focus();
-			}, 1000);
-		});
-	</script>
-</body>
-
+      // Focus sul primo input all'apertura della pagina
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document
+            .querySelector('.sign-in-container input[name="username"]')
+            .focus();
+        }, 1000);
+      });
+    </script>
+  </body>
 </html>

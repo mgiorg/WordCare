@@ -1,10 +1,8 @@
-// === Variabili condivise ===
 var $calendarDays, $currentMonthEl, $prevBtn, $nextBtn;
 var $notesList, $selectedDateEl, $addNoteBtn, $noteForm, $addNoteForm, $cancelNoteBtn;
 var today, selectedDate, currentMonth, currentYear;
 var monthNames, notesMap, editingNoteId;
 
-// === Utility ===
 function formatKey(date) {
 	return date.toISOString().slice(0, 10);
 }
@@ -13,7 +11,6 @@ function formatDisplay(date) {
 	return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
 }
 
-// === Chiamate AJAX ===
 function loadNotes() {
 	$.ajax({
 		url: '/api/paziente-agenda',
@@ -76,7 +73,6 @@ function updateNote(id, payload, callback) {
 	});
 }
 
-// === Rendering ===
 function renderCalendar(month, year) {
 	$calendarDays.empty();
 	var firstDay = new Date(year, month, 1);
@@ -150,14 +146,11 @@ function selectDate(dateObj) {
 	$addNoteForm[0].reset();
 }
 
-// === Init e eventi ===
 $(function () {
-	// Gestione del dropdown dell'avatar
 	$(".navbar-avatar").on("click", function () {
 		$(".avatar-dropdown").toggleClass("active");
 	});
 
-	// Chiudi il dropdown quando si clicca altrove
 	$(document).on("click", function (event) {
 		if (!$(event.target).closest('.navbar-avatar').length) {
 			$(".avatar-dropdown").removeClass("active");
