@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const patientId = getPatientIdFromUrl();
 
   // Carica dati anagrafici paziente
-  fetch(`/pazienti/${patientId}/dati`)
+  fetch(`/professionista/pazienti/${patientId}/dati`)
     .then(res => res.json())
     .then(data => {
       const header = document.querySelector('.card_title__container');
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   // Carica esercizi assegnati
-  fetch(`/pazienti/${patientId}/esercizi`)
+  fetch(`/professionista/pazienti/${patientId}/esercizi`)
     .then(res => res.json())
     .then(data => {
       const tbody = document.querySelector('tbody');
