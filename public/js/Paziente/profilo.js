@@ -1,9 +1,17 @@
 $(function () {
-	// === VARIABILI GLOBALI ===
+	$(".navbar-avatar").on("click", function () {
+		$(".avatar-dropdown").toggleClass("active");
+	});
+
+	$(document).on("click", function (event) {
+		if (!$(event.target).closest('.navbar-avatar').length) {
+			$(".avatar-dropdown").removeClass("active");
+		}
+	});
+	
 	let isEditing = false;
 	let originalData = {};
 
-	// === SELEZIONE ELEMENTI DOM ===
 	const $editBtn = $("#edit-btn");
 	const $saveBtn = $("#save-btn");
 	const $cancelBtn = $("#cancel-btn");
@@ -11,15 +19,13 @@ $(function () {
 	const $message = $("#message");
 	const $inputs = $form.find(".form-input");
 
-	// === CARICA I DATI PROFILO ===
 	function loadProfileData() {
 		$.ajax({
-			url: "/api/profilo/info", // deve restituire dati completi: User + Paziente
+			url: "/api/profilo/info",
 			method: "GET",
 			dataType: "json",
 			xhrFields: { withCredentials: true },
 			success: function (data) {
-				// Popola i campi
 				$("#nome").val(data.nome);
 				$("#cognome").val(data.cognome);
 				$("#username").val(data.username);
@@ -27,7 +33,6 @@ $(function () {
 				$("#data_nascita").val(data.data_nascita);
 				$("#patologia").val(data.patologia || '');
 
-				// Popola header
 				$("#full-name").text(`${data.nome} ${data.cognome}`);
 				$("#user-email").text(data.email);
 				$(".avatar-dropdown .user-name").text(`${data.nome} ${data.cognome}`);
@@ -38,7 +43,6 @@ $(function () {
 		});
 	}
 
-	// === MODALITÀ MODIFICA ===
 	function enableEditMode() {
 		isEditing = true;
 		originalData = {};
@@ -83,7 +87,6 @@ $(function () {
 			}
 		};
 
-		// Validazione
 		if (!updatedData.paziente.nome || !updatedData.paziente.cognome) {
 			showMessage("Nome e cognome sono obbligatori", "error");
 			return;
@@ -110,7 +113,6 @@ $(function () {
 		});
 	}
 
-	// === MESSAGGIO VISIVO ===
 	function showMessage(text, type) {
 		const $span = $message.find("span");
 		const $icon = $message.find("i");
@@ -120,20 +122,9 @@ $(function () {
 		setTimeout(() => $message.removeClass("show"), 5000);
 	}
 
-	// === DROPDOWN AVATAR ===
-	$(".navbar-avatar").on("click", function (e) {
-		e.stopPropagation();
-		$(".avatar-dropdown").toggleClass("active");
-	});
-	$(document).on("click", function () {
-		$(".avatar-dropdown").removeClass("active");
-	});
-
-	// === EVENTI ===
 	$editBtn.on("click", enableEditMode);
 	$cancelBtn.on("click", cancelEdit);
 	$saveBtn.on("click", saveProfile);
 
-	// === AVVIO ===
 	loadProfileData();
 });

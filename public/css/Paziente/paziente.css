@@ -56,7 +56,6 @@ button {
 	font: inherit;
 }
 
-/* Navbar */
 .navbar {
 	display: flex;
 	justify-content: space-between;
@@ -105,7 +104,6 @@ button {
 	background: rgba(255, 255, 255, 0.2);
 }
 
-/* Avatar & logout */
 .navbar-avatar {
 	position: relative;
 	margin-right: 1.25rem;
@@ -162,7 +160,6 @@ button {
 	transform: translateX(5px);
 }
 
-/* Logout button dinamico */
 .Btn {
 	position: relative;
 	width: 45px;
@@ -219,7 +216,6 @@ button {
 	transform: translate(2px, 2px);
 }
 
-/* Dashboard main */
 .dashboard {
 	max-width: 1400px;
 	margin: var(--gap) auto;
@@ -229,7 +225,6 @@ button {
 	gap: var(--gap);
 }
 
-/* Greeting */
 .greeting {
 	text-align: center;
 	background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
@@ -248,7 +243,6 @@ button {
 	color: var(--subtext);
 }
 
-/* Section headings */
 .stats-title,
 .sections-title,
 .upcoming-title,
@@ -259,7 +253,6 @@ button {
 	margin: 1.5rem 0 1rem;
 }
 
-/* Statistics */
 .stats {
 	display: flex;
 	flex-wrap: wrap;
@@ -302,7 +295,6 @@ button {
 	font-weight: bold;
 }
 
-/* Feature cards */
 .feature-cards {
 	display: flex;
 	flex-wrap: wrap;
@@ -375,7 +367,6 @@ button {
 	font-size: 0.85rem;
 }
 
-/* Upcoming appointments */
 .upcoming-appointments {
 	display: flex;
 	flex-wrap: wrap;
@@ -483,7 +474,6 @@ button {
 	color: var(--white);
 }
 
-/* Recent exercises */
 .recent-exercises {
 	display: flex;
 	flex-wrap: wrap;
@@ -550,7 +540,6 @@ button {
 	background: var(--accent);
 }
 
-/* Footer */
 .footer {
 	background: linear-gradient(90deg, var(--primary), var(--accent));
 	color: var(--white);
@@ -611,7 +600,6 @@ button {
 	opacity: 0.8;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
 	.menu-toggle {
 		display: flex;
@@ -674,7 +662,6 @@ button {
 	}
 }
 
-/* Layout interno a due righe */
 .feature-card {
 	display: flex;
 	flex-direction: column;
@@ -695,7 +682,6 @@ button {
 	flex: 1 1 auto;
 }
 
-/* Riga inferiore: centro orizzontale */
 .feature-row-bottom {
 	justify-content: center;
 	margin-top: var(--gap);
@@ -712,7 +698,6 @@ button {
 	white-space: nowrap;
 }
 
-/* colori distinti per tipo */
 .feature-stat.new {
 	background: var(--primary);
 }
@@ -741,7 +726,6 @@ button {
 	background: var(--accent);
 }
 
-/* Modal migliorato */
 .modal {
 	position: fixed;
 	z-index: 1000;
@@ -781,7 +765,6 @@ button {
 	transform: translateY(0) scale(1);
 }
 
-/* Header del modal */
 .modal-header {
 	background: linear-gradient(135deg, var(--primary), var(--accent));
 	color: var(--white);
@@ -881,7 +864,6 @@ button {
 	transform: rotate(90deg) scale(1.1);
 }
 
-/* Body del modal */
 .modal-body {
 	padding: 2rem;
 }
@@ -966,7 +948,6 @@ button {
 	font-weight: 500;
 }
 
-/* Footer del modal */
 .modal-footer {
 	padding: 1.5rem 2rem;
 	background: var(--light-bg);
@@ -1010,7 +991,6 @@ button {
 	color: var(--primary);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
 	.modal-content {
 		margin: 2% auto;
@@ -1094,7 +1074,6 @@ button {
 	margin-bottom: 1.5rem;
 }
 
-/* Footer della sezione appuntamenti */
 .appointments-footer {
 	display: flex;
 	justify-content: center;
@@ -1102,7 +1081,6 @@ button {
 	padding-top: 1rem;
 }
 
-/* Bottone ridimensionato e migliorato */
 .btn-view-all {
 	background: linear-gradient(135deg, var(--primary), var(--accent));
 	color: var(--white);
@@ -1158,7 +1136,6 @@ button {
 	transform: scale(1.1);
 }
 
-/* Responsive per mobile */
 @media (max-width: 768px) {
 	.appointments-footer {
 		padding-top: 1.5rem;
@@ -1170,7 +1147,6 @@ button {
 	}
 }
 
-/* Stili per gli appuntamenti nel modal */
 .appointment-list-item {
 	display: flex;
 	align-items: center;
@@ -1201,7 +1177,6 @@ button {
 	box-shadow: var(--shadow);
 }
 
-/* Appuntamenti passati */
 .appointment-passato {
 	background: var(--light-bg);
 	border-left: 4px solid var(--subtext);
@@ -1216,7 +1191,6 @@ button {
 	background: var(--subtext);
 }
 
-/* Appuntamento prossimo */
 .appointment-prossimo {
 	background: rgba(220, 53, 69, 0.1);
 	border-left: 4px solid var(--danger);
@@ -1230,7 +1204,6 @@ button {
 	background: var(--danger);
 }
 
-/* Appuntamenti futuri */
 .appointment-futuro {
 	background: rgba(102, 126, 234, 0.1);
 	border-left: 4px solid var(--primary);

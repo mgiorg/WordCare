@@ -23,6 +23,7 @@ function loadProfessionistaInfo() {
 						<p class="text-center">Nessun professionista associato a te</p>
 					</div>
         `);
+		openProfessionistaModal();
 			} else {
 				$('#prof-nome').text(data.nome);
 				$('#prof-cognome').text(data.cognome);
@@ -34,12 +35,15 @@ function loadProfessionistaInfo() {
 			openProfessionistaModal();
 		},
 		error: function () {
-			alert('Errore nel caricamento del professionista.');
+			$('#modal-professionista .modal-body').html(`
+					<div class="no-data-message">
+						<p class="text-center">Nessun professionista associato a te</p>
+					</div>
+			`);
+			openProfessionistaModal();
 		}
 	});
 }
-
-// === Funzioni Modali Appuntamenti ===
 
 function openAppointmentsModal() {
 	const modal = document.getElementById('modal-appuntamenti');
@@ -108,7 +112,6 @@ function renderAppuntamenti(data) {
 	openAppointmentsModal();
 }
 
-// === Eventi ===
 
 $(function () {
 	// Modal Professionista

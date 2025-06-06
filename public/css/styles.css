@@ -1,11 +1,9 @@
-/* CSS Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body Styles */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
@@ -13,7 +11,6 @@ body {
     line-height: 1.6;
 }
 
-/* Header Styles */
 header {
     background: #35424a;
     color: #ffffff;
@@ -21,12 +18,10 @@ header {
     text-align: center;
 }
 
-/* Main Content Styles */
 main {
     padding: 20px;
 }
 
-/* Button Styles */
 button {
     background: #35424a;
     color: #ffffff;
@@ -41,7 +36,6 @@ button:hover {
     background: #45a049;
 }
 
-/* Form Styles */
 form {
     display: flex;
     flex-direction: column;
@@ -55,7 +49,6 @@ form input {
     border-radius: 5px;
 }
 
-/* Footer Styles */
 footer {
     text-align: center;
     padding: 10px 0;

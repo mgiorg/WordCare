@@ -35,7 +35,6 @@
 	}
 }
 
-/* Calendario */
 .calendar-section {
 	flex: 1 1 350px;
 	background: var(--white);
@@ -87,7 +86,6 @@
 	width: 40px;
 	height: 40px;
 	border-radius: 8px;
-	/* Quadrati */
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -130,7 +128,6 @@
 	align-items: center;
 	justify-content: center;
 	border-radius: 8px;
-	/* Quadrati */
 	position: relative;
 	font-weight: 500;
 	cursor: pointer;
@@ -201,7 +198,6 @@
 	}
 }
 
-/* Sezione note */
 .notes-section {
 	flex: 1 1 550px;
 	background: var(--white);
@@ -524,5 +520,3 @@
 	background: rgba(0, 0, 0, 0.12);
 	transform: translateY(-2px);
 }
-
-/* Responsive già presente nella dashboard */

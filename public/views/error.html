@@ -1,290 +1,284 @@
 <!DOCTYPE html>
 <html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Errore</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Errore</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<style>
-		/* Reset e box-sizing */
-		*,
-		*::before,
-		*::after {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-		}
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
 
-		body {
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-			overflow: hidden;
-		}
+      .error-container {
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 20px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        width: 480px;
+        max-width: 90%;
+        padding: 40px;
+        text-align: center;
+        position: relative;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        z-index: 2;
+        animation: fadeIn 0.8s ease-out forwards;
+      }
 
-		/* Contenitore principale */
-		.error-container {
-			background: rgba(255, 255, 255, 0.85);
-			border-radius: 20px;
-			box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-			overflow: hidden;
-			width: 480px;
-			max-width: 90%;
-			padding: 40px;
-			text-align: center;
-			position: relative;
-			backdrop-filter: blur(5px);
-			border: 1px solid rgba(255, 255, 255, 0.3);
-			z-index: 2;
-			animation: fadeIn 0.8s ease-out forwards;
-		}
+      h1 {
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #2a3652;
+        font-size: 32px;
+      }
 
-		/* Stili testo */
-		h1 {
-			font-weight: bold;
-			margin-bottom: 20px;
-			color: #2a3652;
-			font-size: 32px;
-		}
+      p {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0.5px;
+        margin: 20px 0 30px;
+        color: #606c88;
+      }
 
-		p {
-			font-size: 16px;
-			font-weight: 400;
-			line-height: 24px;
-			letter-spacing: 0.5px;
-			margin: 20px 0 30px;
-			color: #606c88;
-		}
+      .error-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 20px;
+        position: relative;
+      }
 
-		/* Icona di errore */
-		.error-icon {
-			width: 100px;
-			height: 100px;
-			margin: 0 auto 20px;
-			position: relative;
-		}
+      .error-circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea1a 0%, #764ba21a 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+        color: #764ba2;
+      }
 
-		.error-circle {
-			width: 100%;
-			height: 100%;
-			border-radius: 50%;
-			background: linear-gradient(135deg, #667eea1a 0%, #764ba21a 100%);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 60px;
-			color: #764ba2;
-		}
+      .buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 30px;
+      }
 
-		/* Pulsanti */
-		.buttons {
-			display: flex;
-			gap: 20px;
-			justify-content: center;
-			margin-top: 30px;
-		}
+      .button {
+        border-radius: 30px;
+        border: none;
+        padding: 16px 30px;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      }
 
-		.button {
-			border-radius: 30px;
-			border: none;
-			padding: 16px 30px;
-			font-size: 14px;
-			font-weight: bold;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-			transition: all 0.3s ease;
-			cursor: pointer;
-			text-decoration: none;
-			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-		}
+      .retry {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
 
-		.retry {
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
-		}
+      .exit {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        color: #333;
+      }
 
-		.exit {
-			background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-			color: #333;
-		}
+      .button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
 
-		.button:hover {
-			transform: translateY(-3px);
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-		}
+      .button:active {
+        transform: translateY(0);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
 
-		.button:active {
-			transform: translateY(0);
-			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-		}
+      .bg-shapes {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+      }
 
-		/* Decorazioni di sfondo */
-		.bg-shapes {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			z-index: 1;
-			pointer-events: none;
-		}
+      .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(
+          45deg,
+          rgba(102, 126, 234, 0.5),
+          rgba(118, 75, 162, 0.5)
+        );
+        filter: blur(20px);
+      }
 
-		.shape {
-			position: absolute;
-			border-radius: 50%;
-			background: linear-gradient(45deg, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5));
-			filter: blur(20px);
-		}
+      .shape-1 {
+        width: 300px;
+        height: 300px;
+        top: -120px;
+        right: -100px;
+      }
 
-		.shape-1 {
-			width: 300px;
-			height: 300px;
-			top: -120px;
-			right: -100px;
-		}
+      .shape-2 {
+        width: 250px;
+        height: 250px;
+        bottom: -80px;
+        left: -80px;
+      }
 
-		.shape-2 {
-			width: 250px;
-			height: 250px;
-			bottom: -80px;
-			left: -80px;
-		}
+      .shape-3 {
+        width: 150px;
+        height: 150px;
+        top: 40%;
+        right: -50px;
+        background: linear-gradient(
+          45deg,
+          rgba(102, 126, 234, 0.3),
+          rgba(118, 75, 162, 0.3)
+        );
+      }
 
-		.shape-3 {
-			width: 150px;
-			height: 150px;
-			top: 40%;
-			right: -50px;
-			background: linear-gradient(45deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
-		}
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
 
-		/* Animation for the container */
-		@keyframes fadeIn {
-			from {
-				opacity: 0;
-				transform: translateY(20px);
-			}
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
 
-		/* Animation for buttons */
-		@keyframes pulse {
-			0% {
-				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-			}
+        50% {
+          box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
 
-			50% {
-				box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-			}
+        100% {
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+      }
 
-			100% {
-				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-			}
-		}
+      .retry {
+        animation: pulse 2s infinite;
+      }
 
-		.retry {
-			animation: pulse 2s infinite;
-		}
+      .error-code {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #764ba2;
+        opacity: 0.5;
+      }
 
-		/* Error code display */
-		.error-code {
-			position: absolute;
-			top: 20px;
-			right: 20px;
-			font-size: 16px;
-			font-weight: bold;
-			color: #764ba2;
-			opacity: 0.5;
-		}
+      .error-footer {
+        margin-top: 30px;
+        font-size: 14px;
+        color: #8a8a8a;
+      }
 
-		/* Footer */
-		.error-footer {
-			margin-top: 30px;
-			font-size: 14px;
-			color: #8a8a8a;
-		}
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #764ba2;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: none;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+        margin: 20px auto;
+      }
 
-		/* Loader animation */
-		.loader {
-			width: 48px;
-			height: 48px;
-			border: 5px solid #764ba2;
-			border-bottom-color: transparent;
-			border-radius: 50%;
-			display: none;
-			box-sizing: border-box;
-			animation: rotation 1s linear infinite;
-			margin: 20px auto;
-		}
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
 
-		@keyframes rotation {
-			0% {
-				transform: rotate(0deg);
-			}
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
 
-			100% {
-				transform: rotate(360deg);
-			}
-		}
-	</style>
-</head>
+  <body>
+    <div class="bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
 
-<body>
-	<!-- Background shapes -->
-	<div class="bg-shapes">
-		<div class="shape shape-1"></div>
-		<div class="shape shape-2"></div>
-		<div class="shape shape-3"></div>
-	</div>
+    <div class="error-container">
+      <div class="error-code" id="error-code">404</div>
 
-	<!-- Main error container -->
-	<div class="error-container">
-		<div class="error-code" id="error-code">404</div>
+      <div class="error-icon">
+        <div class="error-circle">
+          <i>!</i>
+        </div>
+      </div>
 
-		<div class="error-icon">
-			<div class="error-circle">
-				<i>!</i>
-			</div>
-		</div>
+      <h1 id="error-title">Oops! Qualcosa è andato storto</h1>
+      <p id="error-message">Si è verificato un errore durante l'operazione</p>
 
-		<h1 id="error-title">Oops! Qualcosa è andato storto</h1>
-		<p id="error-message">Si è verificato un errore durante l'operazione</p>
+      <div class="loader" id="loader"></div>
 
-		<div class="loader" id="loader"></div>
+      <div class="buttons">
+        <a href="/login" class="button retry" id="retry-button">Riprova</a>
+        <a href="/logout" class="button exit" id="exit-button">Esci</a>
+      </div>
 
-		<div class="buttons">
-			<a href="/login" class="button retry" id="retry-button">Riprova</a>
-			<a href="/logout" class="button exit" id="exit-button">Esci</a>
-		</div>
+      <div class="error-footer">
+        <p>© 2025 WordCare - Tutti i diritti riservati</p>
+      </div>
+    </div>
 
-		<div class="error-footer">
-			<p>© 2025 WordCare - Tutti i diritti riservati</p>
-		</div>
-	</div>
+    <script>
+      $(function () {
+        const params = new URLSearchParams(window.location.search);
 
-	<script>
-		$(function () {
-			const params = new URLSearchParams(window.location.search);
+        const code = params.get("code") || "500";
+        const title = params.get("title") || "Errore";
+        const message =
+          params.get("message") || "Si è verificato un errore imprevisto.";
+        const returnUrl = params.get("returnUrl") || "/login";
 
-			const code = params.get('code') || '500';
-			const title = params.get('title') || 'Errore';
-			const message = params.get('message') || 'Si è verificato un errore imprevisto.';
-			const returnUrl = params.get('returnUrl') || '/login';
-
-			$('#error-code').text(code);
-			$('#error-title').text(title);
-			$('#error-message').text(message);
-			$('#retry-button').attr('href', returnUrl);
-		});
-	</script>
-</body>
-
+        $("#error-code").text(code);
+        $("#error-title").text(title);
+        $("#error-message").text(message);
+        $("#retry-button").attr("href", returnUrl);
+      });
+    </script>
+  </body>
 </html>

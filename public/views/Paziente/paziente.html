@@ -1,222 +1,242 @@
 <!DOCTYPE html>
 <html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WordCare - Dashboard Paziente</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../css/Paziente/paziente.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>WordCare - Dashboard Paziente</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-	<link rel="stylesheet" href="../../css/Paziente/paziente.css">
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
-		</script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css"
+    />
+    <link rel="stylesheet" href="../../css/Paziente/tutorial.css" />
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
 
-	<!-- Driver.js CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css" />
-	<link rel="stylesheet" href="../../css/Paziente/tutorial.css">
-	<!-- Driver.js Script -->
-	<script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
+    <script defer src="../../js/Paziente/dashboard.js"></script>
+    <script defer src="../../js/Paziente/modals.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/Paziente/dashboard-tutorial.js"></script>
+  </head>
 
-	<script defer src="../../js/Paziente/dashboard.js"></script>
-	<script defer src="../../js/Paziente/modals.js"></script>
-	<script defer src="../../js/utils.js"></script>
-	<script defer src="../../js/Paziente/dashboard-tutorial.js"></script>
-</head>
+  <div id="modal-professionista" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>
+          <div class="header-icon">
+            <i class="fas fa-user-doctor"></i>
+          </div>
+          Dati del Professionista
+        </h2>
+        <button class="close-btn" onclick="closeModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
 
-<div id="modal-professionista" class="modal">
-	<div class="modal-content">
-		<div class="modal-header">
-			<h2>
-				<div class="header-icon">
-					<i class="fas fa-user-doctor"></i>
-				</div>
-				Dati del Professionista
-			</h2>
-			<button class="close-btn" onclick="closeModal()">
-				<i class="fas fa-times"></i>
-			</button>
-		</div>
+      <div class="modal-body">
+        <ul class="professional-info">
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">Nome</div>
+              <div class="info-value" id="prof-nome"></div>
+            </div>
+          </li>
 
-		<div class="modal-body">
-			<ul class="professional-info">
-				<li class="info-item">
-					<div class="info-icon">
-						<i class="fas fa-user"></i>
-					</div>
-					<div class="info-content">
-						<div class="info-label">Nome</div>
-						<div class="info-value" id="prof-nome"></div>
-					</div>
-				</li>
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">Cognome</div>
+              <div class="info-value" id="prof-cognome"></div>
+            </div>
+          </li>
 
-				<li class="info-item">
-					<div class="info-icon">
-						<i class="fas fa-user"></i>
-					</div>
-					<div class="info-content">
-						<div class="info-label">Cognome</div>
-						<div class="info-value" id="prof-cognome"></div>
-					</div>
-				</li>
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">Data di Nascita</div>
+              <div class="info-value" id="prof-data-nascita"></div>
+            </div>
+          </li>
 
-				<li class="info-item">
-					<div class="info-icon">
-						<i class="fas fa-calendar-alt"></i>
-					</div>
-					<div class="info-content">
-						<div class="info-label">Data di Nascita</div>
-						<div class="info-value" id="prof-data-nascita"></div>
-					</div>
-				</li>
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-stethoscope"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">Specializzazione</div>
+              <div class="info-value" id="prof-specializzazione"></div>
+            </div>
+          </li>
 
-				<li class="info-item">
-					<div class="info-icon">
-						<i class="fas fa-stethoscope"></i>
-					</div>
-					<div class="info-content">
-						<div class="info-label">Specializzazione</div>
-						<div class="info-value" id="prof-specializzazione"></div>
-					</div>
-				</li>
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">Sede</div>
+              <div class="info-value" id="prof-sede"></div>
+            </div>
+          </li>
 
-				<li class="info-item">
-					<div class="info-icon">
-						<i class="fas fa-map-marker-alt"></i>
-					</div>
-					<div class="info-content">
-						<div class="info-label">Sede</div>
-						<div class="info-value" id="prof-sede"></div>
-					</div>
-				</li>
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">In Cura Dal</div>
+              <div class="info-value" id="prof-data-inizio"></div>
+            </div>
+          </li>
+        </ul>
+      </div>
 
-				<li class="info-item">
-					<div class="info-icon">
-						<i class="fas fa-clock"></i>
-					</div>
-					<div class="info-content">
-						<div class="info-label">In Cura Dal</div>
-						<div class="info-value" id="prof-data-inizio"></div>
-					</div>
-				</li>
-			</ul>
-		</div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="contactProfessional()">
+          <i class="fas fa-envelope"></i>
+          Contatta
+        </button>
+      </div>
+    </div>
+  </div>
 
-		<div class="modal-footer">
-			<button class="btn btn-primary" onclick="contactProfessional()">
-				<i class="fas fa-envelope"></i>
-				Contatta
-			</button>
-		</div>
-	</div>
-</div>
+  <div id="modal-appuntamenti" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>
+          <div class="header-icon">
+            <i class="fas fa-calendar"></i>
+          </div>
+          Tutti gli appuntamenti
+        </h2>
+        <button id="close-appointments-modal" class="close-appointments-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="lista-appuntamenti"></div>
+    </div>
+  </div>
 
-<div id="modal-appuntamenti" class="modal">
-	<div class="modal-content">
-		<div class="modal-header">
-			<h2>
-				<div class="header-icon">
-					<i class="fas fa-calendar"></i>
-				</div>
-				Tutti gli appuntamenti
-			</h2>
-			<button id="close-appointments-modal" class="close-appointments-btn">
-				<i class="fas fa-times"></i>
-			</button>
-		</div>
-		<div class="modal-body" id="lista-appuntamenti">
-			<!-- Verrà popolata dinamicamente -->
-		</div>
-	</div>
-</div>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-brand">WordCare</div>
+      <div class="menu-toggle"><span></span><span></span><span></span></div>
+      <ul class="navbar-links">
+        <li>
+          <a href="/paziente"><i class="fas fa-home"></i> Dashboard</a>
+        </li>
+        <li>
+          <a href="/paziente/agenda"
+            ><i class="fas fa-calendar-alt"></i> Agenda</a
+          >
+        </li>
+        <li>
+          <a href="/paziente/esercizi"><i class="fas fa-tasks"></i> Esercizi</a>
+        </li>
+      </ul>
+      <div style="display: flex; align-items: center">
+        <div class="navbar-avatar" style="margin-right: 20px">
+          <img src="../../images/avatars/Avatar1.png" alt="Avatar" />
+          <div class="avatar-dropdown">
+            <div class="user-name"></div>
+            <a href="/paziente/profilo"
+              ><i class="fas fa-user"></i> Il mio profilo</a
+            >
+          </div>
+        </div>
+        <a href="/logout">
+          <button class="Btn">
+            <div class="sign">
+              <svg viewBox="0 0 512 512">
+                <path
+                  d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+                ></path>
+              </svg>
+            </div>
+            <div class="text">Logout</div>
+          </button>
+        </a>
+      </div>
+    </nav>
+    <main class="dashboard">
+      <section class="greeting" id="dashboard">
+        <h1 class="patient-title"></h1>
+        <p id="fraseMotivazionale">
+          Oggi è una nuova opportunità per migliorare. Facciamo progressi
+          insieme!
+        </p>
+      </section>
+      <h2 class="stats-title">Statistiche</h2>
+      <section class="stats">
+        <div class="stat-card" id="esercizi-card">
+          <div class="icon"><i class="fas fa-check-circle"></i></div>
+          <h3>Esercizi completati</h3>
+          <span id=""></span>
+        </div>
+        <div class="stat-card" id="professionista-card">
+          <div class="icon"><i class="fas fa-user-doctor"></i></div>
+          <h3>Professionista</h3>
+          <span id="nome-professionista-in-cura"></span>
+        </div>
+        <div class="stat-card" id="ultima-visita-card">
+          <div class="icon"><i class="fas fa-calendar-check"></i></div>
+          <h3>Ultima visita</h3>
+          <span id="data-ultima-visita"></span>
+        </div>
+      </section>
 
-<body>
-	<nav class="navbar">
-		<div class="navbar-brand">WordCare</div>
-		<div class="menu-toggle"><span></span><span></span><span></span></div>
-		<ul class="navbar-links">
-			<li><a href="/paziente"><i class="fas fa-home"></i> Dashboard</a></li>
-			<li><a href="/paziente/agenda"><i class="fas fa-calendar-alt"></i> Agenda</a></li>
-			<li><a href="/paziente/esercizi"><i class="fas fa-tasks"></i> Esercizi</a></li>
-		</ul>
-		<div style="display: flex; align-items: center;">
-			<div class="navbar-avatar" style="margin-right: 20px;"><img src="../../images/avatars/Avatar1.png"
-					alt="Avatar">
-				<div class="avatar-dropdown">
-					<div class="user-name"></div>
-					<a href="/paziente/profilo"><i class="fas fa-user"></i> Il mio profilo</a>
-				</div>
-			</div>
-			<a href="/logout">
-				<button class="Btn">
-					<div class="sign"><svg viewBox="0 0 512 512">
-							<path
-								d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
-							</path>
-						</svg></div>
-					<div class="text">Logout</div>
-				</button>
-			</a>
-		</div>
-	</nav>
-	<main class="dashboard">
-		<section class="greeting" id="dashboard">
-			<h1 class="patient-title"></h1>
-			<p>Oggi è una nuova opportunità per migliorare. Facciamo progressi insieme !</p>
-		</section>
-		<h2 class="stats-title">Statistiche</h2>
-		<section class="stats">
-			<div class="stat-card" id="esercizi-card">
-				<div class="icon"><i class="fas fa-check-circle"></i></div>
-				<h3>Esercizi completati</h3><span id=""></span>
-			</div>
-			<div class="stat-card" id="professionista-card">
-				<div class="icon"><i class="fas fa-user-doctor"></i></div>
-				<h3>Professionista</h3><span id="nome-professionista-in-cura"></span>
-			</div>
-			<div class="stat-card" id="ultima-visita-card">
-				<div class="icon"><i class="fas fa-calendar-check"></i></div>
-				<h3>Ultima visita</h3><span id="data-ultima-visita"></span>
-			</div>
-		</section>
+      <h2 class="upcoming-title">Prossimi Appuntamenti</h2>
+      <section class="upcoming-appointments">
+        <div class="appointments-container"></div>
+        <div class="appointments-footer">
+          <button class="btn-view-all" id="btn-all-appointments">
+            <i class="fas fa-list"></i>
+            <span>Tutti gli appuntamenti</span>
+          </button>
+        </div>
+      </section>
+    </main>
 
-		<h2 class="upcoming-title">Prossimi Appuntamenti</h2>
-		<section class="upcoming-appointments">
-			<div class="appointments-container">
-				<!-- La card verrà popolata dinamicamente via JS -->
-			</div>
-			<div class="appointments-footer">
-				<button class="btn-view-all" id="btn-all-appointments">
-					<i class="fas fa-list"></i>
-					<span>Tutti gli appuntamenti</span>
-				</button>
-			</div>
-		</section>
-	</main>
-
-	<footer class="footer">
-		<div class="footer-content">
-			<div class="footer-section">
-				<h3>WordCare</h3>
-				<p>Supporto personalizzato per il tuo sviluppo vocale e linguistico</p>
-			</div>
-			<div class="footer-section">
-				<h3>Collegamenti Rapidi</h3>
-				<ul>
-					<li><a href="/paziente">Home</a></li>
-					<li><a href="/paziente/esercizi">Esercizi</a></li>
-					<li><a href="/paziente/agenda">Agenda</a></li>
-				</ul>
-			</div>
-			<div class="footer-section">
-				<h3>Contattaci</h3>
-				<p><i class="fas fa-envelope"></i> info@wordcare.it</p>
-				<p><i class="fas fa-phone"></i> +39 02 1234567</p>
-			</div>
-		</div>
-		<div class="footer-bottom">
-			<p>&copy; 2025 WordCare. Tutti i diritti riservati.</p>
-		</div>
-	</footer>
-</body>
-
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>WordCare</h3>
+          <p>
+            Supporto personalizzato per il tuo sviluppo vocale e linguistico
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Collegamenti Rapidi</h3>
+          <ul>
+            <li><a href="/paziente">Home</a></li>
+            <li><a href="/paziente/esercizi">Esercizi</a></li>
+            <li><a href="/paziente/agenda">Agenda</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contattaci</h3>
+          <p><i class="fas fa-envelope"></i> info@wordcare.it</p>
+          <p><i class="fas fa-phone"></i> +39 02 1234567</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 WordCare. Tutti i diritti riservati.</p>
+      </div>
+    </footer>
+  </body>
 </html>
