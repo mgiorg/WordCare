@@ -40,7 +40,6 @@ router.post('/agenda/:id/elimina', VerifyProfessionalSession, ProfessionalContro
 router.get('/appuntamenti/view', VerifyProfessionalSession, (req, res) => {
   res.sendFile(path.join(viewsPath, 'professionista', 'calendario', 'calendario.html'));
 });
-
 router.get('/promemoria', VerifyProfessionalSession, ProfessionalController.listaPromemoria);
 router.post('/promemoria', VerifyProfessionalSession, ProfessionalController.creaPromemoria);
 router.post('/promemoria/:id/elimina', VerifyProfessionalSession, ProfessionalController.eliminaPromemoria);

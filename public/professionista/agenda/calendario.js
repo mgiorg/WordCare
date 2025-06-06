@@ -1,13 +1,19 @@
 let dataSelezionata = null;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const today = new Date();
   const anno = today.getFullYear();
   const mese = today.getMonth();
-  document.getElementById("titolo-mese").textContent = today.toLocaleDateString("it-IT", { month: "long", year: "numeric" });
+  const oggiISO = today.toISOString().split("T")[0];
+
+  document.getElementById("titolo-mese").textContent = today.toLocaleDateString("it-IT", {
+    month: "long",
+    year: "numeric"
+  });
 
   generaCalendario(anno, mese);
-  caricaEventi();
+  await caricaEventi(); // Attendi il caricamento
+  apriModal(oggiISO);   // Seleziona oggi come giorno attivo
 
   document.getElementById("form-appuntamento").onsubmit = creaAppuntamento;
   document.getElementById("form-promemoria").onsubmit = creaPromemoria;
@@ -37,34 +43,33 @@ function generaCalendario(anno, mese) {
   }
 }
 
-function caricaEventi() {
-  Promise.all([
+async function caricaEventi() {
+  let [apps, proms] = await Promise.all([
     fetch("/professionista/agenda").then(r => r.json()),
     fetch("/professionista/promemoria").then(r => r.json())
-  ]).then(([apps, proms]) => {
-    // Demo identici alla home
-    if (!apps || apps.length === 0) {
-      apps = [
-        { id: "demo1", data: "2025-06-04", ora: "10:00", paziente_nome: "Marco", paziente_cognome: "Verdi" },
-        { id: "demo2", data: "2025-06-05", ora: "14:00", paziente_nome: "Sara", paziente_cognome: "Rossi" },
-        { id: "demo3", data: "2025-06-06", ora: "16:30", paziente_nome: "Luca", paziente_cognome: "Bianchi" }
-      ];
-    }
+  ]);
 
-    if (!proms || proms.length === 0) {
-      proms = [
-        { id: "demo4", data: "2025-06-05", ora_notifica: "09:00", nota: "Controllare referti paziente Rossi" },
-        { id: "demo5", data: "2025-06-06", ora_notifica: "11:30", nota: "Inviare report alla logopedista" },
-        { id: "demo6", data: "2025-06-07", ora_notifica: "15:00", nota: "Telefonata di follow-up a Bianchi" }
-      ];
-    }
+  if (!apps || apps.length === 0) {
+    apps = [
+      { id: "demo1", data: "2025-06-04", ora: "10:00", paziente_nome: "Marco", paziente_cognome: "Verdi" },
+      { id: "demo2", data: "2025-06-05", ora: "14:00", paziente_nome: "Sara", paziente_cognome: "Rossi" },
+      { id: "demo3", data: "2025-06-06", ora: "16:30", paziente_nome: "Luca", paziente_cognome: "Bianchi" }
+    ];
+  }
 
-    apps.forEach(app => {
-      creaEventoHTML(app.data, app.ora, "appuntamento", `${app.paziente_nome} ${app.paziente_cognome}`, app.id);
-    });
-    proms.forEach(prom => {
-      creaEventoHTML(prom.data, prom.ora_notifica, "promemoria", prom.nota, prom.id);
-    });
+  if (!proms || proms.length === 0) {
+    proms = [
+      { id: "demo4", data: "2025-06-05", ora_notifica: "09:00", nota: "Controllare referti paziente Rossi" },
+      { id: "demo5", data: "2025-06-06", ora_notifica: "11:30", nota: "Inviare report alla logopedista" },
+      { id: "demo6", data: "2025-06-07", ora_notifica: "15:00", nota: "Telefonata di follow-up a Bianchi" }
+    ];
+  }
+
+  apps.forEach(app => {
+    creaEventoHTML(app.data, app.ora, "appuntamento", `${app.paziente_nome} ${app.paziente_cognome}`, app.id);
+  });
+  proms.forEach(prom => {
+    creaEventoHTML(prom.data, prom.ora_notifica, "promemoria", prom.nota, prom.id);
   });
 }
 
@@ -83,6 +88,28 @@ function apriModal(data) {
   dataSelezionata = data;
   document.getElementById("data-attiva").textContent = data;
   mostraEliminazione();
+}
+
+function mostraEliminazione() {
+  const lista = document.getElementById("eventi-giorno");
+  lista.innerHTML = "";
+  document.querySelectorAll(`#calendar-list li[data-date="${dataSelezionata}"] .event`)
+    .forEach(ev => {
+      const li = document.createElement("li");
+      li.textContent = ev.textContent;
+
+      const btn = document.createElement("button");
+      btn.textContent = "X";
+      btn.onclick = () => eliminaEvento(ev.dataset.id, ev.classList.contains("appuntamento"));
+
+      li.appendChild(btn);
+      lista.appendChild(li);
+    });
+}
+
+function eliminaEvento(id, isAppuntamento) {
+  const url = isAppuntamento ? `/professionista/agenda/${id}/elimina` : `/professionista/promemoria/${id}/elimina`;
+  fetch(url, { method: "POST" }).then(r => r.ok && location.reload());
 }
 
 function creaAppuntamento(e) {
@@ -139,26 +166,4 @@ function creaPromemoria(e) {
       alert("❌ Errore nel salvataggio.");
     }
   });
-}
-
-function mostraEliminazione() {
-  const lista = document.getElementById("eventi-giorno");
-  lista.innerHTML = "";
-  document.querySelectorAll(`#calendar-list li[data-date="${dataSelezionata}"] .event`)
-    .forEach(ev => {
-      const li = document.createElement("li");
-      li.textContent = ev.textContent;
-
-      const btn = document.createElement("button");
-      btn.textContent = "X";
-      btn.onclick = () => eliminaEvento(ev.dataset.id, ev.classList.contains("appuntamento"));
-
-      li.appendChild(btn);
-      lista.appendChild(li);
-    });
-}
-
-function eliminaEvento(id, isAppuntamento) {
-  const url = isAppuntamento ? `/professionista/agenda/${id}/elimina` : `/professionista/promemoria/${id}/elimina`;
-  fetch(url, { method: "POST" }).then(r => r.ok && location.reload());
 }
